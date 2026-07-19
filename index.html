@@ -1,0 +1,1030 @@
+<title>Arah — Navigasi Malaysia, Tanpa Kompromi</title>
+<style>
+/* ── Tokens ──────────────────────────────────────────────── */
+:root {
+  --bg:       #080D12;
+  --sur:      #111820;
+  --sur2:     #1A2433;
+  --acc:      #00D8A0;
+  --acc2:     #FF7040;
+  --acc-glow: rgba(0,216,160,.14);
+  --acc2-glow:rgba(255,112,64,.14);
+  --txt:      #E8F0FA;
+  --txt2:     #7A94B0;
+  --bdr:      rgba(255,255,255,.07);
+  --bdr2:     rgba(255,255,255,.12);
+  --radius:   8px;
+}
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg:       #F2F5FB;
+    --sur:      #FFFFFF;
+    --sur2:     #E4EAF5;
+    --acc:      #008D6A;
+    --acc2:     #CC5022;
+    --acc-glow: rgba(0,141,106,.1);
+    --acc2-glow:rgba(204,80,34,.1);
+    --txt:      #080D12;
+    --txt2:     #5A7090;
+    --bdr:      rgba(0,0,0,.08);
+    --bdr2:     rgba(0,0,0,.14);
+  }
+}
+:root[data-theme="dark"] {
+  --bg:#080D12;--sur:#111820;--sur2:#1A2433;
+  --acc:#00D8A0;--acc2:#FF7040;
+  --acc-glow:rgba(0,216,160,.14);--acc2-glow:rgba(255,112,64,.14);
+  --txt:#E8F0FA;--txt2:#7A94B0;
+  --bdr:rgba(255,255,255,.07);--bdr2:rgba(255,255,255,.12);
+}
+:root[data-theme="light"] {
+  --bg:#F2F5FB;--sur:#FFFFFF;--sur2:#E4EAF5;
+  --acc:#008D6A;--acc2:#CC5022;
+  --acc-glow:rgba(0,141,106,.1);--acc2-glow:rgba(204,80,34,.1);
+  --txt:#080D12;--txt2:#5A7090;
+  --bdr:rgba(0,0,0,.08);--bdr2:rgba(0,0,0,.14);
+}
+
+/* ── Reset ───────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--txt);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* ── NAV ─────────────────────────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 2rem; height: 64px;
+  background: color-mix(in srgb, var(--bg) 85%, transparent);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--bdr);
+  transition: background 0.3s;
+}
+.nav-logo { font-size: 1.35rem; font-weight: 900; letter-spacing: -0.04em; color: var(--txt); }
+.nav-logo span { color: var(--acc); }
+.nav-links { display: flex; gap: 2rem; align-items: center; list-style: none; }
+.nav-links a { font-size: 0.875rem; font-weight: 500; color: var(--txt2); transition: color 0.2s; }
+.nav-links a:hover { color: var(--txt); }
+.nav-actions { display: flex; gap: 0.6rem; align-items: center; }
+
+/* Language toggle */
+.lang-toggle {
+  display: flex; align-items: center;
+  background: none;
+  border: 1px solid var(--bdr2);
+  border-radius: var(--radius);
+  padding: 0.3rem 0.5rem;
+  gap: 0; cursor: pointer;
+  height: 36px;
+  overflow: hidden;
+}
+.lang-opt {
+  font-size: 0.75rem; font-weight: 800; letter-spacing: 0.06em;
+  padding: 0.2rem 0.5rem;
+  border-radius: 5px;
+  color: var(--txt2);
+  transition: background 0.2s, color 0.2s;
+  line-height: 1;
+}
+.lang-opt.active {
+  background: var(--acc);
+  color: #080D12;
+}
+.lang-sep {
+  font-size: 0.65rem; color: var(--bdr2);
+  padding: 0 1px;
+  user-select: none;
+}
+
+.btn-ghost {
+  padding: 0.45rem 1rem; border-radius: var(--radius);
+  font-size: 0.875rem; font-weight: 600;
+  border: 1px solid var(--bdr2); color: var(--txt2);
+  transition: border-color 0.2s, color 0.2s;
+  cursor: pointer; background: none;
+}
+.btn-ghost:hover { border-color: var(--acc); color: var(--acc); }
+.btn-primary {
+  padding: 0.45rem 1.1rem; border-radius: var(--radius);
+  font-size: 0.875rem; font-weight: 700;
+  background: var(--acc); color: #080D12;
+  border: none; cursor: pointer;
+  transition: opacity 0.2s, transform 0.15s;
+}
+.btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+#theme-toggle {
+  background: none; border: 1px solid var(--bdr2);
+  border-radius: var(--radius); width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; color: var(--txt2);
+  transition: border-color 0.2s, color 0.2s;
+}
+#theme-toggle:hover { border-color: var(--acc); color: var(--acc); }
+
+/* ── HERO ────────────────────────────────────────────────── */
+.hero {
+  min-height: 100vh;
+  display: grid; grid-template-columns: 1fr 1fr;
+  align-items: center; gap: 0;
+  padding: 96px 2rem 4rem;
+  max-width: 1280px; margin: 0 auto;
+}
+.hero-copy { padding-right: 3rem; }
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--acc); margin-bottom: 1.5rem;
+}
+.hero-eyebrow::before { content: ''; display: block; width: 24px; height: 2px; background: var(--acc); }
+.hero-h1 {
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-weight: 900; letter-spacing: -0.04em;
+  line-height: 1.04; text-wrap: balance; margin-bottom: 1rem;
+}
+.hero-h1 em { font-style: normal; color: var(--acc); }
+.hero-tagline { font-size: 1.05rem; color: var(--txt2); margin-bottom: 0.4rem; }
+.hero-tagline2 { font-size: 0.85rem; color: var(--txt2); opacity: 0.6; margin-bottom: 2.5rem; font-style: italic; }
+.hero-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+.btn-hero-primary {
+  padding: 0.75rem 1.6rem; border-radius: var(--radius);
+  font-size: 1rem; font-weight: 700;
+  background: var(--acc); color: #080D12; border: none; cursor: pointer;
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  transition: opacity 0.2s, transform 0.15s;
+}
+.btn-hero-primary:hover { opacity: 0.88; transform: translateY(-2px); }
+.btn-hero-ghost {
+  padding: 0.75rem 1.6rem; border-radius: var(--radius);
+  font-size: 1rem; font-weight: 600;
+  background: none; color: var(--txt); border: 1px solid var(--bdr2); cursor: pointer;
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  transition: border-color 0.2s, color 0.2s, transform 0.15s;
+}
+.btn-hero-ghost:hover { border-color: var(--acc); color: var(--acc); transform: translateY(-2px); }
+.hero-canvas-wrap { position: relative; display: flex; align-items: center; justify-content: center; }
+#map-canvas { width: 100%; max-width: 560px; height: 420px; border-radius: 16px; border: 1px solid var(--bdr); display: block; }
+.canvas-label { position: absolute; bottom: 16px; right: 16px; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--txt2); opacity: 0.6; }
+
+/* ── STATS ───────────────────────────────────────────────── */
+.stats-bar { border-top: 1px solid var(--bdr); border-bottom: 1px solid var(--bdr); background: var(--sur); padding: 1.5rem 2rem; }
+.stats-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; }
+.stat-item { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 0.5rem; border-right: 1px solid var(--bdr); }
+.stat-item:last-child { border-right: none; }
+.stat-num { font-size: 2rem; font-weight: 900; letter-spacing: -0.04em; color: var(--acc); font-variant-numeric: tabular-nums; line-height: 1; margin-bottom: 0.25rem; }
+.stat-label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--txt2); }
+
+/* ── SECTION BASE ────────────────────────────────────────── */
+.section { padding: 6rem 2rem; }
+.container { max-width: 1280px; margin: 0 auto; }
+.section-eyebrow { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--acc); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+.section-eyebrow::before { content: ''; width: 20px; height: 2px; background: var(--acc); }
+.section-h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 900; letter-spacing: -0.035em; line-height: 1.1; text-wrap: balance; margin-bottom: 1rem; }
+.section-sub { font-size: 1.05rem; color: var(--txt2); max-width: 52ch; line-height: 1.7; }
+
+/* ── WHY ─────────────────────────────────────────────────── */
+.why-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--bdr); border: 1px solid var(--bdr); border-radius: 12px; overflow: hidden; margin-top: 3rem; }
+.why-card { background: var(--sur); padding: 2rem 1.8rem; }
+.why-icon { width: 44px; height: 44px; border-radius: 10px; background: var(--acc-glow); display: flex; align-items: center; justify-content: center; margin-bottom: 1.2rem; color: var(--acc); }
+.why-icon.warn { background: var(--acc2-glow); color: var(--acc2); }
+.why-h3 { font-size: 1.1rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.6rem; line-height: 1.3; }
+.why-p { font-size: 0.9rem; color: var(--txt2); line-height: 1.7; }
+
+/* ── FEATURES ────────────────────────────────────────────── */
+.features-section { background: var(--sur); }
+.features-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: 3rem; }
+.feat-card { background: var(--bg); border: 1px solid var(--bdr); border-radius: 12px; padding: 1.8rem; transition: border-color 0.25s, transform 0.2s; }
+.feat-card:hover { border-color: var(--acc); transform: translateY(-3px); }
+.feat-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.2rem; background: var(--acc-glow); color: var(--acc); }
+.feat-icon.warm { background: var(--acc2-glow); color: var(--acc2); }
+.feat-h3 { font-size: 1.05rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.5rem; line-height: 1.3; }
+.feat-p { font-size: 0.875rem; color: var(--txt2); line-height: 1.65; }
+.feat-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem; }
+.feat-tag { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.2rem 0.55rem; border-radius: 4px; background: var(--sur2); color: var(--txt2); }
+
+/* ── MALAYSIA-FIRST ──────────────────────────────────────── */
+.my-section { background: var(--bg); }
+.my-hero-text { font-size: clamp(1.4rem, 2.5vw, 2rem); font-weight: 900; letter-spacing: -0.03em; line-height: 1.2; text-wrap: balance; margin-bottom: 3rem; }
+.my-hero-text strong { color: var(--acc); }
+.my-list { display: flex; flex-direction: column; border: 1px solid var(--bdr); border-radius: 12px; overflow: hidden; }
+.my-item { display: grid; grid-template-columns: 3rem 1fr auto; align-items: center; gap: 1.5rem; padding: 1.4rem 1.8rem; border-bottom: 1px solid var(--bdr); background: var(--sur); transition: background 0.2s; }
+.my-item:last-child { border-bottom: none; }
+.my-item:hover { background: var(--sur2); }
+.my-num { font-size: 1.5rem; font-weight: 900; letter-spacing: -0.04em; color: var(--bdr2); font-variant-numeric: tabular-nums; text-align: right; }
+.my-content h3 { font-size: 1rem; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 0.2rem; }
+.my-content p { font-size: 0.85rem; color: var(--txt2); line-height: 1.5; }
+.my-badge { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.2rem 0.55rem; border-radius: 4px; white-space: nowrap; }
+.badge-mvp { background: var(--acc-glow); color: var(--acc); }
+.badge-v1  { background: var(--sur2); color: var(--txt2); }
+
+/* ── COMPARISON ──────────────────────────────────────────── */
+.compare-section { background: var(--sur); }
+.compare-wrap { margin-top: 3rem; overflow-x: auto; }
+.compare-table { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 0.9rem; }
+.compare-table th { padding: 1rem 1.2rem; text-align: left; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--txt2); border-bottom: 1px solid var(--bdr); }
+.compare-table th:first-child { min-width: 220px; }
+.compare-table th.col-arah { color: var(--acc); }
+.compare-table td { padding: 0.9rem 1.2rem; border-bottom: 1px solid var(--bdr); vertical-align: middle; }
+.compare-table tr:last-child td { border-bottom: none; }
+.compare-table td:first-child { font-weight: 500; color: var(--txt); }
+.compare-table tr:hover td { background: var(--sur2); }
+.cell-check { color: var(--acc); font-size: 1.1rem; }
+.cell-partial { color: var(--acc2); font-size: 0.8rem; font-weight: 600; }
+.cell-no { color: var(--txt2); opacity: 0.35; font-size: 1rem; }
+
+/* ── TECH ────────────────────────────────────────────────── */
+.tech-section { background: var(--bg); }
+.tech-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: var(--bdr); border: 1px solid var(--bdr); border-radius: 12px; overflow: hidden; margin-top: 3rem; }
+.tech-card { background: var(--sur); padding: 1.5rem; }
+.tech-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--acc); margin-bottom: 0.5rem; }
+.tech-name { font-size: 1rem; font-weight: 800; margin-bottom: 0.4rem; }
+.tech-desc { font-size: 0.8rem; color: var(--txt2); line-height: 1.5; }
+
+/* ── REPOS ───────────────────────────────────────────────── */
+.repos-section { background: var(--sur); }
+.repos-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; margin-top: 2.5rem; }
+.repo-card { background: var(--bg); border: 1px solid var(--bdr); border-radius: 10px; padding: 1.2rem; transition: border-color 0.2s, transform 0.15s; }
+.repo-card:hover { border-color: var(--acc); transform: translateY(-2px); }
+.repo-name { font-size: 0.875rem; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 0.35rem; color: var(--acc); }
+.repo-tech { font-size: 0.75rem; color: var(--txt2); margin-bottom: 0.5rem; }
+.repo-desc { font-size: 0.8rem; color: var(--txt2); line-height: 1.5; }
+
+/* ── CTA ─────────────────────────────────────────────────── */
+.cta-section { background: linear-gradient(135deg, color-mix(in srgb, var(--acc) 8%, var(--bg)), var(--bg)); border-top: 1px solid var(--bdr); text-align: center; padding: 6rem 2rem; }
+.cta-h2 { font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 900; letter-spacing: -0.04em; line-height: 1.1; text-wrap: balance; margin-bottom: 1rem; }
+.cta-sub { font-size: 1rem; color: var(--txt2); margin-bottom: 2.5rem; max-width: 50ch; margin-left: auto; margin-right: auto; line-height: 1.7; }
+.cta-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+.btn-cta-primary { padding: 0.8rem 2rem; border-radius: var(--radius); font-size: 1rem; font-weight: 700; background: var(--acc); color: #080D12; border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; transition: opacity 0.2s, transform 0.15s; }
+.btn-cta-primary:hover { opacity: 0.88; transform: translateY(-2px); }
+.btn-cta-ghost { padding: 0.8rem 2rem; border-radius: var(--radius); font-size: 1rem; font-weight: 600; background: none; color: var(--txt); border: 1px solid var(--bdr2); cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; transition: border-color 0.2s, transform 0.15s; }
+.btn-cta-ghost:hover { border-color: var(--acc); color: var(--acc); transform: translateY(-2px); }
+
+/* ── FOOTER ──────────────────────────────────────────────── */
+footer { background: var(--sur); border-top: 1px solid var(--bdr); padding: 2.5rem 2rem; }
+.footer-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.footer-logo { font-size: 1.15rem; font-weight: 900; letter-spacing: -0.04em; }
+.footer-logo span { color: var(--acc); }
+.footer-tagline { font-size: 0.8rem; color: var(--txt2); margin-top: 0.2rem; }
+.footer-links { display: flex; gap: 1.5rem; list-style: none; }
+.footer-links a { font-size: 0.85rem; color: var(--txt2); transition: color 0.2s; }
+.footer-links a:hover { color: var(--txt); }
+.footer-mit { font-size: 0.75rem; color: var(--txt2); opacity: 0.6; }
+
+/* ── RESPONSIVE ──────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; gap: 3rem; }
+  .hero-copy { padding-right: 0; }
+  .hero-canvas-wrap { order: -1; }
+  #map-canvas { height: 280px; }
+  .stats-inner { grid-template-columns: repeat(2,1fr); }
+  .stat-item:nth-child(2) { border-right: none; }
+  .why-grid { grid-template-columns: 1fr; }
+  .features-grid { grid-template-columns: repeat(2,1fr); }
+  .tech-grid { grid-template-columns: repeat(2,1fr); }
+  .repos-grid { grid-template-columns: repeat(2,1fr); }
+}
+@media (max-width: 600px) {
+  nav { padding: 0 1rem; }
+  .nav-links { display: none; }
+  .section { padding: 4rem 1rem; }
+  .hero { padding: 80px 1rem 3rem; }
+  .features-grid { grid-template-columns: 1fr; }
+  .repos-grid { grid-template-columns: repeat(2,1fr); }
+  .tech-grid { grid-template-columns: 1fr; }
+  .stats-inner { grid-template-columns: repeat(2,1fr); }
+  .my-item { grid-template-columns: 2.5rem 1fr; }
+  .my-badge { display: none; }
+  .footer-inner { flex-direction: column; text-align: center; }
+  .footer-links { flex-wrap: wrap; justify-content: center; }
+}
+</style>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Ar<span>ah</span></div>
+  <ul class="nav-links">
+    <li><a href="#features"   data-t="nav.features">Ciri-ciri</a></li>
+    <li><a href="#malaysia"   data-t="nav.malaysia">Malaysia-First</a></li>
+    <li><a href="#compare"    data-t="nav.compare">Bandingkan</a></li>
+    <li><a href="#repos"      data-t="nav.repos">Sumber Terbuka</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="lang-toggle" id="lang-toggle" aria-label="Toggle language" onclick="toggleLang()">
+      <span class="lang-opt active" id="lo-bm">BM</span>
+      <span class="lang-sep">|</span>
+      <span class="lang-opt" id="lo-en">EN</span>
+    </button>
+    <button id="theme-toggle" aria-label="Toggle theme" onclick="toggleTheme()">
+      <svg id="icon-dark" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1111.21 3a7 7 0 009.79 9.79z"/></svg>
+      <svg id="icon-light" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+    </button>
+    <a href="https://github.com/deanz93/arah" class="btn-ghost" data-t="nav.github">GitHub</a>
+    <button class="btn-primary" data-t="nav.beta">Cuba Beta</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top">
+  <div class="hero-copy">
+    <p class="hero-eyebrow" data-t="hero.eyebrow">Platform Navigasi Berdaulat Malaysia</p>
+    <h1 class="hero-h1" data-th="hero.h1">Navigasi Malaysia,<br><em>Tanpa Kompromi.</em></h1>
+    <p class="hero-tagline" data-t="hero.tagline">Komuniti pandu arah. Data di bumi Malaysia. Percuma selamanya.</p>
+    <p class="hero-tagline2" data-t="hero.tagline2">Community-powered navigation. Malaysian data sovereignty. Forever free.</p>
+    <div class="hero-actions">
+      <a href="https://github.com/deanz93/arah" class="btn-hero-primary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        <span data-t="hero.cta1">Cuba Beta</span>
+      </a>
+      <a href="https://github.com/deanz93/arah" class="btn-hero-ghost">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        <span data-t="hero.cta2">Lihat di GitHub</span>
+      </a>
+    </div>
+  </div>
+  <div class="hero-canvas-wrap">
+    <canvas id="map-canvas"></canvas>
+    <div class="canvas-label" data-t="hero.canvas">Simulasi Laluan Langsung</div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item"><div class="stat-num">230</div><div class="stat-label" data-t="stats.features">Ciri Dirancang</div></div>
+    <div class="stat-item"><div class="stat-num">8</div><div class="stat-label" data-t="stats.repos">Repo Sumber Terbuka</div></div>
+    <div class="stat-item"><div class="stat-num">100%</div><div class="stat-label" data-t="stats.data">Data Malaysia</div></div>
+    <div class="stat-item"><div class="stat-num">MIT</div><div class="stat-label" data-t="stats.license">Lesen Terbuka</div></div>
+  </div>
+</div>
+
+<!-- WHY -->
+<section class="section" id="why">
+  <div class="container">
+    <p class="section-eyebrow" data-t="why.eyebrow">Kenapa Arah?</p>
+    <h2 class="section-h2" data-t="why.h2">Waze dan Google Maps bukan untuk kita.</h2>
+    <p class="section-sub" data-t="why.sub">Lebih 90% pemandu Malaysia bergantung pada platform asing yang menjual data anda, mengabaikan keperluan tempatan, dan tidak bertanggungjawab kepada mana-mana pihak berkuasa Malaysia.</p>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon warn"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><line x1="12" y1="8" x2="12" y2="12"/><circle cx="12" cy="16" r=".5" fill="currentColor"/></svg></div>
+        <h3 class="why-h3" data-t="why.c1.title">Tiada Kedaulatan Data</h3>
+        <p class="why-p" data-t="why.c1.desc">Lokasi GPS, sejarah laluan dan corak pemanduan anda mengalir ke pelayan di AS — tertakluk kepada undang-undang asing dan broker data. Arah menyimpan semua data di Malaysia.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon warn"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg></div>
+        <h3 class="why-h3" data-t="why.c2.title">UI Bukan Bahasa Malaysia</h3>
+        <p class="why-p" data-t="why.c2.desc">Panduan suara BM yang tidak tepat, UI dahulukan Bahasa Inggeris, tiada kesedaran tentang format alamat Malaysia. Arah dibina dengan Bahasa Malaysia dahulu, dari hari pertama.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon warn"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
+        <h3 class="why-h3" data-t="why.c3.title">Tiada Ciri Tempatan</h3>
+        <p class="why-p" data-t="why.c3.desc">Amaran banjir kilat? Kos tol dalam Ringgit? Amaran Zon Selamat? Pencari R&amp;R PLUS? Tiada aplikasi asing yang menangani realiti pemanduan unik Malaysia. Arah lakukan semua itu.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="section features-section" id="features">
+  <div class="container">
+    <p class="section-eyebrow" data-t="feat.eyebrow">Ciri Utama</p>
+    <h2 class="section-h2" data-t="feat.h2">Semua yang anda perlukan untuk memandu di Malaysia.</h2>
+    <p class="section-sub" data-t="feat.sub">Dari panduan suara pusingan demi pusingan dalam Bahasa Malaysia hingga amaran banjir masa nyata — Arah direka untuk cara pemandu Malaysia sebenarnya.</p>
+    <div class="features-grid">
+      <div class="feat-card">
+        <div class="feat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg></div>
+        <h3 class="feat-h3" data-t="feat.nav.title">Navigasi Pusingan demi Pusingan</h3>
+        <p class="feat-p" data-t="feat.nav.desc">Panduan suara pusingan demi pusingan dalam Bahasa Malaysia dan Bahasa Inggeris. 3 laluan alternatif — terpantas, bebas tol, dan terpendek. Laluan semula automatik apabila anda tersesat.</p>
+        <div class="feat-tags">
+          <span class="feat-tag" data-t="tag.bm">Suara BM</span>
+          <span class="feat-tag" data-t="tag.reroute">Laluan Semula Auto</span>
+          <span class="feat-tag" data-t="tag.lane">Panduan Lorong</span>
+        </div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon warm"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.63A2 2 0 012 .9h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 8.7a16 16 0 006.29 6.29l1.16-1.16a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7a2 2 0 011.72 2.03z"/></svg></div>
+        <h3 class="feat-h3" data-t="feat.rpt.title">Laporan Komuniti Masa Nyata</h3>
+        <p class="feat-p" data-t="feat.rpt.desc">Laporkan perangkap kelajuan polis, kemalangan, jalan berlubang, sekatan jalan raya dan lagi — dengan satu ketukan. Laporan disiar serta-merta kepada semua pemandu berhampiran melalui WebSocket.</p>
+        <div class="feat-tags">
+          <span class="feat-tag" data-t="tag.ws">WebSocket</span>
+          <span class="feat-tag" data-t="tag.expire">Auto-Luput</span>
+          <span class="feat-tag" data-t="tag.rpt10">10 Jenis Laporan</span>
+        </div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon warm"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0112 2a8 8 0 018 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <h3 class="feat-h3" data-t="feat.flood.title">Amaran Banjir Kilat</h3>
+        <p class="feat-p" data-t="feat.flood.desc">Eksklusif Malaysia. Kesan apabila laluan anda melalui kawasan banjir dan cadangkan laluan pemindahan secara automatik. Amaran FCM kecemasan kepada semua pengguna yang terjejas.</p>
+        <div class="feat-tags">
+          <span class="feat-tag" data-t="tag.geofence">Geofencing</span>
+          <span class="feat-tag" data-t="tag.fcm">FCM Push</span>
+          <span class="feat-tag" data-t="tag.mvp">MVP</span>
+        </div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div>
+        <h3 class="feat-h3" data-t="feat.toll.title">Kos Tol dalam Ringgit</h3>
+        <p class="feat-p" data-t="feat.toll.desc">Lihat kos tol tepat dalam RM untuk setiap laluan alternatif sebelum anda memandu. Pangkalan data plaza tol untuk semua lebuh raya PLUS, Lebuhraya, dan tol negeri.</p>
+        <div class="feat-tags">
+          <span class="feat-tag" data-t="tag.tolldb">DB Tol</span>
+          <span class="feat-tag" data-t="tag.perplaza">Per Plaza</span>
+          <span class="feat-tag" data-t="tag.mvp">MVP</span>
+        </div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+        <h3 class="feat-h3" data-t="feat.off.title">Peta Luar Talian</h3>
+        <p class="feat-p" data-t="feat.off.desc">Muat turun kawasan peta penuh untuk kegunaan luar talian — Semenanjung Malaysia, Sabah, atau Sarawak. Navigasi tanpa internet. Kemas kini delta hanya memuat turun jubin yang berubah.</p>
+        <div class="feat-tags">
+          <span class="feat-tag" data-t="tag.pmtiles">PMTiles</span>
+          <span class="feat-tag" data-t="tag.delta">Kemas Kini Delta</span>
+          <span class="feat-tag" data-t="tag.eastmy">Malaysia Timur</span>
+        </div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg></div>
+        <h3 class="feat-h3" data-t="feat.priv.title">Privasi &amp; Pematuhan PDPA</h3>
+        <p class="feat-p" data-t="feat.priv.desc">Tiada penjualan data. Ping GPS tanpa nama dengan cincangan HMAC sehala. Pematuhan PDPA 2010 sepenuhnya. Mod navigasi tanpa nama — tiada akaun diperlukan.</p>
+        <div class="feat-tags">
+          <span class="feat-tag" data-t="tag.pdpa">PDPA 2010</span>
+          <span class="feat-tag" data-t="tag.nodata">Tiada Jualan Data</span>
+          <span class="feat-tag" data-t="tag.hmac">HMAC Anon</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MALAYSIA-FIRST -->
+<section class="section my-section" id="malaysia">
+  <div class="container">
+    <p class="section-eyebrow" data-t="my.eyebrow">Untuk Malaysia, Dari Malaysia</p>
+    <div class="my-hero-text" data-th="my.herotext">Ciri-ciri yang <strong>tiada dalam Waze</strong> atau Google Maps —<br>kerana mereka tidak faham Malaysia.</div>
+    <div class="my-list">
+      <div class="my-item">
+        <div class="my-num">01</div>
+        <div class="my-content">
+          <h3 data-t="my.1.title">Amaran Banjir + Laluan Pemindahan</h3>
+          <p data-t="my.1.desc">Amaran kawasan banjir masa nyata dengan laluan semula automatik ke jalan pemindahan. Laporan banjir komuniti mencetuskan pemberitahuan tolak kecemasan kepada semua pemandu di kawasan terjejas.</p>
+        </div>
+        <span class="my-badge badge-mvp">MVP</span>
+      </div>
+      <div class="my-item">
+        <div class="my-num">02</div>
+        <div class="my-content">
+          <h3 data-t="my.2.title">Zon Selamat — Amaran Kawasan Sekolah</h3>
+          <p data-t="my.2.desc">Amaran audio dan visual apabila mendekati kawasan sekolah semasa waktu persekolahan (7–8pg, 1–2ptg). Papar had laju 30km/j. Aktif hanya semasa penggal persekolahan.</p>
+        </div>
+        <span class="my-badge badge-mvp">MVP</span>
+      </div>
+      <div class="my-item">
+        <div class="my-num">03</div>
+        <div class="my-content">
+          <h3 data-t="my.3.title">Waktu Solat &amp; Pencari Surau/Masjid</h3>
+          <p data-t="my.3.desc">Papar waktu solat untuk lokasi semasa anda. Cari masjid atau surau terdekat sepanjang laluan anda. Pemberitahuan peringatan pilihan sebelum setiap waktu solat.</p>
+        </div>
+        <span class="my-badge badge-v1">v1</span>
+      </div>
+      <div class="my-item">
+        <div class="my-num">04</div>
+        <div class="my-content">
+          <h3 data-t="my.4.title">Anggaran Trafik Balik Kampung</h3>
+          <p data-t="my.4.desc">Ramalan trafik sejarah untuk musim perayaan — Hari Raya, Tahun Baru Cina, Deepavali. Amaran ETA yang lebih tinggi pada koridor KL–JB, KL–Penang.</p>
+        </div>
+        <span class="my-badge badge-v1">v1</span>
+      </div>
+      <div class="my-item">
+        <div class="my-num">05</div>
+        <div class="my-content">
+          <h3 data-t="my.5.title">Pos Kawalan Johor–Singapura</h3>
+          <p data-t="my.5.desc">Masa menunggu yang dilaporkan komuniti di pos pemeriksaan Woodlands dan Tuas. Corak masa melintas bersejarah mengikut hari dan masa. Cadangan "masa terbaik untuk melintas".</p>
+        </div>
+        <span class="my-badge badge-v1">v1</span>
+      </div>
+      <div class="my-item">
+        <div class="my-num">06</div>
+        <div class="my-content">
+          <h3 data-t="my.6.title">R&amp;R PLUS &amp; Harga Petrol</h3>
+          <p data-t="my.6.desc">Cari semua hentian R&amp;R PLUS sepanjang laluan antara bandar. Harga RON95, RON97, dan diesel semasa di stesen petrol berdekatan (dikemas kini komuniti).</p>
+        </div>
+        <span class="my-badge badge-v1">v1</span>
+      </div>
+      <div class="my-item">
+        <div class="my-num">07</div>
+        <div class="my-content">
+          <h3 data-t="my.7.title">Format Alamat Malaysia &amp; Kod Pos</h3>
+          <p data-t="my.7.desc">Carian menggunakan kod pos Malaysia (01000–98859). Format paparan yang betul: No. 12, Jalan Ampang, Taman Ampang Indah, 68000 Ampang, Selangor. Sabah dan Sarawak disokong sepenuhnya.</p>
+        </div>
+        <span class="my-badge badge-mvp">MVP</span>
+      </div>
+      <div class="my-item">
+        <div class="my-num">08</div>
+        <div class="my-content">
+          <h3 data-t="my.8.title">Suara Panduan Bahasa Malaysia</h3>
+          <p data-t="my.8.desc">Panduan suara TTS penuh dalam Bahasa Malaysia semula jadi — "Dalam 200 meter, belok kiri di Jalan Ampang." Bukan terjemahan — direka dan diuji untuk nama jalan Malaysia.</p>
+        </div>
+        <span class="my-badge badge-mvp">MVP</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON -->
+<section class="section compare-section" id="compare">
+  <div class="container">
+    <p class="section-eyebrow" data-t="cmp.eyebrow">Bandingkan</p>
+    <h2 class="section-h2" data-t="cmp.h2">Arah vs Waze vs Google Maps</h2>
+    <p class="section-sub" data-t="cmp.sub">Perbandingan jujur tentang apa yang ditawarkan setiap platform kepada pemandu Malaysia.</p>
+    <div class="compare-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th data-t="cmp.feature">Ciri</th>
+            <th class="col-arah" data-t="cmp.col.arah">Arah</th>
+            <th data-t="cmp.col.waze">Waze</th>
+            <th data-t="cmp.col.google">Google Maps</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td data-t="cmp.r1">Data disimpan dalam Malaysia</td><td><span class="cell-check">✓</span></td><td><span class="cell-no">✕</span></td><td><span class="cell-no">✕</span></td></tr>
+          <tr><td data-t="cmp.r2">Bahasa Malaysia-first UI + TTS</td><td><span class="cell-check">✓</span></td><td><span class="cell-partial" data-t="cmp.partial">Separa</span></td><td><span class="cell-partial" data-t="cmp.partial2">Separa</span></td></tr>
+          <tr><td data-t="cmp.r3">Amaran banjir kilat + laluan pemindahan</td><td><span class="cell-check">✓</span></td><td><span class="cell-no">✕</span></td><td><span class="cell-no">✕</span></td></tr>
+          <tr><td data-t="cmp.r4">Kos tol dalam RM (per plaza)</td><td><span class="cell-check">✓</span></td><td><span class="cell-partial" data-t="cmp.basic">Asas</span></td><td><span class="cell-no">✕</span></td></tr>
+          <tr><td data-t="cmp.r5">Data peta Open Source (OSM)</td><td><span class="cell-check">✓</span></td><td><span class="cell-no">✕</span></td><td><span class="cell-no">✕</span></td></tr>
+          <tr><td data-t="cmp.r6">Zon Selamat — amaran kawasan sekolah</td><td><span class="cell-check">✓</span></td><td><span class="cell-no">✕</span></td><td><span class="cell-no">✕</span></td></tr>
+          <tr><td data-t="cmp.r7">Waktu solat + pencari surau</td><td><span class="cell-check">✓</span></td><td><span class="cell-no">✕</span></td><td><span class="cell-no">✕</span></td></tr>
+          <tr><td data-t="cmp.r8">Pematuhan PDPA 2010</td><td><span class="cell-check">✓</span></td><td><span class="cell-no">✕</span></td><td><span class="cell-no">✕</span></td></tr>
+          <tr><td data-t="cmp.r9">Tiada data dijual kepada pengiklan</td><td><span class="cell-check">✓</span></td><td><span class="cell-no">✕</span></td><td><span class="cell-no">✕</span></td></tr>
+          <tr><td data-t="cmp.r10">Peta luar talian</td><td><span class="cell-check">✓</span></td><td><span class="cell-partial" data-t="cmp.limited">Terhad</span></td><td><span class="cell-check">✓</span></td></tr>
+          <tr><td data-t="cmp.r11">Liputan Sabah &amp; Sarawak penuh</td><td><span class="cell-check">✓</span></td><td><span class="cell-partial" data-t="cmp.partial3">Separa</span></td><td><span class="cell-check">✓</span></td></tr>
+          <tr><td data-t="cmp.r12">Open source — boleh audit kod</td><td><span class="cell-check">✓</span></td><td><span class="cell-no">✕</span></td><td><span class="cell-no">✕</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- TECH -->
+<section class="section tech-section" id="tech">
+  <div class="container">
+    <p class="section-eyebrow" data-t="tech.eyebrow">Tindanan Teknologi</p>
+    <h2 class="section-h2" data-t="tech.h2">Dibina atas piawaian terbuka. Tiada kebergantungan proprietari.</h2>
+    <p class="section-sub" data-t="tech.sub">Setiap komponen adalah sumber terbuka. Tiada Google Maps API. Tiada Mapbox. Tiada data asing. Berjalan sepenuhnya pada infrastruktur AWS rantau Malaysia.</p>
+    <div class="tech-grid">
+      <div class="tech-card"><div class="tech-label" data-t="tech.mobile.label">Mudah Alih</div><div class="tech-name">React Native 0.74</div><div class="tech-desc" data-t="tech.mobile.desc">iOS + Android dari satu asas kod TypeScript. MapLibre GL untuk rendering. Zustand + TanStack Query.</div></div>
+      <div class="tech-card"><div class="tech-label" data-t="tech.web.label">Portal Web</div><div class="tech-name">Next.js 14</div><div class="tech-desc" data-t="tech.web.desc">Papan pemuka admin dengan App Router + Server Components. Firebase Admin SDK sisi pelayan. Tailwind CSS.</div></div>
+      <div class="tech-card"><div class="tech-label" data-t="tech.api.label">Pintu Masuk API</div><div class="tech-name">Fastify + Node.js</div><div class="tech-desc" data-t="tech.api.desc">REST API bertaip + WebSocket Socket.io. Firebase Auth. Caching Redis. Pengesahan Zod. Had kadar 60 req/min.</div></div>
+      <div class="tech-card"><div class="tech-label" data-t="tech.routing.label">Enjin Laluan</div><div class="tech-name">Valhalla</div><div class="tech-desc" data-t="tech.routing.desc">Enjin laluan C++ yang dihoskan sendiri. Graf OSM Malaysia ~4GB RAM. Manoeuvre pusingan demi pusingan, pengelakan tol, 3 alternatif.</div></div>
+      <div class="tech-card"><div class="tech-label" data-t="tech.geo.label">Pengekod Geo</div><div class="tech-name">Nominatim 4.4</div><div class="tech-desc" data-t="tech.geo.desc">Carian alamat OSM dihoskan sendiri. countrycodes=my dikuatkuasakan. Format alamat &amp; kod pos Malaysia. Import 30 minit.</div></div>
+      <div class="tech-card"><div class="tech-label" data-t="tech.tiles.label">Jubin Peta</div><div class="tech-name">PMTiles + TileServer-GL</div><div class="tech-desc" data-t="tech.tiles.desc">Jubin vektor pada CDN CloudFront. Had Malaysia 99.5,1.0–119.5,7.5. Cache CDN 7 hari. Tiada kos API per permintaan.</div></div>
+      <div class="tech-card"><div class="tech-label" data-t="tech.firebase.label">Pelayan</div><div class="tech-name">Firebase</div><div class="tech-desc" data-t="tech.firebase.desc">Auth (Google + OTP Telefon), Firestore DB masa nyata, Analitik, Crashlytics, Cloud Functions v2.</div></div>
+      <div class="tech-card"><div class="tech-label" data-t="tech.infra.label">Infrastruktur</div><div class="tech-name">Kubernetes / AWS EKS</div><div class="tech-desc" data-t="tech.infra.desc">Terraform IaC. ap-southeast-1 (Singapura). ElastiCache Redis 7.1. Auto-skala HPA. CI/CD GitHub Actions.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- REPOS -->
+<section class="section repos-section" id="repos">
+  <div class="container">
+    <p class="section-eyebrow" data-t="repos.eyebrow">Sumber Terbuka</p>
+    <h2 class="section-h2" data-t="repos.h2">8 repositori. Satu platform. Sepenuhnya terbuka.</h2>
+    <p class="section-sub" data-t="repos.sub">Setiap perkhidmatan adalah repo sumber terbuka yang berasingan. Sumbang ke mana-mana lapisan — mudah alih, API, laluan, infrastruktur. Berlesen MIT. PR dialu-alukan.</p>
+    <div class="repos-grid">
+      <a href="https://github.com/deanz93/arah-mobile" class="repo-card"><div class="repo-name">arah-mobile</div><div class="repo-tech" data-t="repo.mobile.tech">React Native + TypeScript</div><div class="repo-desc" data-t="repo.mobile.desc">Aplikasi navigasi iOS &amp; Android</div></a>
+      <a href="https://github.com/deanz93/arah-web" class="repo-card"><div class="repo-name">arah-web</div><div class="repo-tech" data-t="repo.web.tech">Next.js 14 + TypeScript</div><div class="repo-desc" data-t="repo.web.desc">Laman awam &amp; portal admin</div></a>
+      <a href="https://github.com/deanz93/arah-api" class="repo-card"><div class="repo-name">arah-api</div><div class="repo-tech" data-t="repo.api.tech">Fastify + Node.js</div><div class="repo-desc" data-t="repo.api.desc">Auth, laporan, API profil</div></a>
+      <a href="https://github.com/deanz93/arah-functions" class="repo-card"><div class="repo-name">arah-functions</div><div class="repo-tech" data-t="repo.fn.tech">Firebase Cloud Functions</div><div class="repo-desc" data-t="repo.fn.desc">Kitaran hayat laporan &amp; pemberitahuan</div></a>
+      <a href="https://github.com/deanz93/arah-routing" class="repo-card"><div class="repo-name">arah-routing</div><div class="repo-tech" data-t="repo.routing.tech">Valhalla (C++)</div><div class="repo-desc" data-t="repo.routing.desc">Enjin laluan dihoskan sendiri</div></a>
+      <a href="https://github.com/deanz93/arah-geocoding" class="repo-card"><div class="repo-name">arah-geocoding</div><div class="repo-tech" data-t="repo.geo.tech">Nominatim</div><div class="repo-desc" data-t="repo.geo.desc">Carian alamat Malaysia</div></a>
+      <a href="https://github.com/deanz93/arah-tile-server" class="repo-card"><div class="repo-name">arah-tile-server</div><div class="repo-tech" data-t="repo.tiles.tech">PMTiles + TileServer-GL</div><div class="repo-desc" data-t="repo.tiles.desc">Jubin peta vektor dihoskan sendiri</div></a>
+      <a href="https://github.com/deanz93/arah-infra" class="repo-card"><div class="repo-name">arah-infra</div><div class="repo-tech" data-t="repo.infra.tech">Terraform + Kubernetes</div><div class="repo-desc" data-t="repo.infra.desc">Semua infrastruktur sebagai kod</div></a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <h2 class="cta-h2" data-th="cta.h2">Bina bersama kami.<br>Malaysia layak dapat lebih baik.</h2>
+    <p class="cta-sub" data-t="cta.sub">Arah adalah projek sumber terbuka yang dibina oleh rakyat Malaysia, untuk rakyat Malaysia. Sama ada anda pembangun, pereka, penyumbang OSM, atau bersemangat tentang kedaulatan data — ada tempat untuk anda di sini.</p>
+    <div class="cta-actions">
+      <a href="https://github.com/deanz93/arah" class="btn-cta-primary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        <span data-t="cta.btn1">Mulakan di GitHub</span>
+      </a>
+      <a href="https://github.com/deanz93/arah/blob/master/docs/bmad/06-dev-setup.md" class="btn-cta-ghost">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        <span data-t="cta.btn2">Panduan Pembangun</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">Ar<span>ah</span></div>
+      <div class="footer-tagline" data-t="footer.tagline">Tunjuk Arah, Bersama 🇲🇾</div>
+    </div>
+    <ul class="footer-links">
+      <li><a href="https://github.com/deanz93/arah">GitHub</a></li>
+      <li><a href="https://github.com/deanz93/arah/blob/master/docs/bmad/01-prd.md" data-t="footer.prd">PRD</a></li>
+      <li><a href="https://github.com/deanz93/arah/blob/master/docs/bmad/02-architecture.md" data-t="footer.arch">Seni Bina</a></li>
+      <li><a href="https://github.com/deanz93/arah/blob/master/CONTRIBUTING.md" data-t="footer.contribute">Sumbang</a></li>
+      <li><a href="https://github.com/deanz93/arah/blob/master/LICENSE" data-t="footer.license">Lesen MIT</a></li>
+    </ul>
+    <div class="footer-mit" data-t="footer.mit">Berlesen MIT — Dibina di Malaysia 🇲🇾</div>
+  </div>
+</footer>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   TRANSLATIONS
+══════════════════════════════════════════════════════════ */
+const T = {
+  bm: {
+    'nav.features':'Ciri-ciri','nav.malaysia':'Malaysia-First','nav.compare':'Bandingkan','nav.repos':'Sumber Terbuka','nav.github':'GitHub','nav.beta':'Cuba Beta',
+    'hero.eyebrow':'Platform Navigasi Berdaulat Malaysia',
+    'hero.h1':'Navigasi Malaysia,<br><em>Tanpa Kompromi.</em>',
+    'hero.tagline':'Komuniti pandu arah. Data di bumi Malaysia. Percuma selamanya.',
+    'hero.tagline2':'Community-powered navigation. Malaysian data sovereignty. Forever free.',
+    'hero.cta1':'Cuba Beta','hero.cta2':'Lihat di GitHub','hero.canvas':'Simulasi Laluan Langsung',
+    'stats.features':'Ciri Dirancang','stats.repos':'Repo Sumber Terbuka','stats.data':'Data Malaysia','stats.license':'Lesen Terbuka',
+    'why.eyebrow':'Kenapa Arah?',
+    'why.h2':'Waze dan Google Maps bukan untuk kita.',
+    'why.sub':'Lebih 90% pemandu Malaysia bergantung pada platform asing yang menjual data anda, mengabaikan keperluan tempatan, dan tidak bertanggungjawab kepada mana-mana pihak berkuasa Malaysia.',
+    'why.c1.title':'Tiada Kedaulatan Data',
+    'why.c1.desc':'Lokasi GPS, sejarah laluan dan corak pemanduan anda mengalir ke pelayan di AS — tertakluk kepada undang-undang asing dan broker data. Arah menyimpan semua data di Malaysia.',
+    'why.c2.title':'UI Bukan Bahasa Malaysia',
+    'why.c2.desc':'Panduan suara BM yang tidak tepat, UI dahulukan Bahasa Inggeris, tiada kesedaran tentang format alamat Malaysia. Arah dibina dengan Bahasa Malaysia dahulu, dari hari pertama.',
+    'why.c3.title':'Tiada Ciri Tempatan',
+    'why.c3.desc':'Amaran banjir kilat? Kos tol dalam Ringgit? Amaran Zon Selamat? Pencari R&R PLUS? Tiada aplikasi asing yang menangani realiti pemanduan unik Malaysia. Arah lakukan semua itu.',
+    'feat.eyebrow':'Ciri Utama',
+    'feat.h2':'Semua yang anda perlukan untuk memandu di Malaysia.',
+    'feat.sub':'Dari panduan suara pusingan demi pusingan dalam Bahasa Malaysia hingga amaran banjir masa nyata — Arah direka untuk cara pemandu Malaysia sebenarnya.',
+    'feat.nav.title':'Navigasi Pusingan demi Pusingan',
+    'feat.nav.desc':'Panduan suara pusingan demi pusingan dalam Bahasa Malaysia dan Bahasa Inggeris. 3 laluan alternatif — terpantas, bebas tol, dan terpendek. Laluan semula automatik apabila anda tersesat.',
+    'feat.rpt.title':'Laporan Komuniti Masa Nyata',
+    'feat.rpt.desc':'Laporkan perangkap kelajuan polis, kemalangan, jalan berlubang, sekatan jalan raya dan lagi — dengan satu ketukan. Laporan disiar serta-merta kepada semua pemandu berhampiran melalui WebSocket.',
+    'feat.flood.title':'Amaran Banjir Kilat',
+    'feat.flood.desc':'Eksklusif Malaysia. Kesan apabila laluan anda melalui kawasan banjir dan cadangkan laluan pemindahan secara automatik. Amaran FCM kecemasan kepada semua pengguna yang terjejas.',
+    'feat.toll.title':'Kos Tol dalam Ringgit',
+    'feat.toll.desc':'Lihat kos tol tepat dalam RM untuk setiap laluan alternatif sebelum anda memandu. Pangkalan data plaza tol untuk semua lebuh raya PLUS, Lebuhraya, dan tol negeri.',
+    'feat.off.title':'Peta Luar Talian',
+    'feat.off.desc':'Muat turun kawasan peta penuh untuk kegunaan luar talian — Semenanjung Malaysia, Sabah, atau Sarawak. Navigasi tanpa internet. Kemas kini delta hanya memuat turun jubin yang berubah.',
+    'feat.priv.title':'Privasi & Pematuhan PDPA',
+    'feat.priv.desc':'Tiada penjualan data. Ping GPS tanpa nama dengan cincangan HMAC sehala. Pematuhan PDPA 2010 sepenuhnya. Mod navigasi tanpa nama — tiada akaun diperlukan.',
+    'tag.bm':'Suara BM','tag.reroute':'Laluan Semula Auto','tag.lane':'Panduan Lorong',
+    'tag.ws':'WebSocket','tag.expire':'Auto-Luput','tag.rpt10':'10 Jenis Laporan',
+    'tag.geofence':'Geofencing','tag.fcm':'FCM Push','tag.mvp':'MVP',
+    'tag.tolldb':'DB Tol','tag.perplaza':'Per Plaza',
+    'tag.pmtiles':'PMTiles','tag.delta':'Kemas Kini Delta','tag.eastmy':'Malaysia Timur',
+    'tag.pdpa':'PDPA 2010','tag.nodata':'Tiada Jualan Data','tag.hmac':'HMAC Anon',
+    'my.eyebrow':'Untuk Malaysia, Dari Malaysia',
+    'my.herotext':'Ciri-ciri yang <strong>tiada dalam Waze</strong> atau Google Maps —<br>kerana mereka tidak faham Malaysia.',
+    'my.1.title':'Amaran Banjir + Laluan Pemindahan',
+    'my.1.desc':'Amaran kawasan banjir masa nyata dengan laluan semula automatik ke jalan pemindahan. Laporan banjir komuniti mencetuskan pemberitahuan tolak kecemasan kepada semua pemandu di kawasan terjejas.',
+    'my.2.title':'Zon Selamat — Amaran Kawasan Sekolah',
+    'my.2.desc':'Amaran audio dan visual apabila mendekati kawasan sekolah semasa waktu persekolahan (7–8pg, 1–2ptg). Papar had laju 30km/j. Aktif hanya semasa penggal persekolahan.',
+    'my.3.title':'Waktu Solat & Pencari Surau/Masjid',
+    'my.3.desc':'Papar waktu solat untuk lokasi semasa anda. Cari masjid atau surau terdekat sepanjang laluan anda. Pemberitahuan peringatan pilihan sebelum setiap waktu solat.',
+    'my.4.title':'Anggaran Trafik Balik Kampung',
+    'my.4.desc':'Ramalan trafik sejarah untuk musim perayaan — Hari Raya, Tahun Baru Cina, Deepavali. Amaran ETA yang lebih tinggi pada koridor KL–JB, KL–Penang.',
+    'my.5.title':'Pos Kawalan Johor–Singapura',
+    'my.5.desc':'Masa menunggu yang dilaporkan komuniti di pos pemeriksaan Woodlands dan Tuas. Corak masa melintas bersejarah mengikut hari dan masa. Cadangan "masa terbaik untuk melintas".',
+    'my.6.title':'R&R PLUS & Harga Petrol',
+    'my.6.desc':'Cari semua hentian R&R PLUS sepanjang laluan antara bandar. Harga RON95, RON97, dan diesel semasa di stesen petrol berdekatan (dikemas kini komuniti).',
+    'my.7.title':'Format Alamat Malaysia & Kod Pos',
+    'my.7.desc':'Carian menggunakan kod pos Malaysia (01000–98859). Format paparan yang betul: No. 12, Jalan Ampang, Taman Ampang Indah, 68000 Ampang, Selangor. Sabah dan Sarawak disokong sepenuhnya.',
+    'my.8.title':'Suara Panduan Bahasa Malaysia',
+    'my.8.desc':'Panduan suara TTS penuh dalam Bahasa Malaysia semula jadi — "Dalam 200 meter, belok kiri di Jalan Ampang." Bukan terjemahan — direka dan diuji untuk nama jalan Malaysia.',
+    'cmp.eyebrow':'Bandingkan','cmp.h2':'Arah vs Waze vs Google Maps',
+    'cmp.sub':'Perbandingan jujur tentang apa yang ditawarkan setiap platform kepada pemandu Malaysia.',
+    'cmp.feature':'Ciri','cmp.col.arah':'Arah','cmp.col.waze':'Waze','cmp.col.google':'Google Maps',
+    'cmp.r1':'Data disimpan dalam Malaysia','cmp.r2':'Bahasa Malaysia-first UI + TTS',
+    'cmp.r3':'Amaran banjir kilat + laluan pemindahan','cmp.r4':'Kos tol dalam RM (per plaza)',
+    'cmp.r5':'Data peta Open Source (OSM)','cmp.r6':'Zon Selamat — amaran kawasan sekolah',
+    'cmp.r7':'Waktu solat + pencari surau','cmp.r8':'Pematuhan PDPA 2010',
+    'cmp.r9':'Tiada data dijual kepada pengiklan','cmp.r10':'Peta luar talian',
+    'cmp.r11':'Liputan Sabah & Sarawak penuh','cmp.r12':'Open source — boleh audit kod',
+    'cmp.partial':'Separa','cmp.partial2':'Separa','cmp.partial3':'Separa',
+    'cmp.basic':'Asas','cmp.limited':'Terhad',
+    'tech.eyebrow':'Tindanan Teknologi',
+    'tech.h2':'Dibina atas piawaian terbuka. Tiada kebergantungan proprietari.',
+    'tech.sub':'Setiap komponen adalah sumber terbuka. Tiada Google Maps API. Tiada Mapbox. Tiada data asing. Berjalan sepenuhnya pada infrastruktur AWS rantau Malaysia.',
+    'tech.mobile.label':'Mudah Alih','tech.web.label':'Portal Web','tech.api.label':'Pintu Masuk API',
+    'tech.routing.label':'Enjin Laluan','tech.geo.label':'Pengekod Geo','tech.tiles.label':'Jubin Peta',
+    'tech.firebase.label':'Pelayan','tech.infra.label':'Infrastruktur',
+    'tech.mobile.desc':'iOS + Android dari satu asas kod TypeScript. MapLibre GL untuk rendering. Zustand + TanStack Query.',
+    'tech.web.desc':'Papan pemuka admin dengan App Router + Server Components. Firebase Admin SDK sisi pelayan. Tailwind CSS.',
+    'tech.api.desc':'REST API bertaip + WebSocket Socket.io. Firebase Auth. Caching Redis. Pengesahan Zod. Had kadar 60 req/min.',
+    'tech.routing.desc':'Enjin laluan C++ yang dihoskan sendiri. Graf OSM Malaysia ~4GB RAM. Manoeuvre pusingan demi pusingan, pengelakan tol, 3 alternatif.',
+    'tech.geo.desc':'Carian alamat OSM dihoskan sendiri. countrycodes=my dikuatkuasakan. Format alamat & kod pos Malaysia. Import 30 minit.',
+    'tech.tiles.desc':'Jubin vektor pada CDN CloudFront. Had Malaysia 99.5,1.0–119.5,7.5. Cache CDN 7 hari. Tiada kos API per permintaan.',
+    'tech.firebase.desc':'Auth (Google + OTP Telefon), Firestore DB masa nyata, Analitik, Crashlytics, Cloud Functions v2.',
+    'tech.infra.desc':'Terraform IaC. ap-southeast-1 (Singapura). ElastiCache Redis 7.1. Auto-skala HPA. CI/CD GitHub Actions.',
+    'repos.eyebrow':'Sumber Terbuka','repos.h2':'8 repositori. Satu platform. Sepenuhnya terbuka.',
+    'repos.sub':'Setiap perkhidmatan adalah repo sumber terbuka yang berasingan. Sumbang ke mana-mana lapisan — mudah alih, API, laluan, infrastruktur. Berlesen MIT. PR dialu-alukan.',
+    'repo.mobile.tech':'React Native + TypeScript','repo.mobile.desc':'Aplikasi navigasi iOS & Android',
+    'repo.web.tech':'Next.js 14 + TypeScript','repo.web.desc':'Laman awam & portal admin',
+    'repo.api.tech':'Fastify + Node.js','repo.api.desc':'Auth, laporan, API profil',
+    'repo.fn.tech':'Firebase Cloud Functions','repo.fn.desc':'Kitaran hayat laporan & pemberitahuan',
+    'repo.routing.tech':'Valhalla (C++)','repo.routing.desc':'Enjin laluan dihoskan sendiri',
+    'repo.geo.tech':'Nominatim','repo.geo.desc':'Carian alamat Malaysia',
+    'repo.tiles.tech':'PMTiles + TileServer-GL','repo.tiles.desc':'Jubin peta vektor dihoskan sendiri',
+    'repo.infra.tech':'Terraform + Kubernetes','repo.infra.desc':'Semua infrastruktur sebagai kod',
+    'cta.h2':'Bina bersama kami.<br>Malaysia layak dapat lebih baik.',
+    'cta.sub':'Arah adalah projek sumber terbuka yang dibina oleh rakyat Malaysia, untuk rakyat Malaysia. Sama ada anda pembangun, pereka, penyumbang OSM, atau bersemangat tentang kedaulatan data — ada tempat untuk anda di sini.',
+    'cta.btn1':'Mulakan di GitHub','cta.btn2':'Panduan Pembangun',
+    'footer.tagline':'Tunjuk Arah, Bersama 🇲🇾',
+    'footer.prd':'PRD','footer.arch':'Seni Bina','footer.contribute':'Sumbang',
+    'footer.license':'Lesen MIT','footer.mit':'Berlesen MIT — Dibina di Malaysia 🇲🇾',
+  },
+  en: {
+    'nav.features':'Features','nav.malaysia':'Malaysia-First','nav.compare':'Compare','nav.repos':'Open Source','nav.github':'GitHub','nav.beta':'Try Beta',
+    'hero.eyebrow':"Malaysia's Sovereign Navigation Platform",
+    'hero.h1':'Navigate Malaysia,<br><em>Without Compromise.</em>',
+    'hero.tagline':'Community-powered navigation. Malaysian data sovereignty. Forever free.',
+    'hero.tagline2':'Komuniti pandu arah. Data di bumi Malaysia. Percuma selamanya.',
+    'hero.cta1':'Try Beta','hero.cta2':'View on GitHub','hero.canvas':'Live Route Simulation',
+    'stats.features':'Planned Features','stats.repos':'Open Source Repos','stats.data':'Malaysian Data','stats.license':'Open License',
+    'why.eyebrow':'Why Arah?',
+    'why.h2':"Waze and Google Maps weren't built for us.",
+    'why.sub':'Over 90% of Malaysian drivers rely on foreign-owned platforms that sell your data, ignore local needs, and answer to no Malaysian authority.',
+    'why.c1.title':'No Data Sovereignty',
+    'why.c1.desc':'Your GPS location, route history, and driving patterns flow to servers in the US — subject to foreign law and corporate data brokers. Arah keeps all data in Malaysia.',
+    'why.c2.title':'Not Bahasa Malaysia-First',
+    'why.c2.desc':'Voice guidance in broken BM, English-first UI, no awareness of Malaysian address formats or local driving culture. Arah is built Bahasa Malaysia-first, from day one.',
+    'why.c3.title':'No Local Features',
+    'why.c3.desc':"Flash flood evacuation? Toll cost in Ringgit? Zon Selamat alerts? PLUS R&R locators? No foreign app addresses Malaysia's unique driving realities. Arah does.",
+    'feat.eyebrow':'Key Features',
+    'feat.h2':'Everything you need to drive in Malaysia.',
+    'feat.sub':'From turn-by-turn voice guidance in Bahasa Malaysia to real-time flood alerts — Arah is designed for how Malaysians actually drive.',
+    'feat.nav.title':'Turn-by-Turn Navigation',
+    'feat.nav.desc':'Turn-by-turn voice guidance in Bahasa Malaysia and English. 3 route alternatives — fastest, toll-free, and shortest. Real-time rerouting when you go off-route.',
+    'feat.rpt.title':'Real-Time Community Reports',
+    'feat.rpt.desc':'Report police speed traps, accidents, potholes, roadblocks and more — with one tap. Reports broadcast instantly to all nearby drivers via WebSocket.',
+    'feat.flood.title':'Flash Flood Alerts',
+    'feat.flood.desc':'Malaysia-exclusive. Detect when your route passes through a flood zone and suggest evacuation alternatives automatically. Emergency FCM push to all affected users.',
+    'feat.toll.title':'Toll Cost in Ringgit',
+    'feat.toll.desc':'See the exact toll cost in RM for each route alternative before you start driving. Toll plaza database for all PLUS, Lebuhraya, and state toll plazas.',
+    'feat.off.title':'Offline Maps',
+    'feat.off.desc':'Download map regions for offline use — Peninsular Malaysia, Sabah, or Sarawak. Navigate without internet. Delta updates download only changed tiles.',
+    'feat.priv.title':'Privacy & PDPA Compliance',
+    'feat.priv.desc':'No data selling. Anonymous GPS pings with one-way HMAC hash. Full PDPA 2010 compliance. Anonymous navigation mode — no account needed.',
+    'tag.bm':'BM Voice','tag.reroute':'Auto Reroute','tag.lane':'Lane Guidance',
+    'tag.ws':'WebSocket','tag.expire':'Auto-Expire','tag.rpt10':'10 Report Types',
+    'tag.geofence':'Geofencing','tag.fcm':'FCM Push','tag.mvp':'MVP',
+    'tag.tolldb':'Toll Database','tag.perplaza':'Per Plaza',
+    'tag.pmtiles':'PMTiles','tag.delta':'Delta Updates','tag.eastmy':'East Malaysia',
+    'tag.pdpa':'PDPA 2010','tag.nodata':'No Data Sale','tag.hmac':'HMAC Anon',
+    'my.eyebrow':'For Malaysia, By Malaysia',
+    'my.herotext':'Features <strong>not found in Waze</strong> or Google Maps —<br>because they don\'t understand Malaysia.',
+    'my.1.title':'Flood Alert + Evacuation Routing',
+    'my.1.desc':'Real-time flood zone alerts with automatic re-routing to evacuation roads. Community-confirmed flood reports trigger emergency push notifications to all drivers in the affected area.',
+    'my.2.title':'Zon Selamat — School Zone Alerts',
+    'my.2.desc':'Audio and visual alerts when approaching school zones during school hours (7–8am, 1–2pm). Auto-display 30km/h speed limit. Active only during term time.',
+    'my.3.title':'Prayer Time & Surau/Masjid Locator',
+    'my.3.desc':'Display prayer times for your current location. Search for the nearest masjid or surau along your route. Optional reminder notification before each prayer time.',
+    'my.4.title':'Balik Kampung Traffic Prediction',
+    'my.4.desc':'Historical traffic prediction for festive periods — Hari Raya, Chinese New Year, Deepavali. Elevated ETA warnings on KL–JB, KL–Penang corridors.',
+    'my.5.title':'Johor–Singapore Checkpoint Wait Times',
+    'my.5.desc':'Community-reported wait times at Woodlands and Tuas checkpoints. Historical crossing time patterns by day and time. "Best time to cross" recommendation.',
+    'my.6.title':'PLUS R&R & Petrol Prices',
+    'my.6.desc':'Locate all PLUS R&R stops along intercity routes. Live RON95, RON97, and diesel prices at nearby petrol stations (community-updated).',
+    'my.7.title':'Malaysian Address Format & Postcode',
+    'my.7.desc':'Search by Malaysian postcode (01000–98859). Correct display format: No. 12, Jalan Ampang, Taman Ampang Indah, 68000 Ampang, Selangor. Sabah and Sarawak fully supported.',
+    'my.8.title':'Bahasa Malaysia Voice Guidance',
+    'my.8.desc':'Full TTS voice guidance in natural Bahasa Malaysia — "Dalam 200 meter, belok kiri di Jalan Ampang." Not a translation — designed and tested for Malaysian road names.',
+    'cmp.eyebrow':'Compare','cmp.h2':'Arah vs Waze vs Google Maps',
+    'cmp.sub':'A straightforward look at what each platform offers Malaysian drivers.',
+    'cmp.feature':'Feature','cmp.col.arah':'Arah','cmp.col.waze':'Waze','cmp.col.google':'Google Maps',
+    'cmp.r1':'Data stored in Malaysia','cmp.r2':'Bahasa Malaysia-first UI + TTS',
+    'cmp.r3':'Flash flood alert + evacuation routing','cmp.r4':'Toll cost in RM (per plaza)',
+    'cmp.r5':'Open Source map data (OSM)','cmp.r6':'Zon Selamat school zone alerts',
+    'cmp.r7':'Prayer time + Surau locator','cmp.r8':'PDPA 2010 compliant',
+    'cmp.r9':'No user data sold to advertisers','cmp.r10':'Offline maps',
+    'cmp.r11':'Full Sabah & Sarawak coverage','cmp.r12':'Open source — fully auditable',
+    'cmp.partial':'Partial','cmp.partial2':'Partial','cmp.partial3':'Partial',
+    'cmp.basic':'Basic','cmp.limited':'Limited',
+    'tech.eyebrow':'Technology Stack',
+    'tech.h2':'Built on open standards. No proprietary dependencies.',
+    'tech.sub':'Every component is open source. No Google Maps API. No Mapbox. No foreign data. Runs entirely on Malaysian-region AWS infrastructure.',
+    'tech.mobile.label':'Mobile','tech.web.label':'Web Portal','tech.api.label':'API Gateway',
+    'tech.routing.label':'Routing Engine','tech.geo.label':'Geocoding','tech.tiles.label':'Map Tiles',
+    'tech.firebase.label':'Backend','tech.infra.label':'Infrastructure',
+    'tech.mobile.desc':'iOS + Android from a single TypeScript codebase. MapLibre GL for rendering. Zustand + TanStack Query.',
+    'tech.web.desc':'Admin dashboard with App Router + Server Components. Firebase Admin SDK server-side. Tailwind CSS.',
+    'tech.api.desc':'Typed REST API + Socket.io WebSocket. Firebase Auth. Redis caching. Zod validation. 60 req/min rate limit.',
+    'tech.routing.desc':'Self-hosted C++ routing engine. Malaysia OSM graph ~4GB RAM. Turn-by-turn manoeuvres, toll avoidance, 3 alternatives.',
+    'tech.geo.desc':'Self-hosted OSM address search. countrycodes=my enforced. Malaysian postcode + address format. 30-min import.',
+    'tech.tiles.desc':'Self-hosted vector tiles on CloudFront CDN. Malaysia bounds 99.5,1.0–119.5,7.5. 7-day CDN cache. No API cost per request.',
+    'tech.firebase.desc':'Auth (Google + Phone OTP), Firestore real-time DB, Analytics, Crashlytics, Cloud Functions v2.',
+    'tech.infra.desc':'Terraform IaC. ap-southeast-1 (Singapore). ElastiCache Redis 7.1. HPA auto-scaling. GitHub Actions CI/CD.',
+    'repos.eyebrow':'Open Source','repos.h2':'8 repositories. One platform. Fully open.',
+    'repos.sub':'Every service is a separate open-source repo. Contribute to any layer — mobile, API, routing, infra. MIT licensed. PRs welcome.',
+    'repo.mobile.tech':'React Native + TypeScript','repo.mobile.desc':'iOS & Android navigation app',
+    'repo.web.tech':'Next.js 14 + TypeScript','repo.web.desc':'Public site & admin portal',
+    'repo.api.tech':'Fastify + Node.js','repo.api.desc':'Auth, reports, profile API',
+    'repo.fn.tech':'Firebase Cloud Functions','repo.fn.desc':'Report lifecycle & notifications',
+    'repo.routing.tech':'Valhalla (C++)','repo.routing.desc':'Self-hosted routing engine',
+    'repo.geo.tech':'Nominatim','repo.geo.desc':'Malaysian address search',
+    'repo.tiles.tech':'PMTiles + TileServer-GL','repo.tiles.desc':'Self-hosted vector map tiles',
+    'repo.infra.tech':'Terraform + Kubernetes','repo.infra.desc':'All infrastructure as code',
+    'cta.h2':'Build with us.<br>Malaysia deserves better.',
+    'cta.sub':"Arah is an open-source project built by Malaysians, for Malaysians. Whether you're a developer, designer, OSM contributor, or just passionate about data sovereignty — there's a place for you.",
+    'cta.btn1':'Start on GitHub','cta.btn2':'Developer Guide',
+    'footer.tagline':'Show Direction, Together 🇲🇾',
+    'footer.prd':'PRD','footer.arch':'Architecture','footer.contribute':'Contribute',
+    'footer.license':'MIT License','footer.mit':'MIT Licensed — Built in Malaysia 🇲🇾',
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   I18N ENGINE
+══════════════════════════════════════════════════════════ */
+let currentLang = localStorage.getItem('arah-lang') || 'bm';
+
+function setLang(lang) {
+  currentLang = lang;
+  localStorage.setItem('arah-lang', lang);
+  const strings = T[lang];
+
+  // textContent replacements
+  document.querySelectorAll('[data-t]').forEach(el => {
+    const key = el.getAttribute('data-t');
+    if (strings[key] !== undefined) el.textContent = strings[key];
+  });
+
+  // innerHTML replacements (for em, strong, br tags)
+  document.querySelectorAll('[data-th]').forEach(el => {
+    const key = el.getAttribute('data-th');
+    if (strings[key] !== undefined) el.innerHTML = strings[key];
+  });
+
+  // Update lang toggle UI
+  document.getElementById('lo-bm').classList.toggle('active', lang === 'bm');
+  document.getElementById('lo-en').classList.toggle('active', lang === 'en');
+
+  // Update page lang attribute for accessibility
+  document.documentElement.lang = lang === 'bm' ? 'ms' : 'en';
+
+  // Update page title
+  document.title = lang === 'bm'
+    ? 'Arah — Navigasi Malaysia, Tanpa Kompromi'
+    : 'Arah — Navigate Malaysia, Without Compromise';
+}
+
+function toggleLang() {
+  setLang(currentLang === 'bm' ? 'en' : 'bm');
+}
+
+/* ═══════════════════════════════════════════════════════════
+   THEME
+══════════════════════════════════════════════════════════ */
+let currentTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+function applyTheme(t) {
+  document.documentElement.setAttribute('data-theme', t);
+  document.getElementById('icon-dark').style.display  = t === 'dark'  ? 'block' : 'none';
+  document.getElementById('icon-light').style.display = t === 'light' ? 'block' : 'none';
+}
+function toggleTheme() { currentTheme = currentTheme === 'dark' ? 'light' : 'dark'; applyTheme(currentTheme); }
+applyTheme(currentTheme);
+
+/* Apply saved language on load */
+setLang(currentLang);
+
+/* ═══════════════════════════════════════════════════════════
+   CANVAS ROUTE ANIMATION
+══════════════════════════════════════════════════════════ */
+(function() {
+  const canvas = document.getElementById('map-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, animId, t = 0, routeProgress = 0, currentRoute = 0;
+  const cities = [
+    {name:'Penang',x:.18,y:.14},{name:'Ipoh',x:.26,y:.26},
+    {name:'KL',x:.32,y:.50},{name:'Kuantan',x:.58,y:.42},
+    {name:'JB',x:.35,y:.78},{name:'Kuching',x:.72,y:.74},
+    {name:'KK',x:.88,y:.20}
+  ];
+  const routes = [[0,1,2,4],[2,3],[5,6]];
+  const reports = [
+    {x:.25,y:.38,label:'Polis'},{x:.42,y:.55,label:'Accident'},{x:.33,y:.64,label:'Banjir'}
+  ];
+
+  function resize() {
+    const dpr = window.devicePixelRatio || 1;
+    const r = canvas.getBoundingClientRect();
+    W = r.width; H = r.height;
+    canvas.width  = W * dpr;
+    canvas.height = H * dpr;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  function lerp(a,b,t){return a+(b-a)*t;}
+  function isDark(){return document.documentElement.getAttribute('data-theme')==='dark'||(!document.documentElement.getAttribute('data-theme')&&window.matchMedia('(prefers-color-scheme:dark)').matches);}
+
+  function draw() {
+    const dark = isDark();
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle = dark ? '#080D12' : '#F2F5FB';
+    ctx.fillRect(0,0,W,H);
+
+    // Grid
+    ctx.save();
+    ctx.strokeStyle = `rgba(${dark?'255,255,255':'0,0,0'},${dark?.07:.1})`;
+    ctx.lineWidth = 0.5;
+    for(let x=0;x<W;x+=28){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+    for(let y=0;y<H;y+=28){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+    ctx.restore();
+
+    // Secondary routes (faint)
+    routes.forEach((r,i)=>{
+      if(i===currentRoute%routes.length) return;
+      const pts=r.map(idx=>cities[idx]);
+      ctx.save();ctx.globalAlpha=.15;
+      ctx.strokeStyle=dark?'#E8F0FA':'#080D12';
+      ctx.lineWidth=1;ctx.setLineDash([4,6]);
+      ctx.beginPath();
+      pts.forEach((p,j)=>j===0?ctx.moveTo(p.x*W,p.y*H):ctx.lineTo(p.x*W,p.y*H));
+      ctx.stroke();ctx.setLineDash([]);ctx.restore();
+    });
+
+    // Active route
+    const activePts = routes[currentRoute%routes.length].map(i=>cities[i]);
+    const total = activePts.length-1;
+    const drawn = routeProgress*total;
+    ctx.save();ctx.lineCap='round';ctx.lineJoin='round';
+    for(let i=0;i<activePts.length-1;i++){
+      const sp=Math.min(1,Math.max(0,drawn-i));
+      if(sp<=0)break;
+      const a=activePts[i],b=activePts[i+1];
+      const ex=lerp(a.x*W,b.x*W,sp),ey=lerp(a.y*H,b.y*H,sp);
+      ctx.shadowBlur=12;ctx.shadowColor=dark?'rgba(0,216,160,.4)':'rgba(0,141,106,.3)';
+      ctx.strokeStyle=dark?'#00D8A0':'#008D6A';ctx.lineWidth=3;
+      ctx.beginPath();ctx.moveTo(a.x*W,a.y*H);ctx.lineTo(ex,ey);ctx.stroke();
+      ctx.shadowBlur=0;ctx.strokeStyle=dark?'rgba(0,216,160,.5)':'rgba(0,141,106,.4)';
+      ctx.lineWidth=1.5;ctx.setLineDash([6,4]);ctx.lineDashOffset=-t*2;
+      ctx.beginPath();ctx.moveTo(a.x*W,a.y*H);ctx.lineTo(ex,ey);ctx.stroke();
+      ctx.setLineDash([]);
+    }
+    ctx.restore();
+
+    // Reports
+    reports.forEach((r,i)=>{
+      const rx=r.x*W,ry=r.y*H;
+      const pulse=(Math.sin(t*.05+i*1.3)+1)/2;
+      ctx.save();
+      ctx.strokeStyle=dark?`rgba(255,112,64,${.1+pulse*.3})`:`rgba(204,80,34,${.1+pulse*.3})`;
+      ctx.lineWidth=1;ctx.beginPath();ctx.arc(rx,ry,6+pulse*6,0,Math.PI*2);ctx.stroke();
+      ctx.fillStyle=dark?'#FF7040':'#CC5022';ctx.beginPath();ctx.arc(rx,ry,4,0,Math.PI*2);ctx.fill();
+      ctx.font='600 9px system-ui,sans-serif';ctx.fillStyle=dark?'rgba(255,112,64,.85)':'rgba(204,80,34,.85)';
+      ctx.fillText(r.label,rx+8,ry+3);ctx.restore();
+    });
+
+    // City dots
+    cities.forEach(c=>{
+      const cx=c.x*W,cy=c.y*H;
+      ctx.save();
+      ctx.strokeStyle=dark?'rgba(255,255,255,.25)':'rgba(0,0,0,.2)';ctx.lineWidth=1;
+      ctx.beginPath();ctx.arc(cx,cy,6,0,Math.PI*2);ctx.stroke();
+      ctx.fillStyle=dark?'#E8F0FA':'#080D12';ctx.beginPath();ctx.arc(cx,cy,3.5,0,Math.PI*2);ctx.fill();
+      ctx.font='600 10px system-ui,sans-serif';ctx.fillStyle=dark?'rgba(232,240,250,.7)':'rgba(8,13,18,.6)';
+      ctx.fillText(c.name,cx+9,cy+4);ctx.restore();
+    });
+
+    // GPS dot
+    if(routeProgress>0&&activePts.length>=2){
+      const dr=Math.min(total,routeProgress*total);
+      const seg=Math.min(Math.floor(dr),activePts.length-2);
+      const a=activePts[seg],b=activePts[seg+1]||activePts[activePts.length-1];
+      const gx=lerp(a.x*W,b.x*W,dr-seg),gy=lerp(a.y*H,b.y*H,dr-seg);
+      const pulse=(Math.sin(t*.08)+1)/2;
+      ctx.save();
+      ctx.fillStyle=dark?`rgba(56,189,248,${.08+pulse*.15})`:`rgba(2,132,199,${.08+pulse*.15})`;
+      ctx.beginPath();ctx.arc(gx,gy,14+pulse*6,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle=dark?'rgba(56,189,248,.15)':'rgba(2,132,199,.15)';
+      ctx.beginPath();ctx.arc(gx,gy,10,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle=dark?'#38BDF8':'#0284C7';ctx.shadowBlur=10;ctx.shadowColor=dark?'#38BDF8':'#0284C7';
+      ctx.beginPath();ctx.arc(gx,gy,5,0,Math.PI*2);ctx.fill();ctx.restore();
+    }
+
+    t++;routeProgress+=.004;
+    if(routeProgress>1.2){routeProgress=0;currentRoute++;}
+    animId=requestAnimationFrame(draw);
+  }
+
+  function init(){resize();if(animId)cancelAnimationFrame(animId);draw();}
+  window.addEventListener('resize',init);
+  new MutationObserver(init).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+  init();
+})();
+</script>
