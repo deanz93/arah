@@ -1,0 +1,134 @@
+name: Deploy to Production
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'   # e.g. v1.2.3
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: 'Image tag to deploy (e.g. v1.2.3)'
+        required: true
+
+env:
+  AWS_REGION: ap-southeast-1
+  ECR_REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-southeast-1.amazonaws.com
+  CLUSTER_NAME: arah-production
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production   # Requires manual approval in GitHub Environments
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.image_tag || github.ref }}
+
+      - name: Resolve image tag
+        id: tag
+        run: |
+          if [ -n "${{ github.event.inputs.image_tag }}" ]; then
+            echo "tag=${{ github.event.inputs.image_tag }}" >> $GITHUB_OUTPUT
+          else
+            # Strip refs/tags/ prefix
+            echo "tag=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to ECR
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Verify images exist in ECR
+        run: |
+          for svc in api-gateway tile-server web; do
+            aws ecr describe-images \
+              --repository-name "arah/${svc}" \
+              --image-ids imageTag=${{ steps.tag.outputs.tag }} \
+              --region ${{ env.AWS_REGION }} || {
+                echo "ERROR: Image arah/${svc}:${{ steps.tag.outputs.tag }} not found in ECR"
+                exit 1
+              }
+          done
+
+      - name: Configure kubectl
+        run: aws eks update-kubeconfig --name ${{ env.CLUSTER_NAME }} --region ${{ env.AWS_REGION }}
+
+      - name: Install Kustomize
+        run: |
+          curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
+          sudo mv kustomize /usr/local/bin/
+
+      - name: Update image tags in Kustomize overlay
+        working-directory: infra/k8s/overlays/production
+        run: |
+          kustomize edit set image \
+            api-gateway=${{ env.ECR_REGISTRY }}/arah/api-gateway:${{ steps.tag.outputs.tag }} \
+            tile-server=${{ env.ECR_REGISTRY }}/arah/tile-server:${{ steps.tag.outputs.tag }} \
+            web=${{ env.ECR_REGISTRY }}/arah/web:${{ steps.tag.outputs.tag }}
+
+      - name: Apply secrets (idempotent)
+        run: |
+          kubectl create secret generic arah-api-secrets \
+            --namespace=arah \
+            --from-literal=FIREBASE_PROJECT_ID=${{ secrets.FIREBASE_PROJECT_ID }} \
+            --from-literal=FIREBASE_CLIENT_EMAIL=${{ secrets.FIREBASE_CLIENT_EMAIL }} \
+            --from-literal=FIREBASE_PRIVATE_KEY="${{ secrets.FIREBASE_PRIVATE_KEY }}" \
+            --from-literal=HMAC_SECRET=${{ secrets.HMAC_SECRET }} \
+            --from-literal=REDIS_URL=redis://${{ secrets.REDIS_HOST_PRODUCTION }}:6379 \
+            --dry-run=client -o yaml | kubectl apply -f -
+
+      - name: Rolling deploy via Kustomize
+        run: kustomize build infra/k8s/overlays/production | kubectl apply -f -
+
+      - name: Wait for rollout (api-gateway)
+        run: kubectl rollout status deployment/api-gateway -n arah --timeout=10m
+
+      - name: Wait for rollout (tile-server)
+        run: kubectl rollout status deployment/tile-server -n arah --timeout=10m
+
+      - name: Production smoke test
+        run: |
+          curl -sf "https://api.arah.my/health" | grep '"status":"ok"'
+          echo "Production smoke test passed for ${{ steps.tag.outputs.tag }}"
+
+      - name: Tag commit with deploy timestamp
+        run: |
+          git config user.email "ci@arah.my"
+          git config user.name "Arah CI"
+          git tag "deployed-production-$(date +%Y%m%d-%H%M%S)" || true
+
+      - name: Notify success
+        if: success()
+        uses: slackapi/slack-github-action@v1
+        with:
+          payload: |
+            {"text": ":rocket: Production deploy *${{ steps.tag.outputs.tag }}* succeeded — arah.my is live"}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: Auto-rollback on failure
+        if: failure()
+        run: |
+          echo "Deploy failed — rolling back to previous revision"
+          kubectl rollout undo deployment/api-gateway -n arah
+          kubectl rollout undo deployment/tile-server -n arah
+          kubectl rollout undo deployment/web -n arah
+
+      - name: Notify failure
+        if: failure()
+        uses: slackapi/slack-github-action@v1
+        with:
+          payload: |
+            {"text": ":fire: Production deploy *${{ steps.tag.outputs.tag }}* FAILED — auto-rollback triggered. <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View run>"}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

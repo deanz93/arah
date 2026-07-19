@@ -1,0 +1,38 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: arah
+
+resources:
+  - ../namespace.yaml
+  - ../api-gateway/deployment.yaml
+  - ../api-gateway/service.yaml
+  - ../api-gateway/hpa.yaml
+  - ../valhalla/deployment.yaml
+  - ../valhalla/service.yaml
+  - ../valhalla/hpa.yaml
+  - ../valhalla/pvc.yaml
+  - ../nominatim/deployment.yaml
+  - ../nominatim/service.yaml
+  - ../nominatim/pvc.yaml
+  - ../tile-server/deployment.yaml
+  - ../tile-server/service.yaml
+  - ../tile-server/pvc.yaml
+  - ../redis/deployment.yaml
+  - ../redis/service.yaml
+  - ../ingress/ingress.yaml
+  - ../ingress/certificate.yaml
+
+commonLabels:
+  app.kubernetes.io/part-of: arah
+
+images:
+  - name: api-gateway
+    newName: placeholder-registry/arah/api-gateway
+    newTag: latest
+  - name: tile-server
+    newName: placeholder-registry/arah/tile-server
+    newTag: latest
+  - name: web
+    newName: placeholder-registry/arah/web
+    newTag: latest

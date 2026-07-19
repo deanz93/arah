@@ -1,0 +1,93 @@
+name: Deploy to Staging
+
+on:
+  push:
+    branches: [develop]
+  workflow_dispatch:
+
+env:
+  AWS_REGION: ap-southeast-1
+  ECR_REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-southeast-1.amazonaws.com
+  CLUSTER_NAME: arah-staging
+  KUSTOMIZE_ENV: staging
+
+concurrency:
+  group: deploy-staging
+  cancel-in-progress: false  # Don't cancel deploys mid-flight
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to ECR
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Configure kubectl
+        run: aws eks update-kubeconfig --name ${{ env.CLUSTER_NAME }} --region ${{ env.AWS_REGION }}
+
+      - name: Set image tag
+        id: tag
+        run: |
+          SHORT_SHA=${GITHUB_SHA::8}
+          echo "tag=develop-${SHORT_SHA}" >> $GITHUB_OUTPUT
+
+      - name: Install Kustomize
+        run: |
+          curl -s "https://raw.githubusercontent.com/kubernetes-sigs/kustomize/master/hack/install_kustomize.sh" | bash
+          sudo mv kustomize /usr/local/bin/
+
+      - name: Update image tags in Kustomize overlay
+        working-directory: infra/k8s/overlays/staging
+        run: |
+          kustomize edit set image \
+            api-gateway=${{ env.ECR_REGISTRY }}/arah/api-gateway:${{ steps.tag.outputs.tag }} \
+            tile-server=${{ env.ECR_REGISTRY }}/arah/tile-server:${{ steps.tag.outputs.tag }} \
+            web=${{ env.ECR_REGISTRY }}/arah/web:${{ steps.tag.outputs.tag }}
+
+      - name: Apply namespace and secrets
+        run: |
+          kubectl apply -f infra/k8s/namespace.yaml
+
+          kubectl create secret generic arah-api-secrets \
+            --namespace=arah \
+            --from-literal=FIREBASE_PROJECT_ID=${{ secrets.FIREBASE_PROJECT_ID }} \
+            --from-literal=FIREBASE_CLIENT_EMAIL=${{ secrets.FIREBASE_CLIENT_EMAIL }} \
+            --from-literal=FIREBASE_PRIVATE_KEY="${{ secrets.FIREBASE_PRIVATE_KEY }}" \
+            --from-literal=HMAC_SECRET=${{ secrets.HMAC_SECRET }} \
+            --from-literal=REDIS_URL=redis://${{ secrets.REDIS_HOST_STAGING }}:6379 \
+            --dry-run=client -o yaml | kubectl apply -f -
+
+      - name: Deploy via Kustomize
+        run: kustomize build infra/k8s/overlays/staging | kubectl apply -f -
+
+      - name: Wait for rollout
+        run: |
+          kubectl rollout status deployment/api-gateway -n arah --timeout=5m
+          kubectl rollout status deployment/tile-server -n arah --timeout=5m
+
+      - name: Smoke test
+        run: |
+          LB_HOST=$(kubectl get svc -n ingress-nginx nginx-ingress-ingress-nginx-controller \
+            -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+          sleep 10
+          curl -sf "http://${LB_HOST}/health" | grep '"status":"ok"'
+          echo "Staging smoke test passed"
+
+      - name: Notify Slack on failure
+        if: failure()
+        uses: slackapi/slack-github-action@v1
+        with:
+          payload: |
+            {"text": ":x: Staging deploy FAILED for `${{ github.ref_name }}` — <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View run>"}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

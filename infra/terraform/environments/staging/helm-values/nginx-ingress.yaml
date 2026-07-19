@@ -1,0 +1,17 @@
+controller:
+  replicaCount: 1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 500m
+      memory: 256Mi
+  config:
+    use-real-ip: "true"
+    proxy-read-timeout: "60"
+    proxy-send-timeout: "60"
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true

@@ -1,0 +1,124 @@
+name: Terraform
+
+on:
+  pull_request:
+    paths:
+      - 'infra/terraform/**'
+  push:
+    branches: [develop, master]
+    paths:
+      - 'infra/terraform/**'
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment (staging|production)'
+        required: true
+        default: 'staging'
+      action:
+        description: 'Action (plan|apply|destroy)'
+        required: true
+        default: 'plan'
+
+env:
+  AWS_REGION: ap-southeast-1
+  TF_VERSION: 1.9.5
+
+concurrency:
+  group: terraform-${{ github.event.inputs.environment || 'staging' }}
+  cancel-in-progress: false
+
+jobs:
+  terraform-staging:
+    if: github.event_name == 'pull_request' || github.ref == 'refs/heads/develop' || (github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'staging')
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.action == 'apply' && 'staging' || '' }}
+    defaults:
+      run:
+        working-directory: infra/terraform/environments/staging
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Validate
+        run: terraform validate
+
+      - name: Terraform Format Check
+        run: terraform fmt -check -recursive
+
+      - name: Terraform Plan
+        id: plan
+        run: terraform plan -out=tfplan -no-color 2>&1 | tee plan.txt
+        continue-on-error: true
+
+      - name: Post Plan to PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs')
+            const plan = fs.readFileSync('infra/terraform/environments/staging/plan.txt', 'utf8')
+            const maxLen = 65000
+            const truncated = plan.length > maxLen ? plan.substring(0, maxLen) + '\n... (truncated)' : plan
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `## Terraform Plan (staging)\n\`\`\`hcl\n${truncated}\n\`\`\``
+            })
+
+      - name: Terraform Apply (staging auto-apply on develop)
+        if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
+        run: terraform apply -auto-approve tfplan
+
+      - name: Terraform Apply (manual)
+        if: github.event.inputs.action == 'apply'
+        run: terraform apply -auto-approve tfplan
+
+  terraform-production:
+    if: github.ref == 'refs/heads/master' || (github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'production')
+    runs-on: ubuntu-latest
+    environment: production   # Requires manual approval gate
+    defaults:
+      run:
+        working-directory: infra/terraform/environments/production
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Plan
+        run: terraform plan -out=tfplan -no-color
+
+      - name: Terraform Apply
+        if: github.event.inputs.action == 'apply' || github.event_name == 'push'
+        run: terraform apply -auto-approve tfplan
