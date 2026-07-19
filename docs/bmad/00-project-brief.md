@@ -40,25 +40,38 @@
 ## MVP Feature Checklist
 
 - [ ] Real-time user GPS position on map
-- [ ] Address and POI search
+- [ ] Address and POI search (Nominatim, countrycodes=my)
 - [ ] Turn-by-turn voice navigation (Bahasa Malaysia + English)
-- [ ] Route alternatives: fastest / toll-free / shortest
-- [ ] Estimated toll cost per route
-- [ ] Community reports: police, accident, flood, pothole, roadblock
+- [ ] Route alternatives: fastest / toll-free / shortest (Valhalla)
+- [ ] Estimated toll cost per route (MY toll database)
+- [ ] Community reports: police, accident, flood, pothole, roadblock, hazard
 - [ ] Report upvote / confirm / clear voting
+- [ ] Auto-remove reports on net-3 downvotes (Cloud Function)
+- [ ] Flash flood alert + evacuation routing (critical Malaysia feature)
+- [ ] Real-time report broadcast via WebSocket (Socket.io)
+- [ ] Firebase Auth: Google + Phone OTP
+- [ ] Admin web portal: dashboard + report moderation
 - [ ] Offline map tiles for Peninsular Malaysia
+
+> **Full feature catalogue (230 features across 15 modules):** [09-features.md](./09-features.md)
+> **Full user story set (116 stories across 10 epics):** [01-prd.md](./01-prd.md)
 
 ## Competitive Positioning
 
 | Feature | Arah | Waze | Google Maps |
 |---------|------|------|-------------|
 | Malaysia data sovereignty | ✅ | ❌ | ❌ |
-| Bahasa Malaysia-first UI | ✅ | Partial | Partial |
-| Flash flood alerts | ✅ | ❌ | ❌ |
-| Toll cost estimation | ✅ | Basic | ❌ |
+| Bahasa Malaysia-first UI + TTS | ✅ | Partial | Partial |
+| Flash flood alert + evacuation routing | ✅ | ❌ | ❌ |
+| Toll cost estimation (RM, per plaza) | ✅ | Basic | ❌ |
 | Open-source map data (OSM) | ✅ | ❌ | ❌ |
 | Community hazard reports | ✅ | ✅ | Partial |
 | Offline maps | ✅ | Limited | ✅ |
+| Prayer time display + Surau locator | ✅ | ❌ | ❌ |
+| Zon Selamat (school zone) alerts | ✅ | ❌ | ❌ |
+| East Malaysia (Sabah/Sarawak) coverage | ✅ | Partial | ✅ |
+| No user data sold to advertisers | ✅ | ❌ | ❌ |
+| PDPA 2010 compliant | ✅ | ❌ (US law) | ❌ (US law) |
 
 ## Tech Philosophy
 
