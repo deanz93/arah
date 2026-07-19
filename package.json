@@ -1,0 +1,26 @@
+{
+  "name": "arah-platform",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Arah — Malaysian Navigation Platform (monorepo root)",
+  "scripts": {
+    "prepare": "husky",
+    "lint:mobile": "cd apps/mobile && npm run lint",
+    "lint:web": "cd apps/web && npm run lint",
+    "lint:api": "cd services/api-gateway && npm run lint",
+    "lint": "npm run lint:mobile && npm run lint:web && npm run lint:api",
+    "typecheck:mobile": "cd apps/mobile && npm run typecheck",
+    "typecheck:web": "cd apps/web && npm run typecheck",
+    "typecheck:api": "cd services/api-gateway && npm run typecheck",
+    "typecheck": "npm run typecheck:mobile && npm run typecheck:web && npm run typecheck:api",
+    "test:mobile": "cd apps/mobile && npm test",
+    "test": "npm run test:mobile"
+  },
+  "devDependencies": {
+    "husky": "^9.1.4",
+    "lint-staged": "^15.2.8",
+    "@commitlint/cli": "^19.4.0",
+    "@commitlint/config-conventional": "^19.4.0",
+    "prettier": "^3.3.3"
+  }
+}

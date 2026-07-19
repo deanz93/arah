@@ -18,15 +18,15 @@
 | ID | Story | Priority | Status | Owner |
 |----|-------|----------|--------|-------|
 | S-001 | Initialise React Native project with TypeScript | Must | ✅ | |
-| S-002 | Configure ESLint + Prettier + Husky pre-commit hook | Must | ⬜ | |
-| S-003 | Set up Firebase project (Auth, Analytics, Crashlytics) | Must | ⬜ | |
-| S-004 | Integrate `@react-native-firebase/app` in mobile app | Must | ⬜ | |
-| S-005 | Configure environment variables (.env + react-native-config) | Must | ⬜ | |
-| S-006 | Set up GitHub Actions CI (lint + test on PR) | Should | ⬜ | |
-| S-007 | Initialise Next.js web app (admin + web portal) | Must | ⬜ | |
-| S-008 | Configure Firebase Admin SDK in Next.js API routes | Must | ⬜ | |
-| S-009 | Set up Valhalla routing engine (Docker, Malaysia graph) | Must | ⬜ | |
-| S-010 | Set up Nominatim geocoding (Docker, Malaysia OSM data) | Must | ⬜ | |
+| S-002 | Configure ESLint + Prettier + Husky pre-commit hook | Must | ✅ | |
+| S-003 | Set up Firebase project (Auth, Analytics, Crashlytics) | Must | ✅ | |
+| S-004 | Integrate `@react-native-firebase/app` in mobile app | Must | ✅ | |
+| S-005 | Configure environment variables (.env + react-native-config) | Must | ✅ | |
+| S-006 | Set up GitHub Actions CI (lint + test on PR) | Should | ✅ | |
+| S-007 | Initialise Next.js web app (admin + web portal) | Must | ✅ | |
+| S-008 | Configure Firebase Admin SDK in Next.js API routes | Must | ✅ | |
+| S-009 | Set up Valhalla routing engine (Docker, Malaysia graph) | Must | ✅ | |
+| S-010 | Set up Nominatim geocoding (Docker, Malaysia OSM data) | Must | ✅ | |
 
 ---
 
@@ -36,13 +36,13 @@
 | ID | Story | Ref | Priority | Status | Owner |
 |----|-------|-----|----------|--------|-------|
 | S-011 | Render MapLibre map with OSM tiles on app open | US-001 | Must | ✅ | |
-| S-012 | Show user GPS position (blue dot + heading) | US-001 | Must | ⬜ | |
-| S-013 | Implement search screen with Nominatim autocomplete | US-002 | Must | ⬜ | |
-| S-014 | Display search results list; tap to set as destination | US-002 | Must | ⬜ | |
-| S-015 | Call Valhalla routing API; render route polyline on map | US-003 | Must | ⬜ | |
-| S-016 | Show route preview: distance, ETA, toll cost, alternatives | US-005,006,007 | Must | ⬜ | |
-| S-017 | Start navigation mode: manoeuvre banner + bottom bar | US-003,005 | Must | ⬜ | |
-| S-018 | BM voice guidance via react-native-tts | US-004 | Must | ⬜ | |
+| S-012 | Show user GPS position (blue dot + heading) | US-001 | Must | ✅ | |
+| S-013 | Implement search screen with Nominatim autocomplete | US-002 | Must | ✅ | |
+| S-014 | Display search results list; tap to set as destination | US-002 | Must | ✅ | |
+| S-015 | Call Valhalla routing API; render route polyline on map | US-003 | Must | ✅ | |
+| S-016 | Show route preview: distance, ETA, toll cost, alternatives | US-005,006,007 | Must | ✅ | |
+| S-017 | Start navigation mode: manoeuvre banner + bottom bar | US-003,005 | Must | ✅ | |
+| S-018 | BM voice guidance via react-native-tts | US-004 | Must | ✅ | |
 | S-019 | Auto-reroute when user deviates >50m from route | US-008 | Must | ⬜ | |
 | S-020 | "Arrived at destination" announcement + nav end | US-003 | Must | ⬜ | |
 | S-021 | Night mode: auto-switch map style at sunset | — | Should | ⬜ | |
@@ -125,9 +125,9 @@
 
 ## Current Sprint: Sprint 1
 
-**Focus:** Epic 0 (Foundation) + Epic 1 (Map & Navigation, stories S-011 to S-015)
+**Focus:** Epic 2 (Community Reports) + Epic 3 (Auth) + Epic 4 (Web Portal)
 
-**Sprint Goal:** A developer can run the app, see a MapLibre map centred on KL, and get a route rendered between two hardcoded points.
+**Sprint Goal:** A user can sign in with Google, submit a hazard report, see it appear on the map in real-time, and an admin can view and moderate it on the web portal.
 
 ---
 

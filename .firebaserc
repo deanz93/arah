@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "default": "arah-app",
+    "production": "arah-app",
+    "staging": "arah-app-staging"
+  }
+}

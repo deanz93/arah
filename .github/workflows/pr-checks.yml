@@ -1,0 +1,38 @@
+name: PR Checks
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+
+jobs:
+  title:
+    name: Enforce Conventional Commit title
+    runs-on: ubuntu-latest
+    steps:
+      - uses: amannn/action-semantic-pull-request@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          types: |
+            feat
+            fix
+            docs
+            chore
+            refactor
+            test
+            ci
+          requireScope: false
+
+  story-reference:
+    name: Check story ID in PR title
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate PR references a story
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const title = context.payload.pull_request.title;
+            const hasStory = /S-\d+/.test(title);
+            if (!hasStory) {
+              core.setFailed(`PR title must reference a story ID (e.g. "S-013"). Got: "${title}"`);
+            }

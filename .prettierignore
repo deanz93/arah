@@ -1,0 +1,10 @@
+node_modules
+dist
+.next
+out
+android
+ios
+*.pbf
+*.pmtiles
+_bmad
+docs/bmad-output

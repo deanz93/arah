@@ -1,0 +1,92 @@
+name: Release
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+jobs:
+  # ─── Android APK ──────────────────────────────────────────────────
+  android:
+    name: Build Android
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/mobile
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: apps/mobile/package-lock.json
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: temurin
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Write google-services.json
+        run: echo '${{ secrets.GOOGLE_SERVICES_JSON }}' > android/app/google-services.json
+
+      - name: Write .env
+        run: |
+          echo "ARAH_API_URL=${{ secrets.ARAH_API_URL }}" >> .env
+          echo "ARAH_TILE_URL=${{ secrets.ARAH_TILE_URL }}" >> .env
+          echo "ARAH_SOCKET_URL=${{ secrets.ARAH_SOCKET_URL }}" >> .env
+          echo "VALHALLA_URL=${{ secrets.VALHALLA_URL }}" >> .env
+          echo "NOMINATIM_URL=${{ secrets.NOMINATIM_URL }}" >> .env
+
+      - name: Build Android Release APK
+        run: |
+          cd android
+          ./gradlew assembleRelease --no-daemon
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_STORE_PASSWORD: ${{ secrets.ANDROID_STORE_PASSWORD }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: arah-android-${{ github.sha }}
+          path: apps/mobile/android/app/build/outputs/apk/release/*.apk
+          retention-days: 30
+
+  # ─── Web Deploy ───────────────────────────────────────────────────
+  web-deploy:
+    name: Deploy Web to Vercel
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: apps/web
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: apps/web/package-lock.json
+
+      - name: Install Vercel CLI
+        run: npm install -g vercel
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Deploy to Vercel
+        run: vercel --prod --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
