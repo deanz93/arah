@@ -22,12 +22,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Cache npm dependencies
+        uses: actions/cache@v4
         with:
-          node-version: 24
-          cache: npm
-          cache-dependency-path: apps/mobile/package-lock.json
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-mobile-${{ hashFiles('apps/mobile/package-lock.json') }}
+          restore-keys: ${{ runner.os }}-npm-mobile-
 
       - name: Install dependencies
         run: npm ci
@@ -61,12 +61,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Cache npm dependencies
+        uses: actions/cache@v4
         with:
-          node-version: 24
-          cache: npm
-          cache-dependency-path: apps/web/package-lock.json
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-web-${{ hashFiles('apps/web/package-lock.json') }}
+          restore-keys: ${{ runner.os }}-npm-web-
 
       - name: Install dependencies
         run: npm ci
@@ -80,7 +80,6 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          # Dummy values so build doesn't fail without real Firebase config
           NEXT_PUBLIC_FIREBASE_API_KEY: ci-placeholder
           NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: arah-app.firebaseapp.com
           NEXT_PUBLIC_FIREBASE_PROJECT_ID: arah-app
@@ -102,12 +101,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Cache npm dependencies
+        uses: actions/cache@v4
         with:
-          node-version: 24
-          cache: npm
-          cache-dependency-path: services/api-gateway/package-lock.json
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-api-${{ hashFiles('services/api-gateway/package-lock.json') }}
+          restore-keys: ${{ runner.os }}-npm-api-
 
       - name: Install dependencies
         run: npm ci
@@ -126,7 +125,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@0.28.0
+        uses: aquasecurity/trivy-action@0.20.0
         with:
           scan-type: fs
           scan-ref: .

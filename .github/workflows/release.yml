@@ -17,12 +17,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Cache npm dependencies
+        uses: actions/cache@v4
         with:
-          node-version: 24
-          cache: npm
-          cache-dependency-path: apps/mobile/package-lock.json
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-mobile-${{ hashFiles('apps/mobile/package-lock.json') }}
+          restore-keys: ${{ runner.os }}-npm-mobile-
 
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -72,12 +72,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - name: Cache npm dependencies
+        uses: actions/cache@v4
         with:
-          node-version: 24
-          cache: npm
-          cache-dependency-path: apps/web/package-lock.json
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-web-${{ hashFiles('apps/web/package-lock.json') }}
+          restore-keys: ${{ runner.os }}-npm-web-
 
       - name: Install Vercel CLI
         run: npm install -g vercel
