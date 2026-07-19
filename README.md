@@ -3,10 +3,13 @@
 > **Navigasi Malaysia, Tanpa Kompromi.**
 > *Navigate Malaysia, Without Compromise.*
 
+[![Landing Page](https://img.shields.io/badge/🌐%20Landing%20Page-deanz93.github.io%2Farah-00D8A0.svg)](https://deanz93.github.io/arah/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-00D8A0.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 [![Platform](https://img.shields.io/badge/platform-Android%20%7C%20iOS%20%7C%20Web-blue.svg)](#)
 [![Data: Malaysia](https://img.shields.io/badge/data-Malaysia%20only-CC0001.svg)](#)
+
+> 🌐 **Landing page:** https://deanz93.github.io/arah/
 
 **Arah** (Direction in Malay) is a sovereign, community-powered navigation platform built for Malaysia — a real alternative to Waze and Google Maps, with features no foreign app offers.
 
