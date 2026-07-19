@@ -8,18 +8,20 @@ Tagline: *Tunjuk Arah, Bersama* (Show Direction, Together)
 
 ## Platform Overview
 
-Arah is a full navigation platform — not just an app. It comprises:
+Arah is a full navigation platform — not just an app. Each service lives in its own repo:
 
-| Component | Tech | Description |
-|-----------|------|-------------|
-| `apps/mobile` | React Native + TypeScript | iOS + Android navigation app |
-| `apps/web` | Next.js 14 + TypeScript | Public site, user login, admin panel |
-| `services/api-gateway` | Node.js + Fastify | Auth, reports, user profile API |
-| `services/routing` | Valhalla (C++) | Self-hosted turn-by-turn routing engine |
-| `services/geocoding` | Nominatim | Self-hosted OSM-based address search |
-| `services/tile-server` | PMTiles + Go | Self-hosted vector map tile server |
-| `services/realtime` | Socket.io + Redis | Real-time report broadcasting |
-| `infra` | Docker + nginx | Local dev stack + deployment config |
+| Repo | Tech | Description |
+|------|------|-------------|
+| [arah-mobile](https://github.com/deanz93/arah-mobile) | React Native 0.74 + TypeScript | iOS + Android navigation app |
+| [arah-web](https://github.com/deanz93/arah-web) | Next.js 14 + TypeScript | Public site, user login, admin panel |
+| [arah-api](https://github.com/deanz93/arah-api) | Node.js + Fastify | Auth, reports, user profile API |
+| [arah-routing](https://github.com/deanz93/arah-routing) | Valhalla (C++) | Self-hosted turn-by-turn routing engine |
+| [arah-geocoding](https://github.com/deanz93/arah-geocoding) | Nominatim | Self-hosted OSM-based address search |
+| [arah-tile-server](https://github.com/deanz93/arah-tile-server) | PMTiles + TileServer-GL | Self-hosted vector map tile server |
+| [arah-functions](https://github.com/deanz93/arah-functions) | Firebase Cloud Functions | Report expiry, auto-remove, counters |
+| [arah-infra](https://github.com/deanz93/arah-infra) | Terraform + Kubernetes + Helm | All infrastructure-as-code |
+
+> This repo (`arah`) is the **main reference** — BMAD documentation, architecture decisions, API spec, and the monorepo scaffold live here.
 
 All mapping data is sourced from **OpenStreetMap**. No proprietary APIs. All data stored in Malaysia-region infrastructure.
 
