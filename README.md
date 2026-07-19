@@ -123,16 +123,16 @@ Infrastructure: AWS EKS ap-southeast-1 · ElastiCache Redis 7.1
 
 ## The 8 Repos
 
-| Repo | Stack | What it does |
-|------|-------|--------------|
-| [arah-mobile](https://github.com/deanz93/arah-mobile) | React Native 0.74 + TypeScript | iOS + Android navigation app |
-| [arah-web](https://github.com/deanz93/arah-web) | Next.js 14 App Router | Admin portal + public web |
-| [arah-api](https://github.com/deanz93/arah-api) | Fastify + Node.js + Socket.io | REST API + WebSocket gateway |
-| [arah-routing](https://github.com/deanz93/arah-routing) | Valhalla (C++) | Self-hosted turn-by-turn engine |
-| [arah-geocoding](https://github.com/deanz93/arah-geocoding) | Nominatim 4.4 | Malaysian address search |
-| [arah-tile-server](https://github.com/deanz93/arah-tile-server) | PMTiles + TileServer-GL-Light | Self-hosted vector map tiles |
-| [arah-functions](https://github.com/deanz93/arah-functions) | Firebase Cloud Functions v2 | Report lifecycle, FCM, analytics |
-| [arah-infra](https://github.com/deanz93/arah-infra) | Terraform + Kubernetes + Helm | All infrastructure as code |
+| Repo | Stack | What it does | Site |
+|------|-------|--------------|------|
+| [arah-mobile](https://github.com/deanz93/arah-mobile) | React Native 0.74 + TypeScript | iOS + Android navigation app | [↗](https://deanz93.github.io/arah-mobile/) |
+| [arah-web](https://github.com/deanz93/arah-web) | Next.js 14 App Router | Admin portal + public web | [↗](https://deanz93.github.io/arah-web/) |
+| [arah-api](https://github.com/deanz93/arah-api) | Fastify + Node.js + Socket.io | REST API + WebSocket gateway | [↗](https://deanz93.github.io/arah-api/) |
+| [arah-functions](https://github.com/deanz93/arah-functions) | Firebase Cloud Functions v2 | Report lifecycle, FCM, analytics | [↗](https://deanz93.github.io/arah-functions/) |
+| [arah-routing](https://github.com/deanz93/arah-routing) | Valhalla (C++) | Self-hosted turn-by-turn engine | [↗](https://deanz93.github.io/arah-routing/) |
+| [arah-geocoding](https://github.com/deanz93/arah-geocoding) | Nominatim 4.4 | Malaysian address search | [↗](https://deanz93.github.io/arah-geocoding/) |
+| [arah-tile-server](https://github.com/deanz93/arah-tile-server) | PMTiles + TileServer-GL-Light | Self-hosted vector map tiles | [↗](https://deanz93.github.io/arah-tile-server/) |
+| [arah-infra](https://github.com/deanz93/arah-infra) | Terraform + Kubernetes + Helm | All infrastructure as code | [↗](https://deanz93.github.io/arah-infra/) |
 
 > This repo (`arah`) is the **reference monorepo** — BMAD documentation, architecture decisions, API spec, and scaffold live here.
 
