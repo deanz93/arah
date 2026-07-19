@@ -1,0 +1,64 @@
+services:
+  nginx:
+    image: nginx:alpine
+    container_name: arah-nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - api-gateway
+      - tile-server
+      - valhalla
+      - nominatim
+    restart: unless-stopped
+
+  api-gateway:
+    build:
+      context: ../services/api-gateway
+      dockerfile: Dockerfile
+    container_name: arah-api
+    environment:
+      PORT: "3001"
+      FIREBASE_PROJECT_ID: ${FIREBASE_PROJECT_ID}
+      FIREBASE_CLIENT_EMAIL: ${FIREBASE_CLIENT_EMAIL}
+      FIREBASE_PRIVATE_KEY: ${FIREBASE_PRIVATE_KEY}
+      HMAC_SECRET: ${HMAC_SECRET}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  tile-server:
+    image: maptiler/tileserver-gl:latest
+    container_name: arah-tiles
+    volumes:
+      - ../services/tile-server/data:/data
+      - ../services/tile-server/config.json:/data/config.json
+    restart: unless-stopped
+
+  valhalla:
+    image: ghcr.io/gis-ops/docker-valhalla/valhalla:latest
+    container_name: arah-valhalla
+    volumes:
+      - ../services/routing/valhalla_tiles:/custom_files
+    environment:
+      - use_tiles_ignore_pbf=True
+    restart: unless-stopped
+
+  nominatim:
+    image: mediagis/nominatim:4.4
+    container_name: arah-nominatim
+    environment:
+      PBF_URL: https://download.geofabrik.de/asia/malaysia-singapore-brunei-latest.osm.pbf
+      REPLICATION_URL: https://download.geofabrik.de/asia/malaysia-singapore-brunei-updates/
+      NOMINATIM_PASSWORD: ${NOMINATIM_PASSWORD:-arah_dev}
+    volumes:
+      - nominatim-data:/var/lib/postgresql/14/main
+    shm_size: 1g
+    restart: unless-stopped
+
+volumes:
+  nominatim-data:

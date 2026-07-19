@@ -1,0 +1,49 @@
+# Env files (never commit secrets)
+.env
+.env.local
+.env.*.local
+
+# Node
+node_modules/
+dist/
+.next/
+out/
+
+# React Native
+apps/mobile/android/app/build/
+apps/mobile/ios/build/
+apps/mobile/ios/Pods/
+apps/mobile/.metro-health-check*
+apps/mobile/google-services.json
+apps/mobile/GoogleService-Info.plist
+
+# Firebase config (keep .example, gitignore the real ones)
+google-services.json
+GoogleService-Info.plist
+
+# Map data (large binary files)
+services/routing/valhalla_tiles/
+services/tile-server/data/*.pmtiles
+services/tile-server/data/*.mbtiles
+*.osm.pbf
+*.jar
+
+# Logs
+*.log
+npm-debug.log*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# BMAD output
+docs/bmad-output/
+_bmad/
+
+# Temp
+tmp/

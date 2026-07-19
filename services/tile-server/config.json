@@ -1,0 +1,24 @@
+{
+  "options": {
+    "paths": {
+      "root": "/data",
+      "fonts": "/data/fonts",
+      "sprites": "/data/sprites",
+      "styles": "/data/styles",
+      "mbtiles": "/data"
+    }
+  },
+  "styles": {
+    "arah-streets": {
+      "style": "arah-streets/style.json",
+      "tilejson": {
+        "bounds": [99.5, 1.0, 119.5, 7.5]
+      }
+    }
+  },
+  "data": {
+    "malaysia": {
+      "pmtiles": "malaysia.pmtiles"
+    }
+  }
+}
