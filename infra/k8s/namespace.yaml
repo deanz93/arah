@@ -1,0 +1,6 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: arah
+  labels:
+    app.kubernetes.io/part-of: arah-platform

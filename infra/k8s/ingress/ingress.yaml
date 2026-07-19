@@ -1,0 +1,68 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: arah-ingress
+  namespace: arah
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "10m"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "30"
+    # Rate limit at ingress level (per IP)
+    nginx.ingress.kubernetes.io/limit-rps: "20"
+    nginx.ingress.kubernetes.io/limit-connections: "10"
+    # Enable gzip
+    nginx.ingress.kubernetes.io/enable-gzip: "true"
+spec:
+  tls:
+    - hosts:
+        - api.arah.my
+        - tiles.arah.my
+        - routing.arah.my
+        - geocode.arah.my
+      secretName: arah-tls
+  rules:
+    - host: api.arah.my
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: api-gateway
+                port:
+                  number: 80
+
+    - host: tiles.arah.my
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: tile-server
+                port:
+                  number: 8080
+
+    - host: routing.arah.my
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: valhalla
+                port:
+                  number: 8002
+
+    - host: geocode.arah.my
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: nominatim
+                port:
+                  number: 7070

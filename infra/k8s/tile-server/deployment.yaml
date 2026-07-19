@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tile-server
+  namespace: arah
+  labels:
+    app: tile-server
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: tile-server
+  template:
+    metadata:
+      labels:
+        app: tile-server
+    spec:
+      containers:
+        - name: tile-server
+          image: maptiler/tileserver-gl:latest
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: tile-data
+              mountPath: /data
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "512Mi"
+            limits:
+              cpu: "1000m"
+              memory: "1Gi"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 20
+      volumes:
+        - name: tile-data
+          persistentVolumeClaim:
+            claimName: tile-data-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: tile-data-pvc
+  namespace: arah
+spec:
+  accessModes:
+    - ReadOnlyMany
+  storageClassName: efs-sc
+  resources:
+    requests:
+      storage: 10Gi

@@ -1,0 +1,72 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: arah-alerts
+  namespace: arah
+spec:
+  groups:
+    - name: arah.api
+      rules:
+        - alert: APIHighErrorRate
+          expr: |
+            sum(rate(http_requests_total{namespace="arah",job="api-gateway",status=~"5.."}[5m]))
+            /
+            sum(rate(http_requests_total{namespace="arah",job="api-gateway"}[5m])) > 0.01
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: "API error rate above 1%"
+            description: "Error rate is {{ $value | humanizePercentage }} over the last 5 minutes"
+
+        - alert: APIHighLatency
+          expr: |
+            histogram_quantile(0.99,
+              sum(rate(http_request_duration_seconds_bucket{namespace="arah",job="api-gateway"}[5m])) by (le)
+            ) > 3
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "API p99 latency above 3s"
+
+    - name: arah.valhalla
+      rules:
+        - alert: ValhallaHighLatency
+          expr: |
+            histogram_quantile(0.99,
+              sum(rate(valhalla_route_duration_seconds_bucket[5m])) by (le)
+            ) > 5
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Valhalla p99 routing latency above 5s"
+
+        - alert: ValhallaDown
+          expr: up{job="valhalla"} == 0
+          for: 2m
+          labels:
+            severity: critical
+          annotations:
+            summary: "Valhalla routing service is down"
+
+    - name: arah.redis
+      rules:
+        - alert: RedisHighMemory
+          expr: redis_memory_used_bytes / redis_memory_max_bytes > 0.8
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Redis memory usage above 80%"
+
+    - name: arah.pods
+      rules:
+        - alert: PodCrashLooping
+          expr: |
+            increase(kube_pod_container_status_restarts_total{namespace="arah"}[15m]) > 3
+          labels:
+            severity: critical
+          annotations:
+            summary: "Pod {{ $labels.pod }} is crash looping"

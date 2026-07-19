@@ -89,6 +89,22 @@ cd apps/web && npm install && npm run dev
 
 ---
 
+## Scalability
+
+Arah is designed to scale from MVP to 1M+ Malaysian users without a full rewrite.
+
+| Phase | Users | Infrastructure |
+|-------|-------|---------------|
+| MVP | 0–10k | Docker Compose (`infra/docker-compose.yml`) |
+| Growth | 10k–100k | ECS Fargate + Redis + Cloudflare CDN |
+| Scale | 100k–1M | Kubernetes (`infra/k8s/`) + HPA + monitoring |
+| National | 1M+ | Multi-AZ + Aurora PostgreSQL + Kafka |
+
+Full details: [docs/bmad/08-scaling-guide.md](docs/bmad/08-scaling-guide.md)
+K8s manifests: [infra/k8s/](infra/k8s/)
+
+---
+
 ## Contributing
 
 See [CONTRIBUTING.md](CONTRIBUTING.md). Story IDs in `docs/bmad/05-epics-stories.md` track what to build next.
@@ -101,6 +117,6 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Story IDs in `docs/bmad/05-epics-stories
 
 ## License
 
-MIT — Free to use, modify, and distribute.
+MIT — Free to use, modify, and distribute. See [LICENSE](LICENSE).
 
 *Built in Malaysia 🇲🇾*
