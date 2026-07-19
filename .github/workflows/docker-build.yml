@@ -49,6 +49,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -65,7 +68,11 @@ jobs:
           SHORT_SHA=${GITHUB_SHA::8}
           BRANCH=${GITHUB_REF_NAME//\//-}
           echo "tag=${BRANCH}-${SHORT_SHA}" >> $GITHUB_OUTPUT
-          echo "latest_tag=${GITHUB_REF_NAME == 'master' && 'latest' || 'develop'}" >> $GITHUB_OUTPUT
+          if [ "$GITHUB_REF_NAME" = "master" ]; then
+            echo "latest_tag=latest" >> $GITHUB_OUTPUT
+          else
+            echo "latest_tag=develop" >> $GITHUB_OUTPUT
+          fi
 
       - name: Build and push api-gateway
         uses: docker/build-push-action@v6
@@ -88,6 +95,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -104,6 +114,11 @@ jobs:
           SHORT_SHA=${GITHUB_SHA::8}
           BRANCH=${GITHUB_REF_NAME//\//-}
           echo "tag=${BRANCH}-${SHORT_SHA}" >> $GITHUB_OUTPUT
+          if [ "$GITHUB_REF_NAME" = "master" ]; then
+            echo "latest_tag=latest" >> $GITHUB_OUTPUT
+          else
+            echo "latest_tag=develop" >> $GITHUB_OUTPUT
+          fi
 
       - name: Build and push web
         uses: docker/build-push-action@v6
@@ -115,7 +130,7 @@ jobs:
             NEXT_PUBLIC_FIREBASE_PROJECT_ID=${{ secrets.FIREBASE_PROJECT_ID }}
           tags: |
             ${{ env.ECR_REGISTRY }}/arah/web:${{ steps.tag.outputs.tag }}
-            ${{ env.ECR_REGISTRY }}/arah/web:${{ github.ref_name == 'master' && 'latest' || 'develop' }}
+            ${{ env.ECR_REGISTRY }}/arah/web:${{ steps.tag.outputs.latest_tag }}
           cache-from: type=registry,ref=${{ env.ECR_REGISTRY }}/arah/web:cache
           cache-to: type=registry,ref=${{ env.ECR_REGISTRY }}/arah/web:cache,mode=max
 
@@ -125,6 +140,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -140,7 +158,13 @@ jobs:
         id: tag
         run: |
           SHORT_SHA=${GITHUB_SHA::8}
-          echo "tag=${GITHUB_REF_NAME//\//-}-${SHORT_SHA}" >> $GITHUB_OUTPUT
+          BRANCH=${GITHUB_REF_NAME//\//-}
+          echo "tag=${BRANCH}-${SHORT_SHA}" >> $GITHUB_OUTPUT
+          if [ "$GITHUB_REF_NAME" = "master" ]; then
+            echo "latest_tag=latest" >> $GITHUB_OUTPUT
+          else
+            echo "latest_tag=develop" >> $GITHUB_OUTPUT
+          fi
 
       - name: Build and push tile-server
         uses: docker/build-push-action@v6
@@ -149,6 +173,6 @@ jobs:
           push: true
           tags: |
             ${{ env.ECR_REGISTRY }}/arah/tile-server:${{ steps.tag.outputs.tag }}
-            ${{ env.ECR_REGISTRY }}/arah/tile-server:${{ github.ref_name == 'master' && 'latest' || 'develop' }}
+            ${{ env.ECR_REGISTRY }}/arah/tile-server:${{ steps.tag.outputs.latest_tag }}
           cache-from: type=registry,ref=${{ env.ECR_REGISTRY }}/arah/tile-server:cache
           cache-to: type=registry,ref=${{ env.ECR_REGISTRY }}/arah/tile-server:cache,mode=max
