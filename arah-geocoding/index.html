@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>arah-geocoding — Self-hosted address search &amp; geocoding for Malaysia</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: {
+        'teal': { DEFAULT: '#00D8A0' },
+        'amber': { DEFAULT: '#FF7040' },
+        'bg': '#080D12',
+        'surface': '#111820',
+        'surface2': '#1A2433',
+      }}}
+    }
+  </script>
+  <style>
+    body { font-family: system-ui,-apple-system,sans-serif; }
+    .code-block { background:#0D1117; border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:1.25rem; overflow-x:auto; }
+    pre code { font-family:'Fira Code',monospace; font-size:0.82rem; line-height:1.7; color:#e8f0fa; }
+  </style>
+</head>
+<body class="bg-bg text-slate-200 min-h-screen">
+
+  <!-- Nav -->
+  <nav class="fixed top-0 inset-x-0 z-50 border-b border-white/[0.07] bg-bg/90 backdrop-blur-xl">
+    <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="index.html" class="font-black text-xl text-white">Ar<span class="text-teal">ah</span> <span class="text-slate-500 font-semibold text-base">/ geocoding</span></a>
+      <div class="flex items-center gap-5 text-sm">
+        <a href="index.html" class="text-white font-semibold">Home</a>
+        <a href="coverage.html" class="text-slate-400 hover:text-white">Coverage</a>
+        <a href="roadmap.html" class="text-slate-400 hover:text-white">Roadmap</a>
+        <a href="contributing.html" class="text-slate-400 hover:text-white">Contributing</a>
+        <a href="https://github.com/deanz93/arah-geocoding" class="bg-teal text-bg font-bold px-4 py-1.5 rounded-lg hover:opacity-80">GitHub →</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="pt-32 pb-20 px-6">
+    <div class="max-w-5xl mx-auto text-center">
+      <div class="inline-flex items-center gap-2 bg-surface2 border border-white/[0.08] text-teal text-xs font-semibold px-3 py-1.5 rounded-full mb-6">
+        <span class="w-2 h-2 rounded-full bg-teal inline-block"></span>
+        Self-hosted · MIT License
+      </div>
+      <h1 class="text-5xl font-black text-white mb-4 leading-tight">arah-geocoding</h1>
+      <p class="text-xl text-slate-400 mb-8 max-w-2xl mx-auto">Self-hosted address search &amp; geocoding for Malaysia</p>
+      <div class="flex flex-wrap justify-center gap-2 mb-10">
+        <span class="bg-surface2 border border-white/[0.07] text-slate-300 text-xs px-3 py-1 rounded-full">Nominatim 4.4</span>
+        <span class="bg-surface2 border border-white/[0.07] text-slate-300 text-xs px-3 py-1 rounded-full">PostgreSQL 15</span>
+        <span class="bg-surface2 border border-white/[0.07] text-slate-300 text-xs px-3 py-1 rounded-full">PostGIS</span>
+        <span class="bg-surface2 border border-white/[0.07] text-slate-300 text-xs px-3 py-1 rounded-full">Redis 7.1</span>
+        <span class="bg-surface2 border border-teal/30 text-teal text-xs px-3 py-1 rounded-full">MIT</span>
+        <span class="bg-surface2 border border-amber/30 text-amber text-xs px-3 py-1 rounded-full">29 Stories</span>
+      </div>
+      <!-- Stats row -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-2xl mx-auto">
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-4">
+          <div class="text-3xl font-black text-teal">29</div>
+          <div class="text-xs text-slate-500 mt-1">Stories</div>
+        </div>
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-4">
+          <div class="text-3xl font-black text-teal">4</div>
+          <div class="text-xs text-slate-500 mt-1">Epics</div>
+        </div>
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-4">
+          <div class="text-2xl font-black text-teal">OSM</div>
+          <div class="text-xs text-slate-500 mt-1">Malaysia Data</div>
+        </div>
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-4">
+          <div class="text-2xl font-black text-teal">MIT</div>
+          <div class="text-xs text-slate-500 mt-1">License</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature Cards -->
+  <section class="px-6 pb-16">
+    <div class="max-w-5xl mx-auto grid md:grid-cols-3 gap-6">
+      <!-- Malaysian Address Search -->
+      <div class="bg-surface border border-white/[0.07] rounded-2xl p-6">
+        <div class="w-10 h-10 rounded-xl bg-teal/10 flex items-center justify-center mb-4">
+          <svg class="w-5 h-5 text-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        </div>
+        <h3 class="text-lg font-bold text-white mb-2">Malaysian Address Search</h3>
+        <p class="text-slate-400 text-sm mb-4">Full-text address lookup for all 16 Malaysian states with BM name search and East Malaysia coverage.</p>
+        <ul class="space-y-2 text-sm text-slate-400">
+          <li class="flex gap-2"><span class="text-teal mt-0.5">✓</span> All 16 states covered</li>
+          <li class="flex gap-2"><span class="text-teal mt-0.5">✓</span> Postcode 01000–98859</li>
+          <li class="flex gap-2"><span class="text-teal mt-0.5">✓</span> BM name search</li>
+          <li class="flex gap-2"><span class="text-teal mt-0.5">✓</span> East Malaysia (Sabah, Sarawak)</li>
+        </ul>
+      </div>
+      <!-- Reverse Geocoding -->
+      <div class="bg-surface border border-white/[0.07] rounded-2xl p-6">
+        <div class="w-10 h-10 rounded-xl bg-teal/10 flex items-center justify-center mb-4">
+          <svg class="w-5 h-5 text-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+        </div>
+        <h3 class="text-lg font-bold text-white mb-2">Reverse Geocoding</h3>
+        <p class="text-slate-400 text-sm mb-4">Coordinates → formatted Malaysian address, with zoom-level awareness and Redis caching for fast repeat lookups.</p>
+        <ul class="space-y-2 text-sm text-slate-400">
+          <li class="flex gap-2"><span class="text-teal mt-0.5">✓</span> Coordinates → address</li>
+          <li class="flex gap-2"><span class="text-teal mt-0.5">✓</span> Zoom-level aware</li>
+          <li class="flex gap-2"><span class="text-teal mt-0.5">✓</span> 1h Redis cache</li>
+          <li class="flex gap-2"><span class="text-teal mt-0.5">✓</span> p95 &lt; 150ms</li>
+        </ul>
+      </div>
+      <!-- PDPA Compliant -->
+      <div class="bg-surface border border-white/[0.07] rounded-2xl p-6">
+        <div class="w-10 h-10 rounded-xl bg-amber/10 flex items-center justify-center mb-4">
+          <svg class="w-5 h-5 text-amber" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+        </div>
+        <h3 class="text-lg font-bold text-white mb-2">PDPA Compliant</h3>
+        <p class="text-slate-400 text-sm mb-4">No PII stored in logs. Query hash logging only, with enforced Malaysian countrycodes and graceful 5-second timeout.</p>
+        <ul class="space-y-2 text-sm text-slate-400">
+          <li class="flex gap-2"><span class="text-teal mt-0.5">✓</span> No PII in logs</li>
+          <li class="flex gap-2"><span class="text-teal mt-0.5">✓</span> 5-second timeout + BM error</li>
+          <li class="flex gap-2"><span class="text-teal mt-0.5">✓</span> countrycodes=my enforced</li>
+          <li class="flex gap-2"><span class="text-teal mt-0.5">✓</span> Query hash logging only</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Start -->
+  <section class="px-6 pb-16">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-2xl font-bold text-white mb-6">Quick Start</h2>
+      <div class="code-block mb-6">
+        <pre><code>git clone https://github.com/deanz93/arah-geocoding.git
+cd arah-geocoding
+docker compose up nominatim  # starts pre-built image
+curl 'http://localhost:7070/search?q=KLCC&countrycodes=my&format=jsonv2'</code></pre>
+      </div>
+
+      <div class="bg-surface border border-white/[0.07] rounded-2xl p-6">
+        <h3 class="text-lg font-bold text-white mb-3">Live Endpoint</h3>
+        <p class="text-slate-400 text-sm mb-3">Production geocoding endpoint:</p>
+        <div class="code-block">
+          <pre><code>https://geo.arah.my/search?q=...&countrycodes=my&format=jsonv2</code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Architecture -->
+  <section class="px-6 pb-16">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-2xl font-bold text-white mb-6">Architecture Overview</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-surface border border-white/[0.07] rounded-2xl p-6">
+          <h3 class="text-base font-bold text-white mb-4">Data Import Pipeline</h3>
+          <div class="flex flex-col gap-2 text-sm text-slate-400">
+            <div class="flex items-center gap-3 bg-surface2 rounded-lg px-4 py-2.5">
+              <span class="text-teal font-mono text-xs">1</span>
+              <span>Geofabrik Malaysia PBF download</span>
+            </div>
+            <div class="flex items-center justify-center text-slate-600 text-xs">↓</div>
+            <div class="flex items-center gap-3 bg-surface2 rounded-lg px-4 py-2.5">
+              <span class="text-teal font-mono text-xs">2</span>
+              <span>Nominatim first-time import (PostgreSQL/PostGIS)</span>
+            </div>
+            <div class="flex items-center justify-center text-slate-600 text-xs">↓</div>
+            <div class="flex items-center gap-3 bg-surface2 rounded-lg px-4 py-2.5">
+              <span class="text-teal font-mono text-xs">3</span>
+              <span>12-query validation + 16-state coverage</span>
+            </div>
+            <div class="flex items-center justify-center text-slate-600 text-xs">↓</div>
+            <div class="flex items-center gap-3 bg-surface2 rounded-lg px-4 py-2.5">
+              <span class="text-teal font-mono text-xs">4</span>
+              <span>Monthly replication CronJob</span>
+            </div>
+          </div>
+        </div>
+        <div class="bg-surface border border-white/[0.07] rounded-2xl p-6">
+          <h3 class="text-base font-bold text-white mb-4">Runtime Stack</h3>
+          <div class="space-y-3 text-sm">
+            <div class="flex justify-between items-center py-2 border-b border-white/[0.05]">
+              <span class="text-slate-400">Geocoder</span>
+              <span class="text-white font-medium">Nominatim 4.4</span>
+            </div>
+            <div class="flex justify-between items-center py-2 border-b border-white/[0.05]">
+              <span class="text-slate-400">Database</span>
+              <span class="text-white font-medium">PostgreSQL 15 + PostGIS 3</span>
+            </div>
+            <div class="flex justify-between items-center py-2 border-b border-white/[0.05]">
+              <span class="text-slate-400">Cache</span>
+              <span class="text-white font-medium">Redis 7.1</span>
+            </div>
+            <div class="flex justify-between items-center py-2 border-b border-white/[0.05]">
+              <span class="text-slate-400">Monitoring</span>
+              <span class="text-white font-medium">CloudWatch Synthetics</span>
+            </div>
+            <div class="flex justify-between items-center py-2">
+              <span class="text-slate-400">Load testing</span>
+              <span class="text-white font-medium">k6</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/[0.07] bg-surface mt-20 py-10">
+    <div class="max-w-5xl mx-auto px-6 flex flex-wrap justify-between items-center gap-4">
+      <div>
+        <div class="font-black text-lg">Ar<span class="text-teal">ah</span></div>
+        <p class="text-xs text-slate-500 mt-1">Part of the Arah Platform · MIT License</p>
+      </div>
+      <div class="flex gap-6 text-sm text-slate-500">
+        <a href="https://deanz93.github.io/arah/" class="hover:text-white">Main Site</a>
+        <a href="https://github.com/deanz93/arah" class="hover:text-white">Monorepo</a>
+        <a href="https://github.com/deanz93/arah-geocoding" class="hover:text-white">This Repo</a>
+      </div>
+      <p class="text-xs text-slate-600">MIT · Built in Malaysia 🇲🇾</p>
+    </div>
+  </footer>
+
+</body>
+</html>

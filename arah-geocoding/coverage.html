@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Malaysia Coverage — arah-geocoding</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: {
+        'teal': { DEFAULT: '#00D8A0' },
+        'amber': { DEFAULT: '#FF7040' },
+        'bg': '#080D12',
+        'surface': '#111820',
+        'surface2': '#1A2433',
+      }}}
+    }
+  </script>
+  <style>
+    body { font-family: system-ui,-apple-system,sans-serif; }
+    .code-block { background:#0D1117; border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:1.25rem; overflow-x:auto; }
+    pre code { font-family:'Fira Code',monospace; font-size:0.82rem; line-height:1.7; color:#e8f0fa; }
+  </style>
+</head>
+<body class="bg-bg text-slate-200 min-h-screen">
+
+  <!-- Nav -->
+  <nav class="fixed top-0 inset-x-0 z-50 border-b border-white/[0.07] bg-bg/90 backdrop-blur-xl">
+    <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="index.html" class="font-black text-xl text-white">Ar<span class="text-teal">ah</span> <span class="text-slate-500 font-semibold text-base">/ geocoding</span></a>
+      <div class="flex items-center gap-5 text-sm">
+        <a href="index.html" class="text-slate-400 hover:text-white">Home</a>
+        <a href="coverage.html" class="text-white font-semibold">Coverage</a>
+        <a href="roadmap.html" class="text-slate-400 hover:text-white">Roadmap</a>
+        <a href="contributing.html" class="text-slate-400 hover:text-white">Contributing</a>
+        <a href="https://github.com/deanz93/arah-geocoding" class="bg-teal text-bg font-bold px-4 py-1.5 rounded-lg hover:opacity-80">GitHub →</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <section class="pt-32 pb-12 px-6">
+    <div class="max-w-5xl mx-auto">
+      <div class="inline-flex items-center gap-2 bg-surface2 border border-white/[0.08] text-teal text-xs font-semibold px-3 py-1.5 rounded-full mb-6">
+        16 States · Full Coverage
+      </div>
+      <h1 class="text-4xl font-black text-white mb-3">Malaysia Coverage</h1>
+      <p class="text-lg text-slate-400 max-w-2xl">Geocoding coverage across all 16 Malaysian states</p>
+    </div>
+  </section>
+
+  <!-- Coverage Overview -->
+  <section class="px-6 pb-10">
+    <div class="max-w-5xl mx-auto">
+      <div class="bg-surface border border-white/[0.07] rounded-2xl p-6 mb-8">
+        <h2 class="text-xl font-bold text-white mb-3">Coverage Overview</h2>
+        <p class="text-slate-400 text-sm leading-relaxed">Full OSM-based coverage for <strong class="text-white">Peninsular Malaysia</strong>, <strong class="text-white">Sabah</strong>, and <strong class="text-white">Sarawak</strong>. Data refreshed monthly from Geofabrik. All 16 states — including the three Federal Territories (Kuala Lumpur, Putrajaya, Labuan) — are validated after each import using the <code class="bg-surface2 text-teal px-1.5 py-0.5 rounded font-mono text-xs">validate_coverage.py</code> script.</p>
+        <div class="grid grid-cols-3 gap-4 mt-5">
+          <div class="bg-surface2 rounded-xl p-4 text-center">
+            <div class="text-2xl font-black text-teal">13</div>
+            <div class="text-xs text-slate-500 mt-1">States</div>
+          </div>
+          <div class="bg-surface2 rounded-xl p-4 text-center">
+            <div class="text-2xl font-black text-teal">3</div>
+            <div class="text-xs text-slate-500 mt-1">Federal Territories</div>
+          </div>
+          <div class="bg-surface2 rounded-xl p-4 text-center">
+            <div class="text-2xl font-black text-teal">100%</div>
+            <div class="text-xs text-slate-500 mt-1">Coverage</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- States Coverage Table -->
+  <section class="px-6 pb-12">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-2xl font-bold text-white mb-6">States Coverage Table</h2>
+      <div class="bg-surface border border-white/[0.07] rounded-2xl overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b border-white/[0.07] bg-surface2">
+                <th class="text-left px-6 py-4 text-slate-400 font-semibold">State</th>
+                <th class="text-left px-6 py-4 text-slate-400 font-semibold">Capital</th>
+                <th class="text-left px-6 py-4 text-slate-400 font-semibold">Postcode Range</th>
+                <th class="text-left px-6 py-4 text-slate-400 font-semibold">Coverage</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-white/[0.04] hover:bg-surface2/40 transition-colors">
+                <td class="px-6 py-3.5 text-white font-medium">Perlis</td>
+                <td class="px-6 py-3.5 text-slate-400">Kangar</td>
+                <td class="px-6 py-3.5 text-slate-400 font-mono text-xs">01000–02800</td>
+                <td class="px-6 py-3.5"><span class="text-teal text-sm">✅ Full</span></td>
+              </tr>
+              <tr class="border-b border-white/[0.04] hover:bg-surface2/40 transition-colors">
+                <td class="px-6 py-3.5 text-white font-medium">Kedah</td>
+                <td class="px-6 py-3.5 text-slate-400">Alor Setar</td>
+                <td class="px-6 py-3.5 text-slate-400 font-mono text-xs">05000–09810</td>
+                <td class="px-6 py-3.5"><span class="text-teal text-sm">✅ Full</span></td>
+              </tr>
+              <tr class="border-b border-white/[0.04] hover:bg-surface2/40 transition-colors">
+                <td class="px-6 py-3.5 text-white font-medium">Pulau Pinang</td>
+                <td class="px-6 py-3.5 text-slate-400">George Town</td>
+                <td class="px-6 py-3.5 text-slate-400 font-mono text-xs">10000–14400</td>
+                <td class="px-6 py-3.5"><span class="text-teal text-sm">✅ Full</span></td>
+              </tr>
+              <tr class="border-b border-white/[0.04] hover:bg-surface2/40 transition-colors">
+                <td class="px-6 py-3.5 text-white font-medium">Perak</td>
+                <td class="px-6 py-3.5 text-slate-400">Ipoh</td>
+                <td class="px-6 py-3.5 text-slate-400 font-mono text-xs">30000–36810</td>
+                <td class="px-6 py-3.5"><span class="text-teal text-sm">✅ Full</span></td>
+              </tr>
+              <tr class="border-b border-white/[0.04] hover:bg-surface2/40 transition-colors">
+                <td class="px-6 py-3.5 text-white font-medium">Selangor</td>
+                <td class="px-6 py-3.5 text-slate-400">Shah Alam</td>
+                <td class="px-6 py-3.5 text-slate-400 font-mono text-xs">40000–48300</td>
+                <td class="px-6 py-3.5"><span class="text-teal text-sm">✅ Full</span></td>
+              </tr>
+              <tr class="border-b border-white/[0.04] hover:bg-surface2/40 transition-colors">
+                <td class="px-6 py-3.5 text-white font-medium">WP Kuala Lumpur</td>
+                <td class="px-6 py-3.5 text-slate-400">Kuala Lumpur</td>
+                <td class="px-6 py-3.5 text-slate-400 font-mono text-xs">50000–60000</td>
+                <td class="px-6 py-3.5"><span class="text-teal text-sm">✅ Full</span></td>
+              </tr>
+              <tr class="border-b border-white/[0.04] hover:bg-surface2/40 transition-colors">
+                <td class="px-6 py-3.5 text-white font-medium">WP Putrajaya</td>
+                <td class="px-6 py-3.5 text-slate-400">Putrajaya</td>
+                <td class="px-6 py-3.5 text-slate-400 font-mono text-xs">62000–62988</td>
+                <td class="px-6 py-3.5"><span class="text-teal text-sm">✅ Full</span></td>
+              </tr>
+              <tr class="border-b border-white/[0.04] hover:bg-surface2/40 transition-colors">
+                <td class="px-6 py-3.5 text-white font-medium">Negeri Sembilan</td>
+                <td class="px-6 py-3.5 text-slate-400">Seremban</td>
+                <td class="px-6 py-3.5 text-slate-400 font-mono text-xs">70000–73510</td>
+                <td class="px-6 py-3.5"><span class="text-teal text-sm">✅ Full</span></td>
+              </tr>
+              <tr class="border-b border-white/[0.04] hover:bg-surface2/40 transition-colors">
+                <td class="px-6 py-3.5 text-white font-medium">Melaka</td>
+                <td class="px-6 py-3.5 text-slate-400">Melaka Bandar</td>
+                <td class="px-6 py-3.5 text-slate-400 font-mono text-xs">75000–78300</td>
+                <td class="px-6 py-3.5"><span class="text-teal text-sm">✅ Full</span></td>
+              </tr>
+              <tr class="border-b border-white/[0.04] hover:bg-surface2/40 transition-colors">
+                <td class="px-6 py-3.5 text-white font-medium">Johor</td>
+                <td class="px-6 py-3.5 text-slate-400">Johor Bahru</td>
+                <td class="px-6 py-3.5 text-slate-400 font-mono text-xs">79000–86900</td>
+                <td class="px-6 py-3.5"><span class="text-teal text-sm">✅ Full</span></td>
+              </tr>
+              <tr class="border-b border-white/[0.04] hover:bg-surface2/40 transition-colors">
+                <td class="px-6 py-3.5 text-white font-medium">Pahang</td>
+                <td class="px-6 py-3.5 text-slate-400">Kuantan</td>
+                <td class="px-6 py-3.5 text-slate-400 font-mono text-xs">25000–28800</td>
+                <td class="px-6 py-3.5"><span class="text-teal text-sm">✅ Full</span></td>
+              </tr>
+              <tr class="border-b border-white/[0.04] hover:bg-surface2/40 transition-colors">
+                <td class="px-6 py-3.5 text-white font-medium">Terengganu</td>
+                <td class="px-6 py-3.5 text-slate-400">Kuala Terengganu</td>
+                <td class="px-6 py-3.5 text-slate-400 font-mono text-xs">20000–24300</td>
+                <td class="px-6 py-3.5"><span class="text-teal text-sm">✅ Full</span></td>
+              </tr>
+              <tr class="border-b border-white/[0.04] hover:bg-surface2/40 transition-colors">
+                <td class="px-6 py-3.5 text-white font-medium">Kelantan</td>
+                <td class="px-6 py-3.5 text-slate-400">Kota Bharu</td>
+                <td class="px-6 py-3.5 text-slate-400 font-mono text-xs">15000–18500</td>
+                <td class="px-6 py-3.5"><span class="text-teal text-sm">✅ Full</span></td>
+              </tr>
+              <tr class="border-b border-white/[0.04] hover:bg-surface2/40 transition-colors">
+                <td class="px-6 py-3.5 text-white font-medium">Sabah</td>
+                <td class="px-6 py-3.5 text-slate-400">Kota Kinabalu</td>
+                <td class="px-6 py-3.5 text-slate-400 font-mono text-xs">88000–91300</td>
+                <td class="px-6 py-3.5"><span class="text-teal text-sm">✅ Full</span></td>
+              </tr>
+              <tr class="border-b border-white/[0.04] hover:bg-surface2/40 transition-colors">
+                <td class="px-6 py-3.5 text-white font-medium">Sarawak</td>
+                <td class="px-6 py-3.5 text-slate-400">Kuching</td>
+                <td class="px-6 py-3.5 text-slate-400 font-mono text-xs">93000–98859</td>
+                <td class="px-6 py-3.5"><span class="text-teal text-sm">✅ Full</span></td>
+              </tr>
+              <tr class="hover:bg-surface2/40 transition-colors">
+                <td class="px-6 py-3.5 text-white font-medium">WP Labuan</td>
+                <td class="px-6 py-3.5 text-slate-400">Labuan</td>
+                <td class="px-6 py-3.5 text-slate-400 font-mono text-xs">87000–87033</td>
+                <td class="px-6 py-3.5"><span class="text-teal text-sm">✅ Full</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- API Examples -->
+  <section class="px-6 pb-12">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-2xl font-bold text-white mb-6">API Examples</h2>
+      <div class="grid md:grid-cols-2 gap-5">
+        <div>
+          <p class="text-slate-400 text-xs mb-2 font-semibold uppercase tracking-wide">Forward geocode (address → coordinates)</p>
+          <div class="code-block">
+            <pre><code>curl 'http://localhost:7070/search?q=KLCC+Kuala+Lumpur&countrycodes=my&format=jsonv2'</code></pre>
+          </div>
+        </div>
+        <div>
+          <p class="text-slate-400 text-xs mb-2 font-semibold uppercase tracking-wide">Postcode search</p>
+          <div class="code-block">
+            <pre><code>curl 'http://localhost:7070/search?q=50450&countrycodes=my&format=jsonv2'</code></pre>
+          </div>
+        </div>
+        <div>
+          <p class="text-slate-400 text-xs mb-2 font-semibold uppercase tracking-wide">Reverse geocode (coordinates → address)</p>
+          <div class="code-block">
+            <pre><code>curl 'http://localhost:7070/reverse?lat=3.1570&lon=101.7123&format=jsonv2'</code></pre>
+          </div>
+        </div>
+        <div>
+          <p class="text-slate-400 text-xs mb-2 font-semibold uppercase tracking-wide">East Malaysia — Kota Kinabalu</p>
+          <div class="code-block">
+            <pre><code>curl 'http://localhost:7070/search?q=Kota+Kinabalu+Sabah&countrycodes=my&format=jsonv2'</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Response Format -->
+  <section class="px-6 pb-12">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-2xl font-bold text-white mb-6">Response Format</h2>
+      <p class="text-slate-400 text-sm mb-4">Example Malaysian address in <code class="bg-surface2 text-teal px-1.5 py-0.5 rounded font-mono text-xs">jsonv2</code> format:</p>
+      <div class="code-block">
+        <pre><code>{
+  "display_name": "KLCC, Jalan Ampang, Kuala Lumpur City Centre, 50088 Kuala Lumpur, Wilayah Persekutuan Kuala Lumpur",
+  "lat": "3.15784",
+  "lon": "101.71186",
+  "address": {
+    "attraction": "KLCC",
+    "road": "Jalan Ampang",
+    "suburb": "Kuala Lumpur City Centre",
+    "postcode": "50088",
+    "city": "Kuala Lumpur",
+    "state": "Wilayah Persekutuan Kuala Lumpur",
+    "country": "Malaysia",
+    "country_code": "my"
+  }
+}</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- Performance Table -->
+  <section class="px-6 pb-16">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-2xl font-bold text-white mb-6">Performance</h2>
+      <div class="bg-surface border border-white/[0.07] rounded-2xl overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b border-white/[0.07] bg-surface2">
+                <th class="text-left px-6 py-4 text-slate-400 font-semibold">Endpoint</th>
+                <th class="text-left px-6 py-4 text-slate-400 font-semibold">p50</th>
+                <th class="text-left px-6 py-4 text-slate-400 font-semibold">p95</th>
+                <th class="text-left px-6 py-4 text-slate-400 font-semibold">Cache TTL</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="border-b border-white/[0.04]">
+                <td class="px-6 py-4"><code class="bg-surface2 text-teal px-1.5 py-0.5 rounded font-mono text-xs">/search</code> <span class="text-slate-500 text-xs">(forward)</span></td>
+                <td class="px-6 py-4 text-teal font-medium">45ms</td>
+                <td class="px-6 py-4 text-slate-300">220ms</td>
+                <td class="px-6 py-4 text-slate-400">24h</td>
+              </tr>
+              <tr class="border-b border-white/[0.04]">
+                <td class="px-6 py-4"><code class="bg-surface2 text-teal px-1.5 py-0.5 rounded font-mono text-xs">/reverse</code></td>
+                <td class="px-6 py-4 text-teal font-medium">30ms</td>
+                <td class="px-6 py-4 text-slate-300">150ms</td>
+                <td class="px-6 py-4 text-slate-400">1h</td>
+              </tr>
+              <tr class="border-b border-white/[0.04]">
+                <td class="px-6 py-4"><code class="bg-surface2 text-teal px-1.5 py-0.5 rounded font-mono text-xs">/search</code> <span class="text-slate-500 text-xs">(autocomplete)</span></td>
+                <td class="px-6 py-4 text-teal font-medium">20ms</td>
+                <td class="px-6 py-4 text-slate-300">80ms</td>
+                <td class="px-6 py-4 text-slate-400">5min</td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4">Timeout</td>
+                <td class="px-6 py-4 text-slate-500">—</td>
+                <td class="px-6 py-4 text-amber">5s max</td>
+                <td class="px-6 py-4 text-slate-400">Returns 504 + BM error</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/[0.07] bg-surface mt-20 py-10">
+    <div class="max-w-5xl mx-auto px-6 flex flex-wrap justify-between items-center gap-4">
+      <div>
+        <div class="font-black text-lg">Ar<span class="text-teal">ah</span></div>
+        <p class="text-xs text-slate-500 mt-1">Part of the Arah Platform · MIT License</p>
+      </div>
+      <div class="flex gap-6 text-sm text-slate-500">
+        <a href="https://deanz93.github.io/arah/" class="hover:text-white">Main Site</a>
+        <a href="https://github.com/deanz93/arah" class="hover:text-white">Monorepo</a>
+        <a href="https://github.com/deanz93/arah-geocoding" class="hover:text-white">This Repo</a>
+      </div>
+      <p class="text-xs text-slate-600">MIT · Built in Malaysia 🇲🇾</p>
+    </div>
+  </footer>
+
+</body>
+</html>

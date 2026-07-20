@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roadmap — arah-tile-server</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: {
+        'teal': { DEFAULT: '#00D8A0' },
+        'amber': { DEFAULT: '#FF7040' },
+        'bg': '#080D12',
+        'surface': '#111820',
+        'surface2': '#1A2433',
+      }}}
+    }
+  </script>
+  <style>
+    body { font-family: system-ui,-apple-system,sans-serif; }
+    .code-block { background:#0D1117; border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:1.25rem; overflow-x:auto; }
+    pre code { font-family:'Fira Code',monospace; font-size:0.82rem; line-height:1.7; color:#e8f0fa; }
+  </style>
+</head>
+<body class="bg-bg text-slate-200 min-h-screen">
+
+  <!-- Nav -->
+  <nav class="fixed top-0 inset-x-0 z-50 border-b border-white/[0.07] bg-bg/90 backdrop-blur-xl">
+    <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="index.html" class="font-black text-xl text-white">Ar<span class="text-teal">ah</span> <span class="text-slate-500 font-semibold text-base">/ tile-server</span></a>
+      <div class="flex items-center gap-5 text-sm">
+        <a href="index.html" class="text-slate-400 hover:text-white">Home</a>
+        <a href="styles.html" class="text-slate-400 hover:text-white">Map Styles</a>
+        <a href="roadmap.html" class="text-white font-semibold">Roadmap</a>
+        <a href="contributing.html" class="text-slate-400 hover:text-white">Contributing</a>
+        <a href="https://github.com/deanz93/arah-tile-server" class="bg-teal text-bg font-bold px-4 py-1.5 rounded-lg hover:opacity-80">GitHub →</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <section class="pt-32 pb-12 px-6">
+    <div class="max-w-5xl mx-auto">
+      <div class="inline-flex items-center gap-2 bg-surface2 border border-white/[0.08] text-teal text-xs font-semibold px-3 py-1.5 rounded-full mb-6">
+        34 Stories · 5 Epics
+      </div>
+      <h1 class="text-4xl font-black text-white mb-3">Roadmap</h1>
+      <p class="text-lg text-slate-400 max-w-2xl">BMAD story roadmap — 34 stories across 5 epics (TILE-001 to TILE-034)</p>
+    </div>
+  </section>
+
+  <!-- Epic summary bar -->
+  <section class="px-6 pb-10">
+    <div class="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-5 gap-3">
+      <div class="bg-surface border border-white/[0.07] rounded-xl p-4 text-center">
+        <div class="text-2xl font-black text-teal">8</div>
+        <div class="text-xs text-slate-500 mt-1">Data Pipeline</div>
+      </div>
+      <div class="bg-surface border border-white/[0.07] rounded-xl p-4 text-center">
+        <div class="text-2xl font-black text-teal">7</div>
+        <div class="text-xs text-slate-500 mt-1">TileServer Config</div>
+      </div>
+      <div class="bg-surface border border-white/[0.07] rounded-xl p-4 text-center">
+        <div class="text-2xl font-black text-teal">6</div>
+        <div class="text-xs text-slate-500 mt-1">Deployment</div>
+      </div>
+      <div class="bg-surface border border-white/[0.07] rounded-xl p-4 text-center">
+        <div class="text-2xl font-black text-teal">6</div>
+        <div class="text-xs text-slate-500 mt-1">CDN &amp; Perf</div>
+      </div>
+      <div class="bg-surface border border-white/[0.07] rounded-xl p-4 text-center">
+        <div class="text-2xl font-black text-teal">7</div>
+        <div class="text-xs text-slate-500 mt-1">Localisation</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Epic 1: Data Pipeline -->
+  <section class="px-6 pb-10">
+    <div class="max-w-5xl mx-auto">
+      <div class="flex items-center gap-3 mb-5">
+        <span class="w-2 h-8 rounded-full bg-teal inline-block"></span>
+        <div>
+          <h2 class="text-xl font-bold text-white">Epic 1 — Data Pipeline</h2>
+          <p class="text-slate-500 text-xs">TILE-001 to TILE-008 · 8 stories</p>
+        </div>
+      </div>
+      <div class="bg-surface border border-white/[0.07] rounded-2xl overflow-hidden">
+        <div class="divide-y divide-white/[0.04]">
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-teal font-mono text-xs mt-0.5 shrink-0">TILE-001</span>
+            <div><div class="text-white text-sm font-medium">OSM download</div><p class="text-slate-500 text-xs mt-0.5">Geofabrik Malaysia PBF download script with checksum validation</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-teal font-mono text-xs mt-0.5 shrink-0">TILE-002</span>
+            <div><div class="text-white text-sm font-medium">Planetiler Docker build</div><p class="text-slate-500 text-xs mt-0.5">Containerised Planetiler build with Malaysia bbox 99.5,1.0–119.5,7.5</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-teal font-mono text-xs mt-0.5 shrink-0">TILE-003</span>
+            <div><div class="text-white text-sm font-medium">PMTiles validation</div><p class="text-slate-500 text-xs mt-0.5">Smoke-test script: pmtiles verify, tile count, min/max zoom assertions</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-teal font-mono text-xs mt-0.5 shrink-0">TILE-004</span>
+            <div><div class="text-white text-sm font-medium">S3 upload</div><p class="text-slate-500 text-xs mt-0.5">Multipart upload to S3 with server-side encryption and versioning</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-teal font-mono text-xs mt-0.5 shrink-0">TILE-005</span>
+            <div><div class="text-white text-sm font-medium">CloudFront invalidation</div><p class="text-slate-500 text-xs mt-0.5">Post-upload CF path invalidation for tile and style assets</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-teal font-mono text-xs mt-0.5 shrink-0">TILE-006</span>
+            <div><div class="text-white text-sm font-medium">Monthly EventBridge automation</div><p class="text-slate-500 text-xs mt-0.5">EventBridge rule triggering monthly pipeline refresh from Geofabrik</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-teal font-mono text-xs mt-0.5 shrink-0">TILE-007</span>
+            <div><div class="text-white text-sm font-medium">Smoke-test gate</div><p class="text-slate-500 text-xs mt-0.5">Pipeline gate: fail build if validation thresholds not met</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-teal font-mono text-xs mt-0.5 shrink-0">TILE-008</span>
+            <div><div class="text-white text-sm font-medium">Optimization</div><p class="text-slate-500 text-xs mt-0.5">PMTiles output size optimisation, layer pruning, compress config</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Epic 2: TileServer Config -->
+  <section class="px-6 pb-10">
+    <div class="max-w-5xl mx-auto">
+      <div class="flex items-center gap-3 mb-5">
+        <span class="w-2 h-8 rounded-full bg-teal inline-block"></span>
+        <div>
+          <h2 class="text-xl font-bold text-white">Epic 2 — TileServer Config</h2>
+          <p class="text-slate-500 text-xs">TILE-009 to TILE-015 · 7 stories</p>
+        </div>
+      </div>
+      <div class="bg-surface border border-white/[0.07] rounded-2xl overflow-hidden">
+        <div class="divide-y divide-white/[0.04]">
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-teal font-mono text-xs mt-0.5 shrink-0">TILE-009</span>
+            <div><div class="text-white text-sm font-medium">config.json</div><p class="text-slate-500 text-xs mt-0.5">TileServer-GL config.json with PMTiles data source binding</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-teal font-mono text-xs mt-0.5 shrink-0">TILE-010</span>
+            <div><div class="text-white text-sm font-medium">Day style</div><p class="text-slate-500 text-xs mt-0.5">arah-day MapLibre style JSON with light colour palette</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-teal font-mono text-xs mt-0.5 shrink-0">TILE-011</span>
+            <div><div class="text-white text-sm font-medium">Night style</div><p class="text-slate-500 text-xs mt-0.5">arah-night MapLibre style JSON with dark palette and teal route highlight</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-teal font-mono text-xs mt-0.5 shrink-0">TILE-012</span>
+            <div><div class="text-white text-sm font-medium">Bilingual labels</div><p class="text-slate-500 text-xs mt-0.5">BM default, EN and Jawi toggleable label layers with RTL support</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-teal font-mono text-xs mt-0.5 shrink-0">TILE-013</span>
+            <div><div class="text-white text-sm font-medium">Road classification</div><p class="text-slate-500 text-xs mt-0.5">Motorway–street hierarchy with zoom-level visibility and colour scheme</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-teal font-mono text-xs mt-0.5 shrink-0">TILE-014</span>
+            <div><div class="text-white text-sm font-medium">Sprite sheet</div><p class="text-slate-500 text-xs mt-0.5">Generate and serve @1x and @2x sprite sheets for POI icons</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-teal font-mono text-xs mt-0.5 shrink-0">TILE-015</span>
+            <div><div class="text-white text-sm font-medium">Noto Sans fonts</div><p class="text-slate-500 text-xs mt-0.5">Bundle Noto Sans Latin and Noto Sans Arabic for Jawi rendering</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Epic 3: Deployment -->
+  <section class="px-6 pb-10">
+    <div class="max-w-5xl mx-auto">
+      <div class="flex items-center gap-3 mb-5">
+        <span class="w-2 h-8 rounded-full bg-amber inline-block"></span>
+        <div>
+          <h2 class="text-xl font-bold text-white">Epic 3 — Deployment</h2>
+          <p class="text-slate-500 text-xs">TILE-016 to TILE-021 · 6 stories</p>
+        </div>
+      </div>
+      <div class="bg-surface border border-white/[0.07] rounded-2xl overflow-hidden">
+        <div class="divide-y divide-white/[0.04]">
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-amber font-mono text-xs mt-0.5 shrink-0">TILE-016</span>
+            <div><div class="text-white text-sm font-medium">Docker multi-stage build</div><p class="text-slate-500 text-xs mt-0.5">Multi-stage Dockerfile with Node.js 24, non-root uid 1001, minimal image</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-amber font-mono text-xs mt-0.5 shrink-0">TILE-017</span>
+            <div><div class="text-white text-sm font-medium">K8s staging EFS</div><p class="text-slate-500 text-xs mt-0.5">Kubernetes staging deployment with EFS PVC for PMTiles mount</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-amber font-mono text-xs mt-0.5 shrink-0">TILE-018</span>
+            <div><div class="text-white text-sm font-medium">Production 2-replica HPA</div><p class="text-slate-500 text-xs mt-0.5">Production deployment with 2-replica minimum and HPA on CPU/memory</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-amber font-mono text-xs mt-0.5 shrink-0">TILE-019</span>
+            <div><div class="text-white text-sm font-medium">EFS atomic tile update Job</div><p class="text-slate-500 text-xs mt-0.5">K8s Job for atomic EFS tile swap with blue/green directory rename</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-amber font-mono text-xs mt-0.5 shrink-0">TILE-020</span>
+            <div><div class="text-white text-sm font-medium">Canary 5% rollout</div><p class="text-slate-500 text-xs mt-0.5">Argo Rollouts canary strategy with 5% traffic split and automated promotion</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-amber font-mono text-xs mt-0.5 shrink-0">TILE-021</span>
+            <div><div class="text-white text-sm font-medium">k6 load test</div><p class="text-slate-500 text-xs mt-0.5">k6 scenario: 200 VUs, tile endpoint mix, p95 &lt; 200ms gate</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Epic 4: CDN & Performance -->
+  <section class="px-6 pb-10">
+    <div class="max-w-5xl mx-auto">
+      <div class="flex items-center gap-3 mb-5">
+        <span class="w-2 h-8 rounded-full bg-amber inline-block"></span>
+        <div>
+          <h2 class="text-xl font-bold text-white">Epic 4 — CDN &amp; Performance</h2>
+          <p class="text-slate-500 text-xs">TILE-022 to TILE-027 · 6 stories</p>
+        </div>
+      </div>
+      <div class="bg-surface border border-white/[0.07] rounded-2xl overflow-hidden">
+        <div class="divide-y divide-white/[0.04]">
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-amber font-mono text-xs mt-0.5 shrink-0">TILE-022</span>
+            <div><div class="text-white text-sm font-medium">Range request 206</div><p class="text-slate-500 text-xs mt-0.5">HTTP 206 partial content for PMTiles range requests via CloudFront</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-amber font-mono text-xs mt-0.5 shrink-0">TILE-023</span>
+            <div><div class="text-white text-sm font-medium">Cache-Control headers</div><p class="text-slate-500 text-xs mt-0.5">7-day Cache-Control max-age on tile responses; no-cache on style.json</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-amber font-mono text-xs mt-0.5 shrink-0">TILE-024</span>
+            <div><div class="text-white text-sm font-medium">Gzip compression</div><p class="text-slate-500 text-xs mt-0.5">Brotli/gzip encoding for PBF responses; CloudFront compress enabled</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-amber font-mono text-xs mt-0.5 shrink-0">TILE-025</span>
+            <div><div class="text-white text-sm font-medium">Athena log analysis</div><p class="text-slate-500 text-xs mt-0.5">CloudFront access logs to S3, Athena query for cache-hit ratio and p95</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-amber font-mono text-xs mt-0.5 shrink-0">TILE-026</span>
+            <div><div class="text-white text-sm font-medium">Lighthouse p95</div><p class="text-slate-500 text-xs mt-0.5">Lighthouse CI integration targeting p95 tile load under 200ms</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-amber font-mono text-xs mt-0.5 shrink-0">TILE-027</span>
+            <div><div class="text-white text-sm font-medium">CDN pre-warming</div><p class="text-slate-500 text-xs mt-0.5">Lambda function to pre-warm key tile ranges post-deployment</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Epic 5: Localisation & Special -->
+  <section class="px-6 pb-16">
+    <div class="max-w-5xl mx-auto">
+      <div class="flex items-center gap-3 mb-5">
+        <span class="w-2 h-8 rounded-full bg-teal inline-block"></span>
+        <div>
+          <h2 class="text-xl font-bold text-white">Epic 5 — Localisation &amp; Special</h2>
+          <p class="text-slate-500 text-xs">TILE-028 to TILE-034 · 7 stories</p>
+        </div>
+      </div>
+      <div class="bg-surface border border-white/[0.07] rounded-2xl overflow-hidden">
+        <div class="divide-y divide-white/[0.04]">
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-teal font-mono text-xs mt-0.5 shrink-0">TILE-028</span>
+            <div><div class="text-white text-sm font-medium">Jawi RTL</div><p class="text-slate-500 text-xs mt-0.5">Jawi script layer with proper RTL text layout and Noto Sans Arabic font</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-teal font-mono text-xs mt-0.5 shrink-0">TILE-029</span>
+            <div><div class="text-white text-sm font-medium">Satellite evaluation</div><p class="text-slate-500 text-xs mt-0.5">Evaluate satellite/hybrid tile sources for Malaysia coverage and cost</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-teal font-mono text-xs mt-0.5 shrink-0">TILE-030</span>
+            <div><div class="text-white text-sm font-medium">Custom POI PMTiles</div><p class="text-slate-500 text-xs mt-0.5">Separate PMTiles overlay for Arah custom POI layer (petrol, EV, rest areas)</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-teal font-mono text-xs mt-0.5 shrink-0">TILE-031</span>
+            <div><div class="text-white text-sm font-medium">East Malaysia coverage</div><p class="text-slate-500 text-xs mt-0.5">Validate Sabah and Sarawak coverage, road and label completeness</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-teal font-mono text-xs mt-0.5 shrink-0">TILE-032</span>
+            <div><div class="text-white text-sm font-medium">Festive themes</div><p class="text-slate-500 text-xs mt-0.5">Seasonal style overlays for Hari Raya, Deepavali, Chinese New Year</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-teal font-mono text-xs mt-0.5 shrink-0">TILE-033</span>
+            <div><div class="text-white text-sm font-medium">Metadata endpoint</div><p class="text-slate-500 text-xs mt-0.5">GET /metadata returning build date, tile count, zoom range, layer list</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-teal font-mono text-xs mt-0.5 shrink-0">TILE-034</span>
+            <div><div class="text-white text-sm font-medium">Playwright e2e</div><p class="text-slate-500 text-xs mt-0.5">Visual regression tests for day/night styles with Playwright screenshot comparison</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/[0.07] bg-surface mt-20 py-10">
+    <div class="max-w-5xl mx-auto px-6 flex flex-wrap justify-between items-center gap-4">
+      <div>
+        <div class="font-black text-lg">Ar<span class="text-teal">ah</span></div>
+        <p class="text-xs text-slate-500 mt-1">Part of the Arah Platform · MIT License</p>
+      </div>
+      <div class="flex gap-6 text-sm text-slate-500">
+        <a href="https://deanz93.github.io/arah/" class="hover:text-white">Main Site</a>
+        <a href="https://github.com/deanz93/arah" class="hover:text-white">Monorepo</a>
+        <a href="https://github.com/deanz93/arah-tile-server" class="hover:text-white">This Repo</a>
+      </div>
+      <p class="text-xs text-slate-600">MIT · Built in Malaysia 🇲🇾</p>
+    </div>
+  </footer>
+
+</body>
+</html>

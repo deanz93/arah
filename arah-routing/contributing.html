@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contributing · arah-routing</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: {
+        'teal': { DEFAULT: '#00D8A0' },
+        'amber': { DEFAULT: '#FF7040' },
+        'bg': '#080D12',
+        'surface': '#111820',
+        'surface2': '#1A2433',
+      }}}
+    }
+  </script>
+  <style>
+    body { font-family: system-ui,-apple-system,sans-serif; }
+    .code-block { background:#0D1117; border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:1.25rem; overflow-x:auto; }
+    pre code { font-family:'Fira Code',monospace; font-size:0.82rem; line-height:1.7; color:#e8f0fa; }
+  </style>
+</head>
+<body class="bg-bg text-white min-h-screen">
+
+  <!-- Nav -->
+  <nav class="fixed top-0 inset-x-0 z-50 border-b border-white/[0.07] bg-bg/90 backdrop-blur-xl">
+    <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="index.html" class="font-black text-xl text-white">Ar<span class="text-teal">ah</span> <span class="text-slate-500 font-semibold text-base">/ routing</span></a>
+      <div class="flex items-center gap-5 text-sm">
+        <a href="index.html" class="text-slate-400 hover:text-white">Home</a>
+        <a href="architecture.html" class="text-slate-400 hover:text-white">Architecture</a>
+        <a href="roadmap.html" class="text-slate-400 hover:text-white">Roadmap</a>
+        <a href="contributing.html" class="text-white font-semibold">Contributing</a>
+        <a href="https://github.com/deanz93/arah-routing" class="bg-teal text-bg font-bold px-4 py-1.5 rounded-lg hover:opacity-80">GitHub →</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <div class="pt-28 pb-12 px-6 border-b border-white/[0.07]">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-teal text-sm font-semibold mb-3 uppercase tracking-widest">Contributing</div>
+      <h1 class="text-4xl font-black mb-3">Contributing to arah-routing</h1>
+      <p class="text-slate-400 text-lg">Profile authoring, test conventions, and the pre-PR checklist for routing contributors.</p>
+    </div>
+  </div>
+
+  <main class="max-w-5xl mx-auto px-6 py-14 space-y-14">
+
+    <!-- Getting Started -->
+    <section>
+      <h2 class="text-2xl font-black mb-6">Getting Started</h2>
+      <div class="grid md:grid-cols-3 gap-4 mb-8">
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5">
+          <div class="text-teal font-bold text-lg mb-1">1</div>
+          <div class="font-semibold mb-2">Fork &amp; Clone</div>
+          <p class="text-slate-400 text-sm">Fork the repo and clone locally. You need Docker to build and test the engine.</p>
+        </div>
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5">
+          <div class="text-teal font-bold text-lg mb-1">2</div>
+          <div class="font-semibold mb-2">Build Locally</div>
+          <p class="text-slate-400 text-sm">Run <code class="text-teal text-xs">docker build -t arah-routing:local .</code> and start the engine.</p>
+        </div>
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5">
+          <div class="text-teal font-bold text-lg mb-1">3</div>
+          <div class="font-semibold mb-2">Open a PR</div>
+          <p class="text-slate-400 text-sm">Run the smoke tests and performance gate before requesting review.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Branch Naming -->
+    <section>
+      <h2 class="text-2xl font-black mb-4">Branch Naming</h2>
+      <p class="text-slate-400 mb-4">All branches must be tied to a story ID in the format <code class="text-teal bg-teal/10 px-1.5 py-0.5 rounded text-sm">RTE-NNN</code>.</p>
+      <div class="code-block mb-4">
+        <pre><code># Format
+feature/RTE-NNN-short-description
+
+# Examples
+feature/RTE-009-auto-costing-profile
+feature/RTE-023-toll-plaza-database
+feature/RTE-031-blue-green-tile-swap</code></pre>
+      </div>
+    </section>
+
+    <!-- Commit Format -->
+    <section>
+      <h2 class="text-2xl font-black mb-4">Commit Format</h2>
+      <p class="text-slate-400 mb-4">Follow Conventional Commits with the <code class="text-teal bg-teal/10 px-1.5 py-0.5 rounded text-sm">routing</code> scope.</p>
+      <div class="code-block mb-4">
+        <pre><code># Format
+feat(routing): short description of what was done
+
+# Examples
+feat(routing): add auto_toll_free costing profile
+fix(routing): correct motorcycle speed limits on federal roads
+chore(routing): pin Valhalla to v3.4.0
+test(routing): add k6 benchmark for KL-Penang route</code></pre>
+      </div>
+      <div class="overflow-x-auto mt-6">
+        <table class="w-full text-sm border-collapse">
+          <thead>
+            <tr class="border-b border-white/[0.07]">
+              <th class="text-left py-3 px-4 text-slate-400 font-semibold">Prefix</th>
+              <th class="text-left py-3 px-4 text-slate-400 font-semibold">When to use</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-white/[0.04]">
+            <tr><td class="py-3 px-4"><code class="text-teal text-xs">feat(routing):</code></td><td class="py-3 px-4 text-slate-400">New profile, pipeline script, API feature</td></tr>
+            <tr><td class="py-3 px-4"><code class="text-amber text-xs">fix(routing):</code></td><td class="py-3 px-4 text-slate-400">Incorrect speed limits, broken smoke test, pipeline failure</td></tr>
+            <tr><td class="py-3 px-4"><code class="text-slate-400 text-xs">chore(routing):</code></td><td class="py-3 px-4 text-slate-400">Valhalla version pins, dependency updates</td></tr>
+            <tr><td class="py-3 px-4"><code class="text-slate-400 text-xs">test(routing):</code></td><td class="py-3 px-4 text-slate-400">k6 scripts, smoke tests, profile validation tests</td></tr>
+            <tr><td class="py-3 px-4"><code class="text-slate-400 text-xs">docs(routing):</code></td><td class="py-3 px-4 text-slate-400">Profile docs, runbook updates, API examples</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Skills / Docs -->
+    <section>
+      <h2 class="text-2xl font-black mb-4">Required Skills</h2>
+      <p class="text-slate-400 mb-6">Read the relevant skill doc before opening a PR in that area.</p>
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5">
+          <div class="font-mono text-teal text-sm mb-2">docs/profile.md</div>
+          <p class="text-slate-400 text-sm">How to author a Valhalla costing profile, test it locally, and validate against Malaysian road data.</p>
+        </div>
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5">
+          <div class="font-mono text-teal text-sm mb-2">docs/test.md</div>
+          <p class="text-slate-400 text-sm">Running smoke.sh, k6 benchmarks, and the profile validation Python test suite.</p>
+        </div>
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5">
+          <div class="font-mono text-teal text-sm mb-2">docs/pr.md</div>
+          <p class="text-slate-400 text-sm">PR template, approval requirements, and merge strategy for routing changes.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pre-PR Checklist -->
+    <section>
+      <h2 class="text-2xl font-black mb-4">Pre-PR Checklist</h2>
+      <p class="text-slate-400 mb-6">Run all checks locally before pushing. CI enforces them, but local failures save round-trips.</p>
+      <div class="space-y-3">
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5 flex items-start gap-4">
+          <div class="w-5 h-5 border-2 border-teal/40 rounded flex-shrink-0 mt-0.5"></div>
+          <div>
+            <div class="font-semibold text-sm mb-1">Docker build passes</div>
+            <div class="code-block mt-2"><pre><code>docker build -t arah-routing:local .</code></pre></div>
+          </div>
+        </div>
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5 flex items-start gap-4">
+          <div class="w-5 h-5 border-2 border-teal/40 rounded flex-shrink-0 mt-0.5"></div>
+          <div>
+            <div class="font-semibold text-sm mb-1">Smoke tests pass</div>
+            <div class="code-block mt-2"><pre><code>./scripts/smoke.sh http://localhost:8002</code></pre></div>
+            <p class="text-slate-400 text-sm mt-2">Sends 5 test routes (KL → Penang, KL → JB, Petaling Jaya local, motorcycle, pedestrian) and checks status 200 + non-empty geometry.</p>
+          </div>
+        </div>
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5 flex items-start gap-4">
+          <div class="w-5 h-5 border-2 border-teal/40 rounded flex-shrink-0 mt-0.5"></div>
+          <div>
+            <div class="font-semibold text-sm mb-1">Python profile validation tests pass</div>
+            <div class="code-block mt-2"><pre><code>python -m pytest tests/profiles/ -v</code></pre></div>
+            <p class="text-slate-400 text-sm mt-2">Validates each profile JSON schema, speed limit ranges, and that toll avoidance flags are mutually consistent.</p>
+          </div>
+        </div>
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5 flex items-start gap-4">
+          <div class="w-5 h-5 border-2 border-teal/40 rounded flex-shrink-0 mt-0.5"></div>
+          <div>
+            <div class="font-semibold text-sm mb-1">p95 latency &lt; 500ms maintained</div>
+            <div class="code-block mt-2"><pre><code>k6 run scripts/benchmark.js --env HOST=http://localhost:8002</code></pre></div>
+            <p class="text-slate-400 text-sm mt-2">Runs 200 virtual users for 60 seconds. p95 must stay below 500ms. CI fails the PR if this threshold is breached.</p>
+          </div>
+        </div>
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5 flex items-start gap-4">
+          <div class="w-5 h-5 border-2 border-teal/40 rounded flex-shrink-0 mt-0.5"></div>
+          <div>
+            <div class="font-semibold text-sm mb-1">Memory under 5GB at peak load</div>
+            <p class="text-slate-400 text-sm mt-1">Monitor RSS during the k6 run. The Valhalla graph is ~3.8GB; overhead must not push RSS above 5GB. Document measured peak in the PR description.</p>
+          </div>
+        </div>
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5 flex items-start gap-4">
+          <div class="w-5 h-5 border-2 border-teal/40 rounded flex-shrink-0 mt-0.5"></div>
+          <div>
+            <div class="font-semibold text-sm mb-1">Valhalla version pinned</div>
+            <p class="text-slate-400 text-sm mt-1">The Dockerfile must use an exact Valhalla version tag (e.g. <code class="text-teal text-xs">valhalla/valhalla:3.4.0</code>). <code class="text-amber text-xs">:latest</code> is not permitted in the Dockerfile.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Profile Authoring -->
+    <section>
+      <h2 class="text-2xl font-black mb-4">Writing a New Routing Profile</h2>
+      <p class="text-slate-400 mb-6">Profiles live in <code class="text-teal bg-teal/10 px-1.5 py-0.5 rounded text-sm">profiles/</code>. Each is a JSON file passed to Valhalla at startup.</p>
+      <div class="code-block mb-6">
+        <pre><code>{
+  "costing": "auto",
+  "costing_options": {
+    "auto": {
+      "use_tolls": 0.5,          // 0 = avoid, 1 = prefer
+      "use_highways": 1.0,
+      "use_ferry": 0.5,
+      "top_speed": 110           // Malaysia NSE speed limit
+    }
+  },
+  "directions_options": {
+    "language": "ms-MY"          // Bahasa Malaysia
+  }
+}</code></pre>
+      </div>
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5">
+          <div class="font-semibold text-sm mb-3 text-teal">Do</div>
+          <ul class="text-slate-400 text-sm space-y-2">
+            <li class="flex items-start gap-2"><span class="text-teal mt-0.5">▸</span> Set <code class="text-teal text-xs">language: "ms-MY"</code> on all profiles</li>
+            <li class="flex items-start gap-2"><span class="text-teal mt-0.5">▸</span> Use <code class="text-teal text-xs">top_speed: 110</code> for highway profiles</li>
+            <li class="flex items-start gap-2"><span class="text-teal mt-0.5">▸</span> Add a validation test in <code class="text-teal text-xs">tests/profiles/</code></li>
+          </ul>
+        </div>
+        <div class="bg-surface border border-amber/20 rounded-xl p-5">
+          <div class="font-semibold text-sm mb-3 text-amber">Don't</div>
+          <ul class="text-slate-400 text-sm space-y-2">
+            <li class="flex items-start gap-2"><span class="text-amber mt-0.5">▸</span> Use <code class="text-amber text-xs">top_speed</code> above 110 (NSE limit)</li>
+            <li class="flex items-start gap-2"><span class="text-amber mt-0.5">▸</span> Set <code class="text-amber text-xs">use_highways: 0</code> on car profiles (breaks ETA)</li>
+            <li class="flex items-start gap-2"><span class="text-amber mt-0.5">▸</span> Ship a profile without a smoke test route</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/[0.07] bg-surface mt-20 py-10">
+    <div class="max-w-5xl mx-auto px-6 flex flex-wrap justify-between items-center gap-4">
+      <div>
+        <div class="font-black text-lg">Ar<span class="text-teal">ah</span></div>
+        <p class="text-xs text-slate-500 mt-1">Part of the Arah Platform · MIT License</p>
+      </div>
+      <div class="flex gap-6 text-sm text-slate-500">
+        <a href="https://deanz93.github.io/arah/" class="hover:text-white">Main Site</a>
+        <a href="https://github.com/deanz93/arah" class="hover:text-white">Monorepo</a>
+        <a href="https://github.com/deanz93/arah-routing" class="hover:text-white">This Repo</a>
+      </div>
+      <p class="text-xs text-slate-600">MIT · Built in Malaysia 🇲🇾</p>
+    </div>
+  </footer>
+
+</body>
+</html>

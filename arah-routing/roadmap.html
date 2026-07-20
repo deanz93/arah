@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roadmap · arah-routing</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: {
+        'teal': { DEFAULT: '#00D8A0' },
+        'amber': { DEFAULT: '#FF7040' },
+        'bg': '#080D12',
+        'surface': '#111820',
+        'surface2': '#1A2433',
+      }}}
+    }
+  </script>
+  <style>
+    body { font-family: system-ui,-apple-system,sans-serif; }
+    .code-block { background:#0D1117; border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:1.25rem; overflow-x:auto; }
+    pre code { font-family:'Fira Code',monospace; font-size:0.82rem; line-height:1.7; color:#e8f0fa; }
+  </style>
+</head>
+<body class="bg-bg text-white min-h-screen">
+
+  <!-- Nav -->
+  <nav class="fixed top-0 inset-x-0 z-50 border-b border-white/[0.07] bg-bg/90 backdrop-blur-xl">
+    <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="index.html" class="font-black text-xl text-white">Ar<span class="text-teal">ah</span> <span class="text-slate-500 font-semibold text-base">/ routing</span></a>
+      <div class="flex items-center gap-5 text-sm">
+        <a href="index.html" class="text-slate-400 hover:text-white">Home</a>
+        <a href="architecture.html" class="text-slate-400 hover:text-white">Architecture</a>
+        <a href="roadmap.html" class="text-white font-semibold">Roadmap</a>
+        <a href="contributing.html" class="text-slate-400 hover:text-white">Contributing</a>
+        <a href="https://github.com/deanz93/arah-routing" class="bg-teal text-bg font-bold px-4 py-1.5 rounded-lg hover:opacity-80">GitHub →</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <div class="pt-28 pb-12 px-6 border-b border-white/[0.07]">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-teal text-sm font-semibold mb-3 uppercase tracking-widest">Roadmap</div>
+      <h1 class="text-4xl font-black mb-3">Story Roadmap</h1>
+      <p class="text-slate-400 text-lg">34 stories across 5 epics — all Todo</p>
+      <div class="mt-6 flex items-center gap-4">
+        <div class="flex-1 max-w-xs bg-surface2 rounded-full h-2">
+          <div class="bg-teal h-2 rounded-full w-0"></div>
+        </div>
+        <span class="text-slate-400 text-sm">0 / 34 complete</span>
+      </div>
+    </div>
+  </div>
+
+  <main class="max-w-5xl mx-auto px-6 py-14 space-y-8">
+
+    <!-- Epic 1 -->
+    <div class="bg-surface border border-white/[0.07] rounded-2xl overflow-hidden">
+      <div class="p-6 border-b border-white/[0.07]">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-3 mb-2">
+              <span class="text-xs font-bold bg-surface2 border border-white/10 px-2 py-0.5 rounded text-slate-400">EPIC 1</span>
+              <span class="text-xs text-slate-500">RTE-001 – RTE-008</span>
+            </div>
+            <h3 class="text-lg font-bold">Data Pipeline</h3>
+            <p class="text-slate-400 text-sm mt-1">OSM download automation, Valhalla tile build, graph validation, EFS upload, and monthly refresh scheduling.</p>
+          </div>
+          <div class="text-right flex-shrink-0">
+            <div class="text-2xl font-black text-slate-600">8</div>
+            <div class="text-xs text-slate-500">stories</div>
+          </div>
+        </div>
+        <div class="mt-4 flex items-center gap-3">
+          <div class="flex-1 bg-surface2 rounded-full h-1.5">
+            <div class="bg-slate-600 h-1.5 rounded-full w-0"></div>
+          </div>
+          <span class="text-xs text-slate-500">0%</span>
+        </div>
+      </div>
+      <div class="p-6 grid sm:grid-cols-2 gap-2">
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">RTE-001 · Geofabrik OSM download script</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">RTE-002 · Malaysia bbox clip + validation</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">RTE-003 · Valhalla tile builder Docker image</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">RTE-004 · Graph size + road count validation</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">RTE-005 · EFS upload with atomic mv swap</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">RTE-006 · GitHub Actions monthly refresh</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">RTE-007 · Smoke test after tile swap</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">RTE-008 · Rollback on failed smoke test</span></div>
+      </div>
+    </div>
+
+    <!-- Epic 2 -->
+    <div class="bg-surface border border-white/[0.07] rounded-2xl overflow-hidden">
+      <div class="p-6 border-b border-white/[0.07]">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-3 mb-2">
+              <span class="text-xs font-bold bg-surface2 border border-white/10 px-2 py-0.5 rounded text-slate-400">EPIC 2</span>
+              <span class="text-xs text-slate-500">RTE-009 – RTE-015</span>
+            </div>
+            <h3 class="text-lg font-bold">Routing Profiles</h3>
+            <p class="text-slate-400 text-sm mt-1">Car, motorcycle, pedestrian, bicycle, lorry, toll-free, and highway-free costing profiles tuned for Malaysian roads.</p>
+          </div>
+          <div class="text-right flex-shrink-0">
+            <div class="text-2xl font-black text-slate-600">7</div>
+            <div class="text-xs text-slate-500">stories</div>
+          </div>
+        </div>
+        <div class="mt-4 flex items-center gap-3">
+          <div class="flex-1 bg-surface2 rounded-full h-1.5">
+            <div class="bg-slate-600 h-1.5 rounded-full w-0"></div>
+          </div>
+          <span class="text-xs text-slate-500">0%</span>
+        </div>
+      </div>
+      <div class="p-6 grid sm:grid-cols-2 gap-2">
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">RTE-009 · auto (car) costing profile</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">RTE-010 · auto_toll_free profile</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">RTE-011 · motorcycle costing profile</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">RTE-012 · pedestrian costing profile (BM)</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">RTE-013 · bicycle costing profile</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">RTE-014 · truck (lorry) costing profile</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">RTE-015 · auto_highway_free profile</span></div>
+      </div>
+    </div>
+
+    <!-- Epic 3 -->
+    <div class="bg-surface border border-white/[0.07] rounded-2xl overflow-hidden">
+      <div class="p-6 border-b border-white/[0.07]">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-3 mb-2">
+              <span class="text-xs font-bold bg-surface2 border border-white/10 px-2 py-0.5 rounded text-slate-400">EPIC 3</span>
+              <span class="text-xs text-slate-500">RTE-016 – RTE-022</span>
+            </div>
+            <h3 class="text-lg font-bold">Performance</h3>
+            <p class="text-slate-400 text-sm mt-1">k6 benchmark suite, Redis route cache, HPA configuration, memory profiling, and gzip compression.</p>
+          </div>
+          <div class="text-right flex-shrink-0">
+            <div class="text-2xl font-black text-slate-600">7</div>
+            <div class="text-xs text-slate-500">stories</div>
+          </div>
+        </div>
+        <div class="mt-4 flex items-center gap-3">
+          <div class="flex-1 bg-surface2 rounded-full h-1.5">
+            <div class="bg-slate-600 h-1.5 rounded-full w-0"></div>
+          </div>
+          <span class="text-xs text-slate-500">0%</span>
+        </div>
+      </div>
+      <div class="p-6 grid sm:grid-cols-2 gap-2">
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">RTE-016 · k6 benchmark suite for all routes</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">RTE-017 · Redis route cache (5min TTL)</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">RTE-018 · HPA on CPU 70% threshold</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">RTE-019 · Memory profiling + heap limit</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">RTE-020 · gzip response compression</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">RTE-021 · p95 regression gate in CI</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">RTE-022 · Concurrent request load test (200 VU)</span></div>
+      </div>
+    </div>
+
+    <!-- Epic 4 -->
+    <div class="bg-surface border border-white/[0.07] rounded-2xl overflow-hidden">
+      <div class="p-6 border-b border-white/[0.07]">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-3 mb-2">
+              <span class="text-xs font-bold bg-surface2 border border-white/10 px-2 py-0.5 rounded text-slate-400">EPIC 4</span>
+              <span class="text-xs text-slate-500">RTE-023 – RTE-028</span>
+            </div>
+            <h3 class="text-lg font-bold">Malaysian Features</h3>
+            <p class="text-slate-400 text-sm mt-1">Toll plaza database, flood zone avoidance, Malaysia speed limit audit, Balik Kampung traffic factors.</p>
+          </div>
+          <div class="text-right flex-shrink-0">
+            <div class="text-2xl font-black text-slate-600">6</div>
+            <div class="text-xs text-slate-500">stories</div>
+          </div>
+        </div>
+        <div class="mt-4 flex items-center gap-3">
+          <div class="flex-1 bg-surface2 rounded-full h-1.5">
+            <div class="bg-slate-600 h-1.5 rounded-full w-0"></div>
+          </div>
+          <span class="text-xs text-slate-500">0%</span>
+        </div>
+      </div>
+      <div class="p-6 grid sm:grid-cols-2 gap-2">
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">RTE-023 · Malaysia toll plaza GeoJSON database</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">RTE-024 · Toll cost estimation per vehicle type</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">RTE-025 · Flood zone avoidance layer (JPS data)</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">RTE-026 · Malaysia speed limit audit + corrections</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">RTE-027 · Balik Kampung traffic multiplier (festive)</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">RTE-028 · Bahasa Malaysia manoeuvre strings</span></div>
+      </div>
+    </div>
+
+    <!-- Epic 5 -->
+    <div class="bg-surface border border-white/[0.07] rounded-2xl overflow-hidden">
+      <div class="p-6 border-b border-white/[0.07]">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-3 mb-2">
+              <span class="text-xs font-bold bg-surface2 border border-white/10 px-2 py-0.5 rounded text-slate-400">EPIC 5</span>
+              <span class="text-xs text-slate-500">RTE-029 – RTE-034</span>
+            </div>
+            <h3 class="text-lg font-bold">Operations</h3>
+            <p class="text-slate-400 text-sm mt-1">Staging deploy, production rolling update, blue/green tile swap, Prometheus metrics, and runbooks.</p>
+          </div>
+          <div class="text-right flex-shrink-0">
+            <div class="text-2xl font-black text-slate-600">6</div>
+            <div class="text-xs text-slate-500">stories</div>
+          </div>
+        </div>
+        <div class="mt-4 flex items-center gap-3">
+          <div class="flex-1 bg-surface2 rounded-full h-1.5">
+            <div class="bg-slate-600 h-1.5 rounded-full w-0"></div>
+          </div>
+          <span class="text-xs text-slate-500">0%</span>
+        </div>
+      </div>
+      <div class="p-6 grid sm:grid-cols-2 gap-2">
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">RTE-029 · Staging EKS deploy workflow</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">RTE-030 · Production rolling update (zero-downtime)</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">RTE-031 · Blue/green tile swap procedure</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">RTE-032 · Prometheus metrics (req/s, latency)</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">RTE-033 · Memory OOM alert + restart policy</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">RTE-034 · Routing engine upgrade runbook</span></div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/[0.07] bg-surface mt-20 py-10">
+    <div class="max-w-5xl mx-auto px-6 flex flex-wrap justify-between items-center gap-4">
+      <div>
+        <div class="font-black text-lg">Ar<span class="text-teal">ah</span></div>
+        <p class="text-xs text-slate-500 mt-1">Part of the Arah Platform · MIT License</p>
+      </div>
+      <div class="flex gap-6 text-sm text-slate-500">
+        <a href="https://deanz93.github.io/arah/" class="hover:text-white">Main Site</a>
+        <a href="https://github.com/deanz93/arah" class="hover:text-white">Monorepo</a>
+        <a href="https://github.com/deanz93/arah-routing" class="hover:text-white">This Repo</a>
+      </div>
+      <p class="text-xs text-slate-600">MIT · Built in Malaysia 🇲🇾</p>
+    </div>
+  </footer>
+
+</body>
+</html>

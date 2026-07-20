@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Functions Reference · arah-functions</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: {
+        'teal': { DEFAULT: '#00D8A0' },
+        'amber': { DEFAULT: '#FF7040' },
+        'bg': '#080D12', 'surface': '#111820', 'surface2': '#1A2433',
+      }}}
+    }
+  </script>
+  <style>
+    body { font-family: system-ui,-apple-system,sans-serif; }
+    .code-block { background:#0D1117; border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:1.25rem; overflow-x:auto; }
+    pre code { font-family:'Fira Code',monospace; font-size:0.82rem; line-height:1.7; color:#e8f0fa; }
+    .trigger-firestore { color:#00D8A0; }
+    .trigger-scheduled { color:#FF7040; }
+    .trigger-callable  { color:#7B7BFF; }
+    .trigger-auth      { color:#FF5050; }
+    .trigger-pubsub    { color:#FFD700; }
+  </style>
+</head>
+<body class="bg-bg text-white min-h-screen">
+
+  <!-- Nav -->
+  <nav class="fixed top-0 inset-x-0 z-50 border-b border-white/[0.07] bg-bg/90 backdrop-blur-xl">
+    <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="index.html" class="font-black text-xl tracking-tight text-white">Ar<span class="text-teal">ah</span> <span class="text-slate-500 font-semibold text-base">/ Functions</span></a>
+      <div class="flex items-center gap-5 text-sm">
+        <a href="index.html" class="text-slate-400 hover:text-white">Home</a>
+        <a href="functions.html" class="text-white font-semibold">Functions</a>
+        <a href="roadmap.html" class="text-slate-400 hover:text-white">Roadmap</a>
+        <a href="contributing.html" class="text-slate-400 hover:text-white">Contributing</a>
+        <a href="https://github.com/deanz93/arah-functions" class="bg-teal text-bg font-bold px-4 py-1.5 rounded-lg hover:opacity-80">GitHub →</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="pt-24 pb-20 max-w-5xl mx-auto px-6">
+    <!-- Header -->
+    <div class="py-10 border-b border-white/[0.07] mb-8">
+      <h1 class="text-4xl font-black mb-2">Cloud Functions Reference</h1>
+      <p class="text-slate-400 text-lg">All Firebase Cloud Functions v2 deployed in this repo</p>
+    </div>
+
+    <!-- Legend -->
+    <div class="mb-10 flex flex-wrap gap-3">
+      <div class="flex items-center gap-2 bg-surface border border-white/[0.07] rounded-lg px-3 py-1.5 text-xs">
+        <span class="w-2 h-2 rounded-full bg-teal inline-block"></span>
+        <span class="text-slate-400">Firestore trigger</span>
+      </div>
+      <div class="flex items-center gap-2 bg-surface border border-white/[0.07] rounded-lg px-3 py-1.5 text-xs">
+        <span class="w-2 h-2 rounded-full bg-amber inline-block"></span>
+        <span class="text-slate-400">Scheduled</span>
+      </div>
+      <div class="flex items-center gap-2 bg-surface border border-white/[0.07] rounded-lg px-3 py-1.5 text-xs">
+        <span class="w-2 h-2 rounded-full bg-purple-400 inline-block"></span>
+        <span class="text-slate-400">HTTP callable</span>
+      </div>
+      <div class="flex items-center gap-2 bg-surface border border-white/[0.07] rounded-lg px-3 py-1.5 text-xs">
+        <span class="w-2 h-2 rounded-full bg-red-400 inline-block"></span>
+        <span class="text-slate-400">Auth trigger</span>
+      </div>
+      <div class="flex items-center gap-2 bg-surface border border-white/[0.07] rounded-lg px-3 py-1.5 text-xs">
+        <span class="w-2 h-2 rounded-full bg-yellow-400 inline-block"></span>
+        <span class="text-slate-400">Pub/Sub</span>
+      </div>
+    </div>
+
+    <!-- Group 1: Report Lifecycle -->
+    <section class="mb-10">
+      <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+        <span class="w-1 h-5 bg-teal rounded-full inline-block"></span>
+        Report Lifecycle Functions
+      </h2>
+      <div class="space-y-3">
+
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5">
+          <div class="flex flex-wrap items-start justify-between gap-3 mb-3">
+            <div class="flex items-center gap-3">
+              <span class="w-2.5 h-2.5 rounded-full bg-teal flex-shrink-0 mt-0.5"></span>
+              <code class="text-base font-bold text-white">onReportCreated</code>
+            </div>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="bg-surface2 px-2 py-0.5 rounded font-mono text-slate-400">Firestore trigger</span>
+              <span class="bg-surface2 px-2 py-0.5 rounded font-mono text-slate-400">reports/{id}</span>
+              <span class="bg-surface2 px-2 py-0.5 rounded text-slate-500">timeout: 60s</span>
+              <span class="bg-surface2 px-2 py-0.5 rounded text-slate-500">maxInstances: 50</span>
+            </div>
+          </div>
+          <p class="text-sm text-slate-400">Triggered when a new document is created in <code class="text-slate-300">reports/{id}</code>. Broadcasts to nearby WebSocket clients via Redis pub/sub. Triggers FCM push notifications to users within a 5km radius of the report location.</p>
+        </div>
+
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5">
+          <div class="flex flex-wrap items-start justify-between gap-3 mb-3">
+            <div class="flex items-center gap-3">
+              <span class="w-2.5 h-2.5 rounded-full bg-teal flex-shrink-0 mt-0.5"></span>
+              <code class="text-base font-bold text-white">onVoteUpdated</code>
+            </div>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="bg-surface2 px-2 py-0.5 rounded font-mono text-slate-400">Firestore trigger</span>
+              <span class="bg-surface2 px-2 py-0.5 rounded font-mono text-slate-400">reports/{id}/votes/{uid}</span>
+              <span class="bg-surface2 px-2 py-0.5 rounded text-slate-500">timeout: 30s</span>
+              <span class="bg-surface2 px-2 py-0.5 rounded text-slate-500">maxInstances: 100</span>
+            </div>
+          </div>
+          <p class="text-sm text-slate-400">Aggregates vote counts on the parent report document using Firestore transactions. Automatically expires (soft-deletes) a report when net downvotes reach −3 or lower.</p>
+        </div>
+
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5">
+          <div class="flex flex-wrap items-start justify-between gap-3 mb-3">
+            <div class="flex items-center gap-3">
+              <span class="w-2.5 h-2.5 rounded-full bg-amber flex-shrink-0 mt-0.5"></span>
+              <code class="text-base font-bold text-white">onReportExpired</code>
+            </div>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="bg-surface2 px-2 py-0.5 rounded font-mono text-slate-400">Scheduled</span>
+              <span class="bg-surface2 px-2 py-0.5 rounded font-mono text-slate-400">every 5 min</span>
+              <span class="bg-surface2 px-2 py-0.5 rounded text-slate-500">timeout: 120s</span>
+              <span class="bg-surface2 px-2 py-0.5 rounded text-slate-500">maxInstances: 1</span>
+            </div>
+          </div>
+          <p class="text-sm text-slate-400">Scans the active reports index for entries past their TTL. Removes them from the active geospatial index, archives the full document to <code class="text-slate-300">reports_history/{id}</code>, and emits a <code class="text-slate-300">report:expired</code> WebSocket event.</p>
+        </div>
+
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5">
+          <div class="flex flex-wrap items-start justify-between gap-3 mb-3">
+            <div class="flex items-center gap-3">
+              <span class="w-2.5 h-2.5 rounded-full bg-purple-400 flex-shrink-0 mt-0.5"></span>
+              <code class="text-base font-bold text-white">moderateReport</code>
+            </div>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="bg-surface2 px-2 py-0.5 rounded font-mono text-slate-400">HTTP callable</span>
+              <span class="bg-surface2 px-2 py-0.5 rounded font-mono text-slate-400">admin only</span>
+              <span class="bg-surface2 px-2 py-0.5 rounded text-slate-500">timeout: 30s</span>
+              <span class="bg-surface2 px-2 py-0.5 rounded text-slate-500">maxInstances: 10</span>
+            </div>
+          </div>
+          <p class="text-sm text-slate-400">Admin-callable function to approve, reject, or escalate a report with a reason string. Restricted to users with the <code class="text-slate-300">admin</code> custom claim. Updates report status and triggers downstream notifications.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Group 2: User & Gamification -->
+    <section class="mb-10">
+      <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+        <span class="w-1 h-5 bg-purple-400 rounded-full inline-block"></span>
+        User &amp; Gamification
+      </h2>
+      <div class="space-y-3">
+
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5">
+          <div class="flex flex-wrap items-start justify-between gap-3 mb-3">
+            <div class="flex items-center gap-3">
+              <span class="w-2.5 h-2.5 rounded-full bg-teal flex-shrink-0 mt-0.5"></span>
+              <code class="text-base font-bold text-white">onReportVerified</code>
+            </div>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="bg-surface2 px-2 py-0.5 rounded font-mono text-slate-400">Firestore trigger</span>
+              <span class="bg-surface2 px-2 py-0.5 rounded font-mono text-slate-400">reports/{id}</span>
+              <span class="bg-surface2 px-2 py-0.5 rounded text-slate-500">timeout: 30s</span>
+              <span class="bg-surface2 px-2 py-0.5 rounded text-slate-500">maxInstances: 50</span>
+            </div>
+          </div>
+          <p class="text-sm text-slate-400">Fires when a report's <code class="text-slate-300">status</code> field transitions to <code class="text-slate-300">verified</code>. Awards XP to the submitting user and evaluates badge unlock thresholds. Updates <code class="text-slate-300">users/{uid}/stats</code>.</p>
+        </div>
+
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5">
+          <div class="flex flex-wrap items-start justify-between gap-3 mb-3">
+            <div class="flex items-center gap-3">
+              <span class="w-2.5 h-2.5 rounded-full bg-amber flex-shrink-0 mt-0.5"></span>
+              <code class="text-base font-bold text-white">calculateStreak</code>
+            </div>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="bg-surface2 px-2 py-0.5 rounded font-mono text-slate-400">Scheduled</span>
+              <span class="bg-surface2 px-2 py-0.5 rounded font-mono text-slate-400">daily 00:00 MYT</span>
+              <span class="bg-surface2 px-2 py-0.5 rounded text-slate-500">timeout: 300s</span>
+              <span class="bg-surface2 px-2 py-0.5 rounded text-slate-500">maxInstances: 1</span>
+            </div>
+          </div>
+          <p class="text-sm text-slate-400">Nightly job that computes contribution streaks for all active users. Resets streaks for users with no activity in the past 24h. Runs at midnight Malaysian time (UTC+8).</p>
+        </div>
+
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5">
+          <div class="flex flex-wrap items-start justify-between gap-3 mb-3">
+            <div class="flex items-center gap-3">
+              <span class="w-2.5 h-2.5 rounded-full bg-purple-400 flex-shrink-0 mt-0.5"></span>
+              <code class="text-base font-bold text-white">getUserStats</code>
+            </div>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="bg-surface2 px-2 py-0.5 rounded font-mono text-slate-400">HTTP callable</span>
+              <span class="bg-surface2 px-2 py-0.5 rounded text-slate-500">timeout: 15s</span>
+              <span class="bg-surface2 px-2 py-0.5 rounded text-slate-500">maxInstances: 100</span>
+            </div>
+          </div>
+          <p class="text-sm text-slate-400">Returns the calling user's leaderboard position, XP total, current streak, and full badge list. Reads from pre-computed stats in <code class="text-slate-300">users/{uid}/stats</code> for sub-100ms response.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Group 3: Notifications -->
+    <section class="mb-10">
+      <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+        <span class="w-1 h-5 bg-amber rounded-full inline-block"></span>
+        Notifications
+      </h2>
+      <div class="space-y-3">
+
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5">
+          <div class="flex flex-wrap items-start justify-between gap-3 mb-3">
+            <div class="flex items-center gap-3">
+              <span class="w-2.5 h-2.5 rounded-full bg-purple-400 flex-shrink-0 mt-0.5"></span>
+              <code class="text-base font-bold text-white">sendFloodAlert</code>
+            </div>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="bg-surface2 px-2 py-0.5 rounded font-mono text-slate-400">HTTP callable</span>
+              <span class="bg-surface2 px-2 py-0.5 rounded font-mono text-slate-400">admin only</span>
+              <span class="bg-surface2 px-2 py-0.5 rounded text-slate-500">timeout: 60s</span>
+              <span class="bg-surface2 px-2 py-0.5 rounded text-slate-500">maxInstances: 5</span>
+            </div>
+          </div>
+          <p class="text-sm text-slate-400">Admin-only callable that broadcasts an FCM emergency alert to all users whose <code class="text-slate-300">locationState</code> matches the specified flood zone ID. Uses FCM topic messaging for scale.</p>
+        </div>
+
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5">
+          <div class="flex flex-wrap items-start justify-between gap-3 mb-3">
+            <div class="flex items-center gap-3">
+              <span class="w-2.5 h-2.5 rounded-full bg-teal flex-shrink-0 mt-0.5"></span>
+              <code class="text-base font-bold text-white">notifyNearbyDrivers</code>
+            </div>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="bg-surface2 px-2 py-0.5 rounded font-mono text-slate-400">Firestore trigger</span>
+              <span class="bg-surface2 px-2 py-0.5 rounded font-mono text-slate-400">reports/{id}</span>
+              <span class="bg-surface2 px-2 py-0.5 rounded text-slate-500">timeout: 30s</span>
+              <span class="bg-surface2 px-2 py-0.5 rounded text-slate-500">maxInstances: 50</span>
+            </div>
+          </div>
+          <p class="text-sm text-slate-400">FCM batch send to active drivers within 5km of a newly created or verified incident. Queries geohash index to find nearby FCM tokens, batches up to 500 tokens per FCM multicast call.</p>
+        </div>
+
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5">
+          <div class="flex flex-wrap items-start justify-between gap-3 mb-3">
+            <div class="flex items-center gap-3">
+              <span class="w-2.5 h-2.5 rounded-full bg-yellow-400 flex-shrink-0 mt-0.5"></span>
+              <code class="text-base font-bold text-white">sendPrayerReminder</code>
+            </div>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="bg-surface2 px-2 py-0.5 rounded font-mono text-slate-400">Pub/Sub</span>
+              <span class="bg-surface2 px-2 py-0.5 rounded font-mono text-slate-400">prayer-reminders topic</span>
+              <span class="bg-surface2 px-2 py-0.5 rounded text-slate-500">timeout: 60s</span>
+              <span class="bg-surface2 px-2 py-0.5 rounded text-slate-500">maxInstances: 10</span>
+            </div>
+          </div>
+          <p class="text-sm text-slate-400">Subscribed to the <code class="text-slate-300">prayer-reminders</code> Pub/Sub topic. Sends a pre-prayer FCM notification to users who have opted in, segmented by Malaysian state (each state has different prayer times).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Group 4: Data Operations -->
+    <section class="mb-10">
+      <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+        <span class="w-1 h-5 bg-blue-400 rounded-full inline-block"></span>
+        Data Operations
+      </h2>
+      <div class="space-y-3">
+
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5">
+          <div class="flex flex-wrap items-start justify-between gap-3 mb-3">
+            <div class="flex items-center gap-3">
+              <span class="w-2.5 h-2.5 rounded-full bg-amber flex-shrink-0 mt-0.5"></span>
+              <code class="text-base font-bold text-white">weeklyAnalyticsRollup</code>
+            </div>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="bg-surface2 px-2 py-0.5 rounded font-mono text-slate-400">Scheduled</span>
+              <span class="bg-surface2 px-2 py-0.5 rounded font-mono text-slate-400">every Sunday 01:00 MYT</span>
+              <span class="bg-surface2 px-2 py-0.5 rounded text-slate-500">timeout: 540s</span>
+              <span class="bg-surface2 px-2 py-0.5 rounded text-slate-500">maxInstances: 1</span>
+            </div>
+          </div>
+          <p class="text-sm text-slate-400">Weekly aggregation job that rolls up report statistics per Malaysian state and per report type into <code class="text-slate-300">analytics/weekly/{YYYY-WW}</code>. Powers the admin dashboard charts.</p>
+        </div>
+
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5">
+          <div class="flex flex-wrap items-start justify-between gap-3 mb-3">
+            <div class="flex items-center gap-3">
+              <span class="w-2.5 h-2.5 rounded-full bg-amber flex-shrink-0 mt-0.5"></span>
+              <code class="text-base font-bold text-white">cleanExpiredData</code>
+            </div>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="bg-surface2 px-2 py-0.5 rounded font-mono text-slate-400">Scheduled</span>
+              <span class="bg-surface2 px-2 py-0.5 rounded font-mono text-slate-400">daily 03:00 MYT</span>
+              <span class="bg-surface2 px-2 py-0.5 rounded text-slate-500">timeout: 540s</span>
+              <span class="bg-surface2 px-2 py-0.5 rounded text-slate-500">maxInstances: 1</span>
+            </div>
+          </div>
+          <p class="text-sm text-slate-400">Purges GPS ping documents older than 24 hours from <code class="text-slate-300">gps_pings</code> and archived report documents older than 7 days from <code class="text-slate-300">reports_history</code>. PDPA data retention compliance.</p>
+        </div>
+
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5">
+          <div class="flex flex-wrap items-start justify-between gap-3 mb-3">
+            <div class="flex items-center gap-3">
+              <span class="w-2.5 h-2.5 rounded-full bg-purple-400 flex-shrink-0 mt-0.5"></span>
+              <code class="text-base font-bold text-white">exportUserData</code>
+            </div>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="bg-surface2 px-2 py-0.5 rounded font-mono text-slate-400">HTTP callable</span>
+              <span class="bg-surface2 px-2 py-0.5 rounded text-slate-500">timeout: 300s</span>
+              <span class="bg-surface2 px-2 py-0.5 rounded text-slate-500">maxInstances: 20</span>
+            </div>
+          </div>
+          <p class="text-sm text-slate-400">PDPA Article 30 compliant data export. Collects all user data (profile, reports, votes, GPS history) into a JSON ZIP file, uploads to Cloud Storage, and returns a signed download URL valid for 24 hours.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Group 5: Admin & Moderation -->
+    <section class="mb-10">
+      <h2 class="text-lg font-bold mb-4 flex items-center gap-2">
+        <span class="w-1 h-5 bg-red-400 rounded-full inline-block"></span>
+        Admin &amp; Moderation
+      </h2>
+      <div class="space-y-3">
+
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5">
+          <div class="flex flex-wrap items-start justify-between gap-3 mb-3">
+            <div class="flex items-center gap-3">
+              <span class="w-2.5 h-2.5 rounded-full bg-red-400 flex-shrink-0 mt-0.5"></span>
+              <code class="text-base font-bold text-white">onUserDeleted</code>
+            </div>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="bg-surface2 px-2 py-0.5 rounded font-mono text-slate-400">Auth trigger</span>
+              <span class="bg-surface2 px-2 py-0.5 rounded font-mono text-slate-400">user.delete</span>
+              <span class="bg-surface2 px-2 py-0.5 rounded text-slate-500">timeout: 300s</span>
+              <span class="bg-surface2 px-2 py-0.5 rounded text-slate-500">maxInstances: 20</span>
+            </div>
+          </div>
+          <p class="text-sm text-slate-400">Triggered by Firebase Auth user deletion event. Performs PDPA-compliant cascade delete: removes <code class="text-slate-300">users/{uid}</code>, all authored reports, all votes, GPS ping history, and analytics associations. Uses batched writes for atomicity.</p>
+        </div>
+
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5">
+          <div class="flex flex-wrap items-start justify-between gap-3 mb-3">
+            <div class="flex items-center gap-3">
+              <span class="w-2.5 h-2.5 rounded-full bg-amber flex-shrink-0 mt-0.5"></span>
+              <code class="text-base font-bold text-white">generateModerationReport</code>
+            </div>
+            <div class="flex flex-wrap gap-2 text-xs">
+              <span class="bg-surface2 px-2 py-0.5 rounded font-mono text-slate-400">Scheduled</span>
+              <span class="bg-surface2 px-2 py-0.5 rounded font-mono text-slate-400">every Monday 08:00 MYT</span>
+              <span class="bg-surface2 px-2 py-0.5 rounded text-slate-500">timeout: 120s</span>
+              <span class="bg-surface2 px-2 py-0.5 rounded text-slate-500">maxInstances: 1</span>
+            </div>
+          </div>
+          <p class="text-sm text-slate-400">Weekly moderator summary emailed to admin addresses. Includes: total reports submitted, verified, rejected, and escalated in the past week, plus top reporting users and flagged content.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/[0.07] bg-surface mt-20 py-10">
+    <div class="max-w-5xl mx-auto px-6 flex flex-wrap justify-between items-center gap-4">
+      <div>
+        <div class="font-black text-lg">Ar<span class="text-teal">ah</span></div>
+        <p class="text-xs text-slate-500 mt-1">Part of the Arah Platform · MIT License</p>
+      </div>
+      <div class="flex gap-6 text-sm text-slate-500">
+        <a href="https://deanz93.github.io/arah/" class="hover:text-white">Main Site</a>
+        <a href="https://github.com/deanz93/arah" class="hover:text-white">Monorepo</a>
+        <a href="https://github.com/deanz93/arah-functions" class="hover:text-white">This Repo</a>
+      </div>
+      <p class="text-xs text-slate-600">MIT · Built in Malaysia 🇲🇾</p>
+    </div>
+  </footer>
+
+</body>
+</html>

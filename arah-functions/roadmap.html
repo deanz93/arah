@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roadmap · arah-functions</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: {
+        'teal': { DEFAULT: '#00D8A0' },
+        'amber': { DEFAULT: '#FF7040' },
+        'bg': '#080D12', 'surface': '#111820', 'surface2': '#1A2433',
+      }}}
+    }
+  </script>
+  <style>
+    body { font-family: system-ui,-apple-system,sans-serif; }
+    .code-block { background:#0D1117; border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:1.25rem; overflow-x:auto; }
+    pre code { font-family:'Fira Code',monospace; font-size:0.82rem; line-height:1.7; color:#e8f0fa; }
+  </style>
+</head>
+<body class="bg-bg text-white min-h-screen">
+
+  <!-- Nav -->
+  <nav class="fixed top-0 inset-x-0 z-50 border-b border-white/[0.07] bg-bg/90 backdrop-blur-xl">
+    <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="index.html" class="font-black text-xl tracking-tight text-white">Ar<span class="text-teal">ah</span> <span class="text-slate-500 font-semibold text-base">/ Functions</span></a>
+      <div class="flex items-center gap-5 text-sm">
+        <a href="index.html" class="text-slate-400 hover:text-white">Home</a>
+        <a href="functions.html" class="text-slate-400 hover:text-white">Functions</a>
+        <a href="roadmap.html" class="text-white font-semibold">Roadmap</a>
+        <a href="contributing.html" class="text-slate-400 hover:text-white">Contributing</a>
+        <a href="https://github.com/deanz93/arah-functions" class="bg-teal text-bg font-bold px-4 py-1.5 rounded-lg hover:opacity-80">GitHub →</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="pt-24 pb-20 max-w-5xl mx-auto px-6">
+    <!-- Header -->
+    <div class="py-10 border-b border-white/[0.07] mb-12">
+      <h1 class="text-4xl font-black mb-2">Functions Development Roadmap</h1>
+      <p class="text-slate-400 text-lg">34 stories across 5 epics — BMAD methodology</p>
+    </div>
+
+    <!-- Overall Progress -->
+    <section class="mb-12">
+      <div class="bg-surface border border-white/[0.07] rounded-xl p-6">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <div class="text-sm text-slate-400">Overall Progress</div>
+            <div class="text-3xl font-black text-white mt-1">0 / 34 stories</div>
+          </div>
+          <div class="text-right">
+            <div class="text-xs text-slate-500 uppercase tracking-wider mb-1">Status</div>
+            <div class="bg-surface2 text-slate-400 text-sm px-3 py-1 rounded-full">Planning Phase</div>
+          </div>
+        </div>
+        <div class="w-full bg-surface2 rounded-full h-2">
+          <div class="bg-teal h-2 rounded-full" style="width:0%"></div>
+        </div>
+        <div class="flex justify-between mt-2 text-xs text-slate-600">
+          <span>0%</span>
+          <span>100%</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Epic Progress Summary Table -->
+    <section class="mb-12">
+      <h2 class="text-xl font-bold mb-5">Epic Summary</h2>
+      <div class="bg-surface border border-white/[0.07] rounded-xl overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead class="bg-surface2 border-b border-white/[0.07]">
+              <tr>
+                <th class="text-left px-5 py-3 text-slate-500 font-medium text-xs uppercase tracking-wider">Epic</th>
+                <th class="text-left px-5 py-3 text-slate-500 font-medium text-xs uppercase tracking-wider">Stories</th>
+                <th class="text-left px-5 py-3 text-slate-500 font-medium text-xs uppercase tracking-wider">IDs</th>
+                <th class="text-left px-5 py-3 text-slate-500 font-medium text-xs uppercase tracking-wider">Progress</th>
+                <th class="text-left px-5 py-3 text-slate-500 font-medium text-xs uppercase tracking-wider w-40">Bar</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-white/[0.04]">
+              <tr class="hover:bg-white/[0.02]">
+                <td class="px-5 py-3 text-white font-medium text-xs">Report Lifecycle</td>
+                <td class="px-5 py-3 text-slate-400 text-xs">10</td>
+                <td class="px-5 py-3 font-mono text-slate-500 text-xs">FN-001–010</td>
+                <td class="px-5 py-3 text-slate-500 text-xs">0 / 10</td>
+                <td class="px-5 py-3"><div class="w-full bg-surface2 rounded-full h-1.5"><div class="bg-teal h-1.5 rounded-full" style="width:0%"></div></div></td>
+              </tr>
+              <tr class="hover:bg-white/[0.02]">
+                <td class="px-5 py-3 text-white font-medium text-xs">User &amp; Gamification</td>
+                <td class="px-5 py-3 text-slate-400 text-xs">8</td>
+                <td class="px-5 py-3 font-mono text-slate-500 text-xs">FN-011–018</td>
+                <td class="px-5 py-3 text-slate-500 text-xs">0 / 8</td>
+                <td class="px-5 py-3"><div class="w-full bg-surface2 rounded-full h-1.5"><div class="bg-purple-400 h-1.5 rounded-full" style="width:0%"></div></div></td>
+              </tr>
+              <tr class="hover:bg-white/[0.02]">
+                <td class="px-5 py-3 text-white font-medium text-xs">Notifications</td>
+                <td class="px-5 py-3 text-slate-400 text-xs">6</td>
+                <td class="px-5 py-3 font-mono text-slate-500 text-xs">FN-019–024</td>
+                <td class="px-5 py-3 text-slate-500 text-xs">0 / 6</td>
+                <td class="px-5 py-3"><div class="w-full bg-surface2 rounded-full h-1.5"><div class="bg-amber h-1.5 rounded-full" style="width:0%"></div></div></td>
+              </tr>
+              <tr class="hover:bg-white/[0.02]">
+                <td class="px-5 py-3 text-white font-medium text-xs">Data Operations</td>
+                <td class="px-5 py-3 text-slate-400 text-xs">6</td>
+                <td class="px-5 py-3 font-mono text-slate-500 text-xs">FN-025–030</td>
+                <td class="px-5 py-3 text-slate-500 text-xs">0 / 6</td>
+                <td class="px-5 py-3"><div class="w-full bg-surface2 rounded-full h-1.5"><div class="bg-blue-400 h-1.5 rounded-full" style="width:0%"></div></div></td>
+              </tr>
+              <tr class="hover:bg-white/[0.02]">
+                <td class="px-5 py-3 text-white font-medium text-xs">Admin &amp; Moderation</td>
+                <td class="px-5 py-3 text-slate-400 text-xs">4</td>
+                <td class="px-5 py-3 font-mono text-slate-500 text-xs">FN-031–034</td>
+                <td class="px-5 py-3 text-slate-500 text-xs">0 / 4</td>
+                <td class="px-5 py-3"><div class="w-full bg-surface2 rounded-full h-1.5"><div class="bg-red-400 h-1.5 rounded-full" style="width:0%"></div></div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Epics Detail -->
+    <section class="space-y-6">
+
+      <!-- Epic 1: Report Lifecycle -->
+      <div class="bg-surface border border-white/[0.07] rounded-xl overflow-hidden">
+        <div class="px-6 py-4 border-b border-white/[0.07] flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <span class="w-2 h-2 rounded-full bg-teal inline-block"></span>
+            <h3 class="font-bold text-white">Epic 1 · Report Lifecycle</h3>
+            <span class="text-xs text-slate-500 font-mono">FN-001–010</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="text-xs text-slate-500">0 / 10</span>
+            <div class="w-20 bg-surface2 rounded-full h-1.5">
+              <div class="bg-teal h-1.5 rounded-full" style="width:0%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="p-6">
+          <div class="grid grid-cols-2 md:grid-cols-5 gap-2">
+            <div class="flex items-center gap-2 bg-surface2 rounded-lg px-3 py-2">
+              <span class="text-slate-600 text-xs">🔲</span>
+              <span class="text-xs text-slate-400 font-mono">FN-001</span>
+              <span class="text-xs text-slate-500 hidden lg:inline">onReportCreated</span>
+            </div>
+            <div class="flex items-center gap-2 bg-surface2 rounded-lg px-3 py-2">
+              <span class="text-slate-600 text-xs">🔲</span>
+              <span class="text-xs text-slate-400 font-mono">FN-002</span>
+              <span class="text-xs text-slate-500 hidden lg:inline">Redis broadcast</span>
+            </div>
+            <div class="flex items-center gap-2 bg-surface2 rounded-lg px-3 py-2">
+              <span class="text-slate-600 text-xs">🔲</span>
+              <span class="text-xs text-slate-400 font-mono">FN-003</span>
+              <span class="text-xs text-slate-500 hidden lg:inline">FCM nearby</span>
+            </div>
+            <div class="flex items-center gap-2 bg-surface2 rounded-lg px-3 py-2">
+              <span class="text-slate-600 text-xs">🔲</span>
+              <span class="text-xs text-slate-400 font-mono">FN-004</span>
+              <span class="text-xs text-slate-500 hidden lg:inline">onVoteUpdated</span>
+            </div>
+            <div class="flex items-center gap-2 bg-surface2 rounded-lg px-3 py-2">
+              <span class="text-slate-600 text-xs">🔲</span>
+              <span class="text-xs text-slate-400 font-mono">FN-005</span>
+              <span class="text-xs text-slate-500 hidden lg:inline">Vote aggregation</span>
+            </div>
+            <div class="flex items-center gap-2 bg-surface2 rounded-lg px-3 py-2">
+              <span class="text-slate-600 text-xs">🔲</span>
+              <span class="text-xs text-slate-400 font-mono">FN-006</span>
+              <span class="text-xs text-slate-500 hidden lg:inline">Auto-expire</span>
+            </div>
+            <div class="flex items-center gap-2 bg-surface2 rounded-lg px-3 py-2">
+              <span class="text-slate-600 text-xs">🔲</span>
+              <span class="text-xs text-slate-400 font-mono">FN-007</span>
+              <span class="text-xs text-slate-500 hidden lg:inline">onReportExpired</span>
+            </div>
+            <div class="flex items-center gap-2 bg-surface2 rounded-lg px-3 py-2">
+              <span class="text-slate-600 text-xs">🔲</span>
+              <span class="text-xs text-slate-400 font-mono">FN-008</span>
+              <span class="text-xs text-slate-500 hidden lg:inline">Archive history</span>
+            </div>
+            <div class="flex items-center gap-2 bg-surface2 rounded-lg px-3 py-2">
+              <span class="text-slate-600 text-xs">🔲</span>
+              <span class="text-xs text-slate-400 font-mono">FN-009</span>
+              <span class="text-xs text-slate-500 hidden lg:inline">moderateReport</span>
+            </div>
+            <div class="flex items-center gap-2 bg-surface2 rounded-lg px-3 py-2">
+              <span class="text-slate-600 text-xs">🔲</span>
+              <span class="text-xs text-slate-400 font-mono">FN-010</span>
+              <span class="text-xs text-slate-500 hidden lg:inline">Mod notifications</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Epic 2: User & Gamification -->
+      <div class="bg-surface border border-white/[0.07] rounded-xl overflow-hidden">
+        <div class="px-6 py-4 border-b border-white/[0.07] flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <span class="w-2 h-2 rounded-full bg-purple-400 inline-block"></span>
+            <h3 class="font-bold text-white">Epic 2 · User &amp; Gamification</h3>
+            <span class="text-xs text-slate-500 font-mono">FN-011–018</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="text-xs text-slate-500">0 / 8</span>
+            <div class="w-20 bg-surface2 rounded-full h-1.5">
+              <div class="bg-purple-400 h-1.5 rounded-full" style="width:0%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="p-6">
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+            <div class="flex items-center gap-2 bg-surface2 rounded-lg px-3 py-2">
+              <span class="text-slate-600 text-xs">🔲</span>
+              <span class="text-xs text-slate-400 font-mono">FN-011</span>
+              <span class="text-xs text-slate-500 hidden md:inline">onReportVerified</span>
+            </div>
+            <div class="flex items-center gap-2 bg-surface2 rounded-lg px-3 py-2">
+              <span class="text-slate-600 text-xs">🔲</span>
+              <span class="text-xs text-slate-400 font-mono">FN-012</span>
+              <span class="text-xs text-slate-500 hidden md:inline">Award XP</span>
+            </div>
+            <div class="flex items-center gap-2 bg-surface2 rounded-lg px-3 py-2">
+              <span class="text-slate-600 text-xs">🔲</span>
+              <span class="text-xs text-slate-400 font-mono">FN-013</span>
+              <span class="text-xs text-slate-500 hidden md:inline">Badge unlocks</span>
+            </div>
+            <div class="flex items-center gap-2 bg-surface2 rounded-lg px-3 py-2">
+              <span class="text-slate-600 text-xs">🔲</span>
+              <span class="text-xs text-slate-400 font-mono">FN-014</span>
+              <span class="text-xs text-slate-500 hidden md:inline">calculateStreak</span>
+            </div>
+            <div class="flex items-center gap-2 bg-surface2 rounded-lg px-3 py-2">
+              <span class="text-slate-600 text-xs">🔲</span>
+              <span class="text-xs text-slate-400 font-mono">FN-015</span>
+              <span class="text-xs text-slate-500 hidden md:inline">Streak reset</span>
+            </div>
+            <div class="flex items-center gap-2 bg-surface2 rounded-lg px-3 py-2">
+              <span class="text-slate-600 text-xs">🔲</span>
+              <span class="text-xs text-slate-400 font-mono">FN-016</span>
+              <span class="text-xs text-slate-500 hidden md:inline">getUserStats</span>
+            </div>
+            <div class="flex items-center gap-2 bg-surface2 rounded-lg px-3 py-2">
+              <span class="text-slate-600 text-xs">🔲</span>
+              <span class="text-xs text-slate-400 font-mono">FN-017</span>
+              <span class="text-xs text-slate-500 hidden md:inline">Leaderboard update</span>
+            </div>
+            <div class="flex items-center gap-2 bg-surface2 rounded-lg px-3 py-2">
+              <span class="text-slate-600 text-xs">🔲</span>
+              <span class="text-xs text-slate-400 font-mono">FN-018</span>
+              <span class="text-xs text-slate-500 hidden md:inline">Rank notifications</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Epic 3: Notifications -->
+      <div class="bg-surface border border-white/[0.07] rounded-xl overflow-hidden">
+        <div class="px-6 py-4 border-b border-white/[0.07] flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <span class="w-2 h-2 rounded-full bg-amber inline-block"></span>
+            <h3 class="font-bold text-white">Epic 3 · Notifications</h3>
+            <span class="text-xs text-slate-500 font-mono">FN-019–024</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="text-xs text-slate-500">0 / 6</span>
+            <div class="w-20 bg-surface2 rounded-full h-1.5">
+              <div class="bg-amber h-1.5 rounded-full" style="width:0%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="p-6">
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
+            <div class="flex items-center gap-2 bg-surface2 rounded-lg px-3 py-2">
+              <span class="text-slate-600 text-xs">🔲</span>
+              <span class="text-xs text-slate-400 font-mono">FN-019</span>
+              <span class="text-xs text-slate-500 hidden md:inline">sendFloodAlert</span>
+            </div>
+            <div class="flex items-center gap-2 bg-surface2 rounded-lg px-3 py-2">
+              <span class="text-slate-600 text-xs">🔲</span>
+              <span class="text-xs text-slate-400 font-mono">FN-020</span>
+              <span class="text-xs text-slate-500 hidden md:inline">FCM topic fanout</span>
+            </div>
+            <div class="flex items-center gap-2 bg-surface2 rounded-lg px-3 py-2">
+              <span class="text-slate-600 text-xs">🔲</span>
+              <span class="text-xs text-slate-400 font-mono">FN-021</span>
+              <span class="text-xs text-slate-500 hidden md:inline">notifyNearby</span>
+            </div>
+            <div class="flex items-center gap-2 bg-surface2 rounded-lg px-3 py-2">
+              <span class="text-slate-600 text-xs">🔲</span>
+              <span class="text-xs text-slate-400 font-mono">FN-022</span>
+              <span class="text-xs text-slate-500 hidden md:inline">Geohash targeting</span>
+            </div>
+            <div class="flex items-center gap-2 bg-surface2 rounded-lg px-3 py-2">
+              <span class="text-slate-600 text-xs">🔲</span>
+              <span class="text-xs text-slate-400 font-mono">FN-023</span>
+              <span class="text-xs text-slate-500 hidden md:inline">sendPrayerReminder</span>
+            </div>
+            <div class="flex items-center gap-2 bg-surface2 rounded-lg px-3 py-2">
+              <span class="text-slate-600 text-xs">🔲</span>
+              <span class="text-xs text-slate-400 font-mono">FN-024</span>
+              <span class="text-xs text-slate-500 hidden md:inline">State segmentation</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Epic 4: Data Operations -->
+      <div class="bg-surface border border-white/[0.07] rounded-xl overflow-hidden">
+        <div class="px-6 py-4 border-b border-white/[0.07] flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <span class="w-2 h-2 rounded-full bg-blue-400 inline-block"></span>
+            <h3 class="font-bold text-white">Epic 4 · Data Operations</h3>
+            <span class="text-xs text-slate-500 font-mono">FN-025–030</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="text-xs text-slate-500">0 / 6</span>
+            <div class="w-20 bg-surface2 rounded-full h-1.5">
+              <div class="bg-blue-400 h-1.5 rounded-full" style="width:0%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="p-6">
+          <div class="grid grid-cols-2 md:grid-cols-3 gap-2">
+            <div class="flex items-center gap-2 bg-surface2 rounded-lg px-3 py-2">
+              <span class="text-slate-600 text-xs">🔲</span>
+              <span class="text-xs text-slate-400 font-mono">FN-025</span>
+              <span class="text-xs text-slate-500 hidden md:inline">weeklyRollup</span>
+            </div>
+            <div class="flex items-center gap-2 bg-surface2 rounded-lg px-3 py-2">
+              <span class="text-slate-600 text-xs">🔲</span>
+              <span class="text-xs text-slate-400 font-mono">FN-026</span>
+              <span class="text-xs text-slate-500 hidden md:inline">State aggregation</span>
+            </div>
+            <div class="flex items-center gap-2 bg-surface2 rounded-lg px-3 py-2">
+              <span class="text-slate-600 text-xs">🔲</span>
+              <span class="text-xs text-slate-400 font-mono">FN-027</span>
+              <span class="text-xs text-slate-500 hidden md:inline">cleanExpiredData</span>
+            </div>
+            <div class="flex items-center gap-2 bg-surface2 rounded-lg px-3 py-2">
+              <span class="text-slate-600 text-xs">🔲</span>
+              <span class="text-xs text-slate-400 font-mono">FN-028</span>
+              <span class="text-xs text-slate-500 hidden md:inline">GPS ping purge</span>
+            </div>
+            <div class="flex items-center gap-2 bg-surface2 rounded-lg px-3 py-2">
+              <span class="text-slate-600 text-xs">🔲</span>
+              <span class="text-xs text-slate-400 font-mono">FN-029</span>
+              <span class="text-xs text-slate-500 hidden md:inline">exportUserData</span>
+            </div>
+            <div class="flex items-center gap-2 bg-surface2 rounded-lg px-3 py-2">
+              <span class="text-slate-600 text-xs">🔲</span>
+              <span class="text-xs text-slate-400 font-mono">FN-030</span>
+              <span class="text-xs text-slate-500 hidden md:inline">ZIP + signed URL</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Epic 5: Admin & Moderation -->
+      <div class="bg-surface border border-white/[0.07] rounded-xl overflow-hidden">
+        <div class="px-6 py-4 border-b border-white/[0.07] flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <span class="w-2 h-2 rounded-full bg-red-400 inline-block"></span>
+            <h3 class="font-bold text-white">Epic 5 · Admin &amp; Moderation</h3>
+            <span class="text-xs text-slate-500 font-mono">FN-031–034</span>
+          </div>
+          <div class="flex items-center gap-3">
+            <span class="text-xs text-slate-500">0 / 4</span>
+            <div class="w-20 bg-surface2 rounded-full h-1.5">
+              <div class="bg-red-400 h-1.5 rounded-full" style="width:0%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="p-6">
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+            <div class="flex items-center gap-2 bg-surface2 rounded-lg px-3 py-2">
+              <span class="text-slate-600 text-xs">🔲</span>
+              <span class="text-xs text-slate-400 font-mono">FN-031</span>
+              <span class="text-xs text-slate-500 hidden md:inline">onUserDeleted</span>
+            </div>
+            <div class="flex items-center gap-2 bg-surface2 rounded-lg px-3 py-2">
+              <span class="text-slate-600 text-xs">🔲</span>
+              <span class="text-xs text-slate-400 font-mono">FN-032</span>
+              <span class="text-xs text-slate-500 hidden md:inline">Cascade delete</span>
+            </div>
+            <div class="flex items-center gap-2 bg-surface2 rounded-lg px-3 py-2">
+              <span class="text-slate-600 text-xs">🔲</span>
+              <span class="text-xs text-slate-400 font-mono">FN-033</span>
+              <span class="text-xs text-slate-500 hidden md:inline">genModReport</span>
+            </div>
+            <div class="flex items-center gap-2 bg-surface2 rounded-lg px-3 py-2">
+              <span class="text-slate-600 text-xs">🔲</span>
+              <span class="text-xs text-slate-400 font-mono">FN-034</span>
+              <span class="text-xs text-slate-500 hidden md:inline">Admin email</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- GitHub CTA -->
+    <div class="mt-10 text-center">
+      <a href="https://github.com/deanz93/arah-functions/issues" class="inline-flex items-center gap-2 bg-surface border border-white/[0.12] text-white px-6 py-3 rounded-lg hover:border-white/30 transition-colors text-sm font-medium">
+        Track stories on GitHub Issues →
+      </a>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/[0.07] bg-surface mt-20 py-10">
+    <div class="max-w-5xl mx-auto px-6 flex flex-wrap justify-between items-center gap-4">
+      <div>
+        <div class="font-black text-lg">Ar<span class="text-teal">ah</span></div>
+        <p class="text-xs text-slate-500 mt-1">Part of the Arah Platform · MIT License</p>
+      </div>
+      <div class="flex gap-6 text-sm text-slate-500">
+        <a href="https://deanz93.github.io/arah/" class="hover:text-white">Main Site</a>
+        <a href="https://github.com/deanz93/arah" class="hover:text-white">Monorepo</a>
+        <a href="https://github.com/deanz93/arah-functions" class="hover:text-white">This Repo</a>
+      </div>
+      <p class="text-xs text-slate-600">MIT · Built in Malaysia 🇲🇾</p>
+    </div>
+  </footer>
+
+</body>
+</html>

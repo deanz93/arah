@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roadmap — arah-geocoding</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: {
+        'teal': { DEFAULT: '#00D8A0' },
+        'amber': { DEFAULT: '#FF7040' },
+        'bg': '#080D12',
+        'surface': '#111820',
+        'surface2': '#1A2433',
+      }}}
+    }
+  </script>
+  <style>
+    body { font-family: system-ui,-apple-system,sans-serif; }
+    .code-block { background:#0D1117; border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:1.25rem; overflow-x:auto; }
+    pre code { font-family:'Fira Code',monospace; font-size:0.82rem; line-height:1.7; color:#e8f0fa; }
+  </style>
+</head>
+<body class="bg-bg text-slate-200 min-h-screen">
+
+  <!-- Nav -->
+  <nav class="fixed top-0 inset-x-0 z-50 border-b border-white/[0.07] bg-bg/90 backdrop-blur-xl">
+    <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="index.html" class="font-black text-xl text-white">Ar<span class="text-teal">ah</span> <span class="text-slate-500 font-semibold text-base">/ geocoding</span></a>
+      <div class="flex items-center gap-5 text-sm">
+        <a href="index.html" class="text-slate-400 hover:text-white">Home</a>
+        <a href="coverage.html" class="text-slate-400 hover:text-white">Coverage</a>
+        <a href="roadmap.html" class="text-white font-semibold">Roadmap</a>
+        <a href="contributing.html" class="text-slate-400 hover:text-white">Contributing</a>
+        <a href="https://github.com/deanz93/arah-geocoding" class="bg-teal text-bg font-bold px-4 py-1.5 rounded-lg hover:opacity-80">GitHub →</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <section class="pt-32 pb-12 px-6">
+    <div class="max-w-5xl mx-auto">
+      <div class="inline-flex items-center gap-2 bg-surface2 border border-white/[0.08] text-teal text-xs font-semibold px-3 py-1.5 rounded-full mb-6">
+        29 Stories · 4 Epics
+      </div>
+      <h1 class="text-4xl font-black text-white mb-3">Roadmap</h1>
+      <p class="text-lg text-slate-400 max-w-2xl">BMAD story roadmap — 29 stories across 4 epics (GEO-001 to GEO-029)</p>
+    </div>
+  </section>
+
+  <!-- Epic summary bar -->
+  <section class="px-6 pb-10">
+    <div class="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-3">
+      <div class="bg-surface border border-white/[0.07] rounded-xl p-4 text-center">
+        <div class="text-2xl font-black text-teal">6</div>
+        <div class="text-xs text-slate-500 mt-1">Data Import</div>
+      </div>
+      <div class="bg-surface border border-white/[0.07] rounded-xl p-4 text-center">
+        <div class="text-2xl font-black text-teal">10</div>
+        <div class="text-xs text-slate-500 mt-1">API Quality</div>
+      </div>
+      <div class="bg-surface border border-white/[0.07] rounded-xl p-4 text-center">
+        <div class="text-2xl font-black text-teal">6</div>
+        <div class="text-xs text-slate-500 mt-1">Deployment</div>
+      </div>
+      <div class="bg-surface border border-white/[0.07] rounded-xl p-4 text-center">
+        <div class="text-2xl font-black text-teal">7</div>
+        <div class="text-xs text-slate-500 mt-1">Perf &amp; Ops</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Epic 1: Data Import -->
+  <section class="px-6 pb-10">
+    <div class="max-w-5xl mx-auto">
+      <div class="flex items-center gap-3 mb-5">
+        <span class="w-2 h-8 rounded-full bg-teal inline-block"></span>
+        <div>
+          <h2 class="text-xl font-bold text-white">Epic 1 — Data Import</h2>
+          <p class="text-slate-500 text-xs">GEO-001 to GEO-006 · 6 stories</p>
+        </div>
+      </div>
+      <div class="bg-surface border border-white/[0.07] rounded-2xl overflow-hidden">
+        <div class="divide-y divide-white/[0.04]">
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-teal font-mono text-xs mt-0.5 shrink-0">GEO-001</span>
+            <div><div class="text-white text-sm font-medium">Download PBF</div><p class="text-slate-500 text-xs mt-0.5">Geofabrik Malaysia PBF download with md5 checksum and retry logic</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-teal font-mono text-xs mt-0.5 shrink-0">GEO-002</span>
+            <div><div class="text-white text-sm font-medium">First-time import</div><p class="text-slate-500 text-xs mt-0.5">Nominatim initial OSM data import into PostgreSQL 15 / PostGIS 3</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-teal font-mono text-xs mt-0.5 shrink-0">GEO-003</span>
+            <div><div class="text-white text-sm font-medium">12-query validation</div><p class="text-slate-500 text-xs mt-0.5">Post-import smoke test: 12 landmark queries covering all regions</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-teal font-mono text-xs mt-0.5 shrink-0">GEO-004</span>
+            <div><div class="text-white text-sm font-medium">East Malaysia validation</div><p class="text-slate-500 text-xs mt-0.5">Separate validation suite for Sabah and Sarawak place names</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-teal font-mono text-xs mt-0.5 shrink-0">GEO-005</span>
+            <div><div class="text-white text-sm font-medium">Postcode coverage — all 16 states</div><p class="text-slate-500 text-xs mt-0.5">validate_coverage.py asserting at least one result per state postcode prefix</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-teal font-mono text-xs mt-0.5 shrink-0">GEO-006</span>
+            <div><div class="text-white text-sm font-medium">Monthly replication CronJob</div><p class="text-slate-500 text-xs mt-0.5">Kubernetes CronJob: monthly PBF download, differential replication, validation gate</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Epic 2: API Quality -->
+  <section class="px-6 pb-10">
+    <div class="max-w-5xl mx-auto">
+      <div class="flex items-center gap-3 mb-5">
+        <span class="w-2 h-8 rounded-full bg-teal inline-block"></span>
+        <div>
+          <h2 class="text-xl font-bold text-white">Epic 2 — API Quality</h2>
+          <p class="text-slate-500 text-xs">GEO-007 to GEO-016 · 10 stories</p>
+        </div>
+      </div>
+      <div class="bg-surface border border-white/[0.07] rounded-2xl overflow-hidden">
+        <div class="divide-y divide-white/[0.04]">
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-teal font-mono text-xs mt-0.5 shrink-0">GEO-007</span>
+            <div><div class="text-white text-sm font-medium">Structured address search</div><p class="text-slate-500 text-xs mt-0.5">Support structured params: street, city, state, postcode in /search</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-teal font-mono text-xs mt-0.5 shrink-0">GEO-008</span>
+            <div><div class="text-white text-sm font-medium">Importance scores</div><p class="text-slate-500 text-xs mt-0.5">Tune importance weights for Malaysian landmarks, cities, and federal territories</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-teal font-mono text-xs mt-0.5 shrink-0">GEO-009</span>
+            <div><div class="text-white text-sm font-medium">Result diversity</div><p class="text-slate-500 text-xs mt-0.5">De-duplicate results across states; ensure cross-regional variety in top-5</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-teal font-mono text-xs mt-0.5 shrink-0">GEO-010</span>
+            <div><div class="text-white text-sm font-medium">BM name search</div><p class="text-slate-500 text-xs mt-0.5">Index and prioritise name:ms OSM tags for Bahasa Malaysia queries</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-teal font-mono text-xs mt-0.5 shrink-0">GEO-011</span>
+            <div><div class="text-white text-sm font-medium">Low-confidence filtering</div><p class="text-slate-500 text-xs mt-0.5">Filter results with importance &lt; 0.2 from top-10; return empty array not 500</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-teal font-mono text-xs mt-0.5 shrink-0">GEO-012</span>
+            <div><div class="text-white text-sm font-medium">Reverse geocode zoom levels</div><p class="text-slate-500 text-xs mt-0.5">Map zoom param to Nominatim zoom levels for suburb, city, state granularity</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-teal font-mono text-xs mt-0.5 shrink-0">GEO-013</span>
+            <div><div class="text-white text-sm font-medium">Autocomplete latency</div><p class="text-slate-500 text-xs mt-0.5">Prefix search optimisation targeting p95 &lt; 80ms at 3-char minimum</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-teal font-mono text-xs mt-0.5 shrink-0">GEO-014</span>
+            <div><div class="text-white text-sm font-medium">Address hierarchy</div><p class="text-slate-500 text-xs mt-0.5">Return full Malaysian address hierarchy in addressdetails=1 response</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-teal font-mono text-xs mt-0.5 shrink-0">GEO-015</span>
+            <div><div class="text-white text-sm font-medium">Postcode structured search</div><p class="text-slate-500 text-xs mt-0.5">Dedicated postcode resolver returning all addresses within a postcode</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-teal font-mono text-xs mt-0.5 shrink-0">GEO-016</span>
+            <div><div class="text-white text-sm font-medium">Address parser</div><p class="text-slate-500 text-xs mt-0.5">Malaysian address format normaliser before Nominatim query submission</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Epic 3: Deployment -->
+  <section class="px-6 pb-10">
+    <div class="max-w-5xl mx-auto">
+      <div class="flex items-center gap-3 mb-5">
+        <span class="w-2 h-8 rounded-full bg-amber inline-block"></span>
+        <div>
+          <h2 class="text-xl font-bold text-white">Epic 3 — Deployment</h2>
+          <p class="text-slate-500 text-xs">GEO-017 to GEO-022 · 6 stories</p>
+        </div>
+      </div>
+      <div class="bg-surface border border-white/[0.07] rounded-2xl overflow-hidden">
+        <div class="divide-y divide-white/[0.04]">
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-amber font-mono text-xs mt-0.5 shrink-0">GEO-017</span>
+            <div><div class="text-white text-sm font-medium">K8s staging</div><p class="text-slate-500 text-xs mt-0.5">Kubernetes staging namespace with Nominatim + PostgreSQL StatefulSet</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-amber font-mono text-xs mt-0.5 shrink-0">GEO-018</span>
+            <div><div class="text-white text-sm font-medium">EBS snapshot import</div><p class="text-slate-500 text-xs mt-0.5">Restore PostgreSQL data from EBS snapshot for fast environment bootstrap</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-amber font-mono text-xs mt-0.5 shrink-0">GEO-019</span>
+            <div><div class="text-white text-sm font-medium">Production single-replica</div><p class="text-slate-500 text-xs mt-0.5">Production deployment: single Nominatim replica with EBS gp3 storage</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-amber font-mono text-xs mt-0.5 shrink-0">GEO-020</span>
+            <div><div class="text-white text-sm font-medium">Readiness probe</div><p class="text-slate-500 text-xs mt-0.5">HTTP readiness probe on /status, liveness on /health with 60s initialDelay</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-amber font-mono text-xs mt-0.5 shrink-0">GEO-021</span>
+            <div><div class="text-white text-sm font-medium">EBS backup</div><p class="text-slate-500 text-xs mt-0.5">Daily EBS snapshot via AWS Backup with 7-day retention policy</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-amber font-mono text-xs mt-0.5 shrink-0">GEO-022</span>
+            <div><div class="text-white text-sm font-medium">Redis cache validation</div><p class="text-slate-500 text-xs mt-0.5">Integration test: confirm cache hit on second identical request within TTL</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Epic 4: Performance & Operations -->
+  <section class="px-6 pb-16">
+    <div class="max-w-5xl mx-auto">
+      <div class="flex items-center gap-3 mb-5">
+        <span class="w-2 h-8 rounded-full bg-amber inline-block"></span>
+        <div>
+          <h2 class="text-xl font-bold text-white">Epic 4 — Performance &amp; Operations</h2>
+          <p class="text-slate-500 text-xs">GEO-023 to GEO-029 · 7 stories</p>
+        </div>
+      </div>
+      <div class="bg-surface border border-white/[0.07] rounded-2xl overflow-hidden">
+        <div class="divide-y divide-white/[0.04]">
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-amber font-mono text-xs mt-0.5 shrink-0">GEO-023</span>
+            <div><div class="text-white text-sm font-medium">k6 50-VU benchmark</div><p class="text-slate-500 text-xs mt-0.5">k6 scenario: 50 VUs, mixed /search and /reverse, p95 &lt; 300ms gate</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-amber font-mono text-xs mt-0.5 shrink-0">GEO-024</span>
+            <div><div class="text-white text-sm font-medium">PostgreSQL tuning</div><p class="text-slate-500 text-xs mt-0.5">pg_trgm, effective_cache_size, work_mem, shared_buffers tuning for geocoding workload</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-amber font-mono text-xs mt-0.5 shrink-0">GEO-025</span>
+            <div><div class="text-white text-sm font-medium">Post-import warming</div><p class="text-slate-500 text-xs mt-0.5">Warm Redis cache with 500 common Malaysian place queries post-import</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-amber font-mono text-xs mt-0.5 shrink-0">GEO-026</span>
+            <div><div class="text-white text-sm font-medium">5-second timeout with BM error</div><p class="text-slate-500 text-xs mt-0.5">Return HTTP 504 with JSON body <code class="font-mono text-xs text-slate-300">{"error":"Masa tamat. Sila cuba semula."}</code></p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-amber font-mono text-xs mt-0.5 shrink-0">GEO-027</span>
+            <div><div class="text-white text-sm font-medium">postgres-exporter Grafana</div><p class="text-slate-500 text-xs mt-0.5">Deploy postgres-exporter sidecar; Grafana dashboard for query duration and cache ratio</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-amber font-mono text-xs mt-0.5 shrink-0">GEO-028</span>
+            <div><div class="text-white text-sm font-medium">CloudWatch Synthetics canary</div><p class="text-slate-500 text-xs mt-0.5">Canary: KLCC search every 5 minutes, alert if result count &lt; 1 or latency &gt; 500ms</p></div>
+          </div>
+          <div class="flex items-start gap-4 px-6 py-4">
+            <span class="text-amber font-mono text-xs mt-0.5 shrink-0">GEO-029</span>
+            <div><div class="text-white text-sm font-medium">PDPA audit log</div><p class="text-slate-500 text-xs mt-0.5">Structured log with query_hash, response_time, result_count — no raw query text stored</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/[0.07] bg-surface mt-20 py-10">
+    <div class="max-w-5xl mx-auto px-6 flex flex-wrap justify-between items-center gap-4">
+      <div>
+        <div class="font-black text-lg">Ar<span class="text-teal">ah</span></div>
+        <p class="text-xs text-slate-500 mt-1">Part of the Arah Platform · MIT License</p>
+      </div>
+      <div class="flex gap-6 text-sm text-slate-500">
+        <a href="https://deanz93.github.io/arah/" class="hover:text-white">Main Site</a>
+        <a href="https://github.com/deanz93/arah" class="hover:text-white">Monorepo</a>
+        <a href="https://github.com/deanz93/arah-geocoding" class="hover:text-white">This Repo</a>
+      </div>
+      <p class="text-xs text-slate-600">MIT · Built in Malaysia 🇲🇾</p>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>arah-infra · Infrastructure as Code</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: {
+        'teal': { DEFAULT: '#00D8A0' },
+        'amber': { DEFAULT: '#FF7040' },
+        'bg': '#080D12',
+        'surface': '#111820',
+        'surface2': '#1A2433',
+      }}}
+    }
+  </script>
+  <style>
+    body { font-family: system-ui,-apple-system,sans-serif; }
+    .code-block { background:#0D1117; border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:1.25rem; overflow-x:auto; }
+    pre code { font-family:'Fira Code',monospace; font-size:0.82rem; line-height:1.7; color:#e8f0fa; }
+  </style>
+</head>
+<body class="bg-bg text-white min-h-screen">
+
+  <!-- Nav -->
+  <nav class="fixed top-0 inset-x-0 z-50 border-b border-white/[0.07] bg-bg/90 backdrop-blur-xl">
+    <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="index.html" class="font-black text-xl text-white">Ar<span class="text-teal">ah</span> <span class="text-slate-500 font-semibold text-base">/ infra</span></a>
+      <div class="flex items-center gap-5 text-sm">
+        <a href="index.html" class="text-white font-semibold">Home</a>
+        <a href="architecture.html" class="text-slate-400 hover:text-white">Architecture</a>
+        <a href="roadmap.html" class="text-slate-400 hover:text-white">Roadmap</a>
+        <a href="contributing.html" class="text-slate-400 hover:text-white">Contributing</a>
+        <a href="https://github.com/deanz93/arah-infra" class="bg-teal text-bg font-bold px-4 py-1.5 rounded-lg hover:opacity-80">GitHub →</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="pt-36 pb-20 px-6">
+    <div class="max-w-5xl mx-auto text-center">
+      <div class="inline-flex items-center gap-2 bg-teal/10 border border-teal/20 rounded-full px-4 py-1.5 text-teal text-sm font-semibold mb-8">
+        <span class="w-2 h-2 rounded-full bg-teal inline-block"></span>
+        Infrastructure as Code · AWS ap-southeast-1
+      </div>
+      <h1 class="text-6xl font-black mb-6 tracking-tight">
+        arah-<span class="text-teal">infra</span>
+      </h1>
+      <p class="text-xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+        Infrastructure as Code for the Arah navigation platform. Terraform, Kubernetes, Helm, and CI/CD pipelines for production-grade AWS deployments.
+      </p>
+
+      <!-- Badges -->
+      <div class="flex flex-wrap justify-center gap-2 mb-12">
+        <span class="bg-surface2 border border-white/10 rounded-full px-3 py-1 text-xs text-slate-300 font-medium">Terraform</span>
+        <span class="bg-surface2 border border-white/10 rounded-full px-3 py-1 text-xs text-slate-300 font-medium">Kubernetes</span>
+        <span class="bg-surface2 border border-white/10 rounded-full px-3 py-1 text-xs text-slate-300 font-medium">Helm</span>
+        <span class="bg-surface2 border border-white/10 rounded-full px-3 py-1 text-xs text-slate-300 font-medium">GitHub Actions</span>
+        <span class="bg-surface2 border border-white/10 rounded-full px-3 py-1 text-xs text-slate-300 font-medium">AWS</span>
+        <span class="bg-teal/10 border border-teal/20 rounded-full px-3 py-1 text-xs text-teal font-medium">MIT</span>
+        <span class="bg-amber/10 border border-amber/20 rounded-full px-3 py-1 text-xs text-amber font-medium">54 Stories</span>
+      </div>
+
+      <!-- Stats -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto mb-16">
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5 text-center">
+          <div class="text-3xl font-black text-teal">54</div>
+          <div class="text-sm text-slate-400 mt-1">Stories</div>
+        </div>
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5 text-center">
+          <div class="text-3xl font-black text-white">7</div>
+          <div class="text-sm text-slate-400 mt-1">Epics</div>
+        </div>
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5 text-center">
+          <div class="text-3xl font-black text-white">SGP</div>
+          <div class="text-sm text-slate-400 mt-1">AWS ap-southeast-1</div>
+        </div>
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5 text-center">
+          <div class="text-3xl font-black text-white">MIT</div>
+          <div class="text-sm text-slate-400 mt-1">License</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature Cards -->
+  <section class="px-6 pb-20">
+    <div class="max-w-5xl mx-auto grid md:grid-cols-3 gap-6">
+      <!-- Terraform -->
+      <div class="bg-surface border border-white/[0.07] rounded-2xl p-7 hover:border-teal/30 transition-colors">
+        <div class="w-10 h-10 bg-teal/10 border border-teal/20 rounded-xl flex items-center justify-center mb-5">
+          <svg class="w-5 h-5 text-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+        </div>
+        <h3 class="font-bold text-lg mb-3">Terraform</h3>
+        <ul class="text-slate-400 text-sm space-y-2">
+          <li class="flex items-start gap-2"><span class="text-teal mt-0.5">▸</span> EKS cluster with managed node groups</li>
+          <li class="flex items-start gap-2"><span class="text-teal mt-0.5">▸</span> ElastiCache Redis 7.1 for caching</li>
+          <li class="flex items-start gap-2"><span class="text-teal mt-0.5">▸</span> ECR repositories × 8 services</li>
+          <li class="flex items-start gap-2"><span class="text-teal mt-0.5">▸</span> S3 + CloudFront tile CDN</li>
+          <li class="flex items-start gap-2"><span class="text-teal mt-0.5">▸</span> Route53 DNS management</li>
+          <li class="flex items-start gap-2"><span class="text-teal mt-0.5">▸</span> Remote S3 state backend</li>
+        </ul>
+      </div>
+
+      <!-- Kubernetes -->
+      <div class="bg-surface border border-white/[0.07] rounded-2xl p-7 hover:border-teal/30 transition-colors">
+        <div class="w-10 h-10 bg-teal/10 border border-teal/20 rounded-xl flex items-center justify-center mb-5">
+          <svg class="w-5 h-5 text-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/></svg>
+        </div>
+        <h3 class="font-bold text-lg mb-3">Kubernetes</h3>
+        <ul class="text-slate-400 text-sm space-y-2">
+          <li class="flex items-start gap-2"><span class="text-teal mt-0.5">▸</span> Kustomize overlays for staging + prod</li>
+          <li class="flex items-start gap-2"><span class="text-teal mt-0.5">▸</span> HPA auto-scaling on CPU/memory</li>
+          <li class="flex items-start gap-2"><span class="text-teal mt-0.5">▸</span> PodDisruptionBudgets for HA</li>
+          <li class="flex items-start gap-2"><span class="text-teal mt-0.5">▸</span> NetworkPolicies for isolation</li>
+          <li class="flex items-start gap-2"><span class="text-teal mt-0.5">▸</span> RBAC with least-privilege roles</li>
+          <li class="flex items-start gap-2"><span class="text-teal mt-0.5">▸</span> Helm charts for third-party deps</li>
+        </ul>
+      </div>
+
+      <!-- CI/CD -->
+      <div class="bg-surface border border-white/[0.07] rounded-2xl p-7 hover:border-teal/30 transition-colors">
+        <div class="w-10 h-10 bg-teal/10 border border-teal/20 rounded-xl flex items-center justify-center mb-5">
+          <svg class="w-5 h-5 text-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+        </div>
+        <h3 class="font-bold text-lg mb-3">CI/CD</h3>
+        <ul class="text-slate-400 text-sm space-y-2">
+          <li class="flex items-start gap-2"><span class="text-teal mt-0.5">▸</span> OIDC AWS authentication (no long-lived keys)</li>
+          <li class="flex items-start gap-2"><span class="text-teal mt-0.5">▸</span> GitHub Actions multi-env pipelines</li>
+          <li class="flex items-start gap-2"><span class="text-teal mt-0.5">▸</span> Trivy container security scanning</li>
+          <li class="flex items-start gap-2"><span class="text-teal mt-0.5">▸</span> Checkov IaC policy scanning</li>
+          <li class="flex items-start gap-2"><span class="text-teal mt-0.5">▸</span> Staging auto-deploy on merge</li>
+          <li class="flex items-start gap-2"><span class="text-teal mt-0.5">▸</span> Production manual approval gate</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Start -->
+  <section class="px-6 pb-20">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-3xl font-black mb-3">Quick Start</h2>
+      <p class="text-slate-400 mb-6">Clone the repo and initialise the VPC Terraform module to get started.</p>
+      <div class="code-block">
+        <pre><code>git clone https://github.com/deanz93/arah-infra.git
+cd arah-infra
+terraform -chdir=terraform/modules/vpc init
+terraform -chdir=terraform/modules/vpc plan -var-file=../../vars/staging.tfvars</code></pre>
+      </div>
+
+      <div class="mt-8 bg-surface border border-white/[0.07] rounded-xl p-6 flex items-start gap-4">
+        <div class="w-8 h-8 bg-amber/10 border border-amber/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+          <svg class="w-4 h-4 text-amber" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <div>
+          <div class="font-semibold text-sm mb-1">AWS Region: ap-southeast-1 (Singapore)</div>
+          <p class="text-slate-400 text-sm">All resources are provisioned in AWS ap-southeast-1 to minimise latency for Malaysian users. Ensure your AWS credentials are configured for this region before running Terraform.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Links -->
+  <section class="px-6 pb-20">
+    <div class="max-w-5xl mx-auto grid md:grid-cols-3 gap-4">
+      <a href="architecture.html" class="bg-surface border border-white/[0.07] rounded-xl p-5 hover:border-teal/30 transition-colors group">
+        <div class="font-semibold mb-1 group-hover:text-teal transition-colors">Architecture →</div>
+        <div class="text-slate-400 text-sm">AWS layout, module breakdown, Kubernetes workloads</div>
+      </a>
+      <a href="roadmap.html" class="bg-surface border border-white/[0.07] rounded-xl p-5 hover:border-teal/30 transition-colors group">
+        <div class="font-semibold mb-1 group-hover:text-teal transition-colors">Roadmap →</div>
+        <div class="text-slate-400 text-sm">54 stories across 7 epics — from bootstrap to DR</div>
+      </a>
+      <a href="contributing.html" class="bg-surface border border-white/[0.07] rounded-xl p-5 hover:border-teal/30 transition-colors group">
+        <div class="font-semibold mb-1 group-hover:text-teal transition-colors">Contributing →</div>
+        <div class="text-slate-400 text-sm">Branch naming, commit format, PR checklist</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/[0.07] bg-surface mt-20 py-10">
+    <div class="max-w-5xl mx-auto px-6 flex flex-wrap justify-between items-center gap-4">
+      <div>
+        <div class="font-black text-lg">Ar<span class="text-teal">ah</span></div>
+        <p class="text-xs text-slate-500 mt-1">Part of the Arah Platform · MIT License</p>
+      </div>
+      <div class="flex gap-6 text-sm text-slate-500">
+        <a href="https://deanz93.github.io/arah/" class="hover:text-white">Main Site</a>
+        <a href="https://github.com/deanz93/arah" class="hover:text-white">Monorepo</a>
+        <a href="https://github.com/deanz93/arah-infra" class="hover:text-white">This Repo</a>
+      </div>
+      <p class="text-xs text-slate-600">MIT · Built in Malaysia 🇲🇾</p>
+    </div>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Architecture · arah-infra</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: {
+        'teal': { DEFAULT: '#00D8A0' },
+        'amber': { DEFAULT: '#FF7040' },
+        'bg': '#080D12',
+        'surface': '#111820',
+        'surface2': '#1A2433',
+      }}}
+    }
+  </script>
+  <style>
+    body { font-family: system-ui,-apple-system,sans-serif; }
+    .code-block { background:#0D1117; border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:1.25rem; overflow-x:auto; }
+    pre code { font-family:'Fira Code',monospace; font-size:0.82rem; line-height:1.7; color:#e8f0fa; }
+    pre.diagram { font-family:'Fira Code',monospace; font-size:0.8rem; line-height:1.8; color:#a8c4e0; }
+  </style>
+</head>
+<body class="bg-bg text-white min-h-screen">
+
+  <!-- Nav -->
+  <nav class="fixed top-0 inset-x-0 z-50 border-b border-white/[0.07] bg-bg/90 backdrop-blur-xl">
+    <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="index.html" class="font-black text-xl text-white">Ar<span class="text-teal">ah</span> <span class="text-slate-500 font-semibold text-base">/ infra</span></a>
+      <div class="flex items-center gap-5 text-sm">
+        <a href="index.html" class="text-slate-400 hover:text-white">Home</a>
+        <a href="architecture.html" class="text-white font-semibold">Architecture</a>
+        <a href="roadmap.html" class="text-slate-400 hover:text-white">Roadmap</a>
+        <a href="contributing.html" class="text-slate-400 hover:text-white">Contributing</a>
+        <a href="https://github.com/deanz93/arah-infra" class="bg-teal text-bg font-bold px-4 py-1.5 rounded-lg hover:opacity-80">GitHub →</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <div class="pt-28 pb-12 px-6 border-b border-white/[0.07]">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-teal text-sm font-semibold mb-3 uppercase tracking-widest">Architecture</div>
+      <h1 class="text-4xl font-black mb-3">Infrastructure Architecture</h1>
+      <p class="text-slate-400 text-lg">AWS ap-southeast-1 · Terraform · EKS · ElastiCache</p>
+    </div>
+  </div>
+
+  <main class="max-w-5xl mx-auto px-6 py-14 space-y-16">
+
+    <!-- Section 1: AWS Architecture -->
+    <section>
+      <h2 class="text-2xl font-black mb-2">AWS Architecture Overview</h2>
+      <p class="text-slate-400 mb-6">All production workloads run in <span class="text-white font-medium">AWS ap-southeast-1 (Singapore)</span>. Public traffic enters via CloudFront CDN, passes through an Application Load Balancer (nginx ingress), and is routed to five EKS-hosted services.</p>
+      <div class="code-block">
+        <pre class="diagram">
+                    ┌─────────────────────────────────────────────┐
+                    │           AWS ap-southeast-1                 │
+                    │                                              │
+  Internet ─── CloudFront CDN ─── ALB (nginx ingress)            │
+                                          │                        │
+                    ┌─────────────────────┼────────────────┐       │
+                    ▼                     ▼                ▼       │
+               EKS Cluster           EKS Cluster       EKS Cluster│
+               (api-gateway)        (tile-server)     (geocoding) │
+               (valhalla)           (nominatim)                    │
+                    │                                              │
+               ElastiCache                                        │
+               Redis 7.1                                          │
+                    │                                              │
+               Firebase (Firestore · Auth · FCM)                  │
+                    └─────────────────────────────────────────────┘
+        </pre>
+      </div>
+    </section>
+
+    <!-- Section 2: Module Breakdown -->
+    <section>
+      <h2 class="text-2xl font-black mb-2">Terraform Module Breakdown</h2>
+      <p class="text-slate-400 mb-6">Seven reusable modules compose the full infrastructure stack. Each module is independently versioned and can be applied in isolation.</p>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm border-collapse">
+          <thead>
+            <tr class="border-b border-white/[0.07]">
+              <th class="text-left py-3 px-4 text-slate-400 font-semibold">Module</th>
+              <th class="text-left py-3 px-4 text-slate-400 font-semibold">Resources</th>
+              <th class="text-left py-3 px-4 text-slate-400 font-semibold">Description</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-white/[0.04]">
+            <tr class="hover:bg-surface/50">
+              <td class="py-3 px-4"><code class="text-teal text-xs bg-teal/10 px-2 py-0.5 rounded">terraform/modules/vpc</code></td>
+              <td class="py-3 px-4 text-slate-300">VPC, Subnets, NAT GW, Route Tables</td>
+              <td class="py-3 px-4 text-slate-400">Network foundation with public/private subnets across 3 AZs</td>
+            </tr>
+            <tr class="hover:bg-surface/50">
+              <td class="py-3 px-4"><code class="text-teal text-xs bg-teal/10 px-2 py-0.5 rounded">terraform/modules/eks</code></td>
+              <td class="py-3 px-4 text-slate-300">EKS Cluster, Node Groups, OIDC</td>
+              <td class="py-3 px-4 text-slate-400">Managed Kubernetes cluster with IRSA-ready OIDC provider</td>
+            </tr>
+            <tr class="hover:bg-surface/50">
+              <td class="py-3 px-4"><code class="text-teal text-xs bg-teal/10 px-2 py-0.5 rounded">terraform/modules/redis</code></td>
+              <td class="py-3 px-4 text-slate-300">ElastiCache Redis 7.1, Subnet Group</td>
+              <td class="py-3 px-4 text-slate-400">Session store and routing cache for sub-50ms reads</td>
+            </tr>
+            <tr class="hover:bg-surface/50">
+              <td class="py-3 px-4"><code class="text-teal text-xs bg-teal/10 px-2 py-0.5 rounded">terraform/modules/ecr</code></td>
+              <td class="py-3 px-4 text-slate-300">ECR Repositories × 8</td>
+              <td class="py-3 px-4 text-slate-400">Private container registries with image scanning enabled</td>
+            </tr>
+            <tr class="hover:bg-surface/50">
+              <td class="py-3 px-4"><code class="text-teal text-xs bg-teal/10 px-2 py-0.5 rounded">terraform/modules/cdn</code></td>
+              <td class="py-3 px-4 text-slate-300">CloudFront + S3</td>
+              <td class="py-3 px-4 text-slate-400">Global CDN for map tiles and static assets</td>
+            </tr>
+            <tr class="hover:bg-surface/50">
+              <td class="py-3 px-4"><code class="text-teal text-xs bg-teal/10 px-2 py-0.5 rounded">terraform/modules/dns</code></td>
+              <td class="py-3 px-4 text-slate-300">Route53 zones, records</td>
+              <td class="py-3 px-4 text-slate-400">DNS management with health-check failover</td>
+            </tr>
+            <tr class="hover:bg-surface/50">
+              <td class="py-3 px-4"><code class="text-teal text-xs bg-teal/10 px-2 py-0.5 rounded">terraform/modules/monitoring</code></td>
+              <td class="py-3 px-4 text-slate-300">kube-prometheus-stack, Grafana</td>
+              <td class="py-3 px-4 text-slate-400">Full observability stack with pre-built dashboards</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 3: Kustomize -->
+    <section>
+      <h2 class="text-2xl font-black mb-2">Kustomize Overlay Structure</h2>
+      <p class="text-slate-400 mb-6">Shared base manifests are patched per environment. Staging runs lighter replicas with debug logging; prod enables HPA, PodDisruptionBudgets, and stricter resource limits.</p>
+      <div class="code-block">
+        <pre><code>k8s/
+├── base/               # Shared manifests (Deployments, Services, ConfigMaps)
+│   ├── api-gateway/
+│   ├── tile-server/
+│   ├── valhalla/
+│   ├── nominatim/
+│   └── geocoding/
+├── overlays/
+│   ├── staging/        # Staging patches: 1 replica, debug logging, small limits
+│   │   ├── kustomization.yaml
+│   │   └── patches/
+│   └── prod/           # Prod patches: 2+ replicas, HPA, PDB, prod resource limits
+│       ├── kustomization.yaml
+│       └── patches/</code></pre>
+      </div>
+    </section>
+
+    <!-- Section 4: Kubernetes Workloads -->
+    <section>
+      <h2 class="text-2xl font-black mb-2">Kubernetes Workloads</h2>
+      <p class="text-slate-400 mb-6">All workloads run on EKS managed node groups with auto-scaling. HPA is enabled for stateless services; stateful services use fixed replicas.</p>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm border-collapse">
+          <thead>
+            <tr class="border-b border-white/[0.07]">
+              <th class="text-left py-3 px-4 text-slate-400 font-semibold">Name</th>
+              <th class="text-left py-3 px-4 text-slate-400 font-semibold">Replicas (prod)</th>
+              <th class="text-left py-3 px-4 text-slate-400 font-semibold">HPA</th>
+              <th class="text-left py-3 px-4 text-slate-400 font-semibold">Resources</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-white/[0.04]">
+            <tr class="hover:bg-surface/50">
+              <td class="py-3 px-4 font-medium">api-gateway</td>
+              <td class="py-3 px-4 text-slate-300">2–5</td>
+              <td class="py-3 px-4"><span class="text-teal">✓</span></td>
+              <td class="py-3 px-4 text-slate-400">200m CPU / 256Mi</td>
+            </tr>
+            <tr class="hover:bg-surface/50">
+              <td class="py-3 px-4 font-medium">tile-server</td>
+              <td class="py-3 px-4 text-slate-300">2–4</td>
+              <td class="py-3 px-4"><span class="text-teal">✓</span></td>
+              <td class="py-3 px-4 text-slate-400">500m CPU / 1Gi</td>
+            </tr>
+            <tr class="hover:bg-surface/50">
+              <td class="py-3 px-4 font-medium">valhalla</td>
+              <td class="py-3 px-4 text-slate-300">2</td>
+              <td class="py-3 px-4"><span class="text-slate-600">—</span></td>
+              <td class="py-3 px-4 text-slate-400">1000m CPU / 4Gi</td>
+            </tr>
+            <tr class="hover:bg-surface/50">
+              <td class="py-3 px-4 font-medium">nominatim</td>
+              <td class="py-3 px-4 text-slate-300">1</td>
+              <td class="py-3 px-4"><span class="text-slate-600">—</span></td>
+              <td class="py-3 px-4 text-slate-400">500m CPU / 2Gi</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 5: Scalability Path -->
+    <section>
+      <h2 class="text-2xl font-black mb-2">Scalability Path</h2>
+      <p class="text-slate-400 mb-6">Infrastructure evolves with user growth. Each phase represents a step-change in capability without a full rewrite.</p>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm border-collapse">
+          <thead>
+            <tr class="border-b border-white/[0.07]">
+              <th class="text-left py-3 px-4 text-slate-400 font-semibold">Phase</th>
+              <th class="text-left py-3 px-4 text-slate-400 font-semibold">Users</th>
+              <th class="text-left py-3 px-4 text-slate-400 font-semibold">Infrastructure</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-white/[0.04]">
+            <tr class="hover:bg-surface/50">
+              <td class="py-3 px-4"><span class="text-slate-300 font-semibold">MVP</span></td>
+              <td class="py-3 px-4 text-slate-300">0 – 10k</td>
+              <td class="py-3 px-4 text-slate-400">Docker Compose on a single EC2 instance</td>
+            </tr>
+            <tr class="hover:bg-surface/50">
+              <td class="py-3 px-4"><span class="text-amber font-semibold">Growth</span></td>
+              <td class="py-3 px-4 text-slate-300">10k – 100k</td>
+              <td class="py-3 px-4 text-slate-400">ECS Fargate + ElastiCache Redis + RDS</td>
+            </tr>
+            <tr class="hover:bg-surface/50">
+              <td class="py-3 px-4"><span class="text-teal font-semibold">Scale</span></td>
+              <td class="py-3 px-4 text-slate-300">100k – 1M</td>
+              <td class="py-3 px-4 text-slate-400">EKS + HPA + multi-AZ Redis + CloudFront</td>
+            </tr>
+            <tr class="hover:bg-surface/50">
+              <td class="py-3 px-4"><span class="text-white font-semibold">National</span></td>
+              <td class="py-3 px-4 text-slate-300">1M+</td>
+              <td class="py-3 px-4 text-slate-400">Multi-AZ + Kafka + read replicas + global CDN</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/[0.07] bg-surface mt-20 py-10">
+    <div class="max-w-5xl mx-auto px-6 flex flex-wrap justify-between items-center gap-4">
+      <div>
+        <div class="font-black text-lg">Ar<span class="text-teal">ah</span></div>
+        <p class="text-xs text-slate-500 mt-1">Part of the Arah Platform · MIT License</p>
+      </div>
+      <div class="flex gap-6 text-sm text-slate-500">
+        <a href="https://deanz93.github.io/arah/" class="hover:text-white">Main Site</a>
+        <a href="https://github.com/deanz93/arah" class="hover:text-white">Monorepo</a>
+        <a href="https://github.com/deanz93/arah-infra" class="hover:text-white">This Repo</a>
+      </div>
+      <p class="text-xs text-slate-600">MIT · Built in Malaysia 🇲🇾</p>
+    </div>
+  </footer>
+
+</body>
+</html>

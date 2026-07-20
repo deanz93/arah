@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Roadmap · arah-infra</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: {
+        'teal': { DEFAULT: '#00D8A0' },
+        'amber': { DEFAULT: '#FF7040' },
+        'bg': '#080D12',
+        'surface': '#111820',
+        'surface2': '#1A2433',
+      }}}
+    }
+  </script>
+  <style>
+    body { font-family: system-ui,-apple-system,sans-serif; }
+    .code-block { background:#0D1117; border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:1.25rem; overflow-x:auto; }
+    pre code { font-family:'Fira Code',monospace; font-size:0.82rem; line-height:1.7; color:#e8f0fa; }
+  </style>
+</head>
+<body class="bg-bg text-white min-h-screen">
+
+  <!-- Nav -->
+  <nav class="fixed top-0 inset-x-0 z-50 border-b border-white/[0.07] bg-bg/90 backdrop-blur-xl">
+    <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="index.html" class="font-black text-xl text-white">Ar<span class="text-teal">ah</span> <span class="text-slate-500 font-semibold text-base">/ infra</span></a>
+      <div class="flex items-center gap-5 text-sm">
+        <a href="index.html" class="text-slate-400 hover:text-white">Home</a>
+        <a href="architecture.html" class="text-slate-400 hover:text-white">Architecture</a>
+        <a href="roadmap.html" class="text-white font-semibold">Roadmap</a>
+        <a href="contributing.html" class="text-slate-400 hover:text-white">Contributing</a>
+        <a href="https://github.com/deanz93/arah-infra" class="bg-teal text-bg font-bold px-4 py-1.5 rounded-lg hover:opacity-80">GitHub →</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <div class="pt-28 pb-12 px-6 border-b border-white/[0.07]">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-teal text-sm font-semibold mb-3 uppercase tracking-widest">Roadmap</div>
+      <h1 class="text-4xl font-black mb-3">Story Roadmap</h1>
+      <p class="text-slate-400 text-lg">54 stories across 7 epics — all Todo</p>
+      <div class="mt-6 flex items-center gap-4">
+        <div class="flex-1 max-w-xs bg-surface2 rounded-full h-2">
+          <div class="bg-teal h-2 rounded-full w-0"></div>
+        </div>
+        <span class="text-slate-400 text-sm">0 / 54 complete</span>
+      </div>
+    </div>
+  </div>
+
+  <main class="max-w-5xl mx-auto px-6 py-14 space-y-8">
+
+    <!-- Epic 1 -->
+    <div class="bg-surface border border-white/[0.07] rounded-2xl overflow-hidden">
+      <div class="p-6 border-b border-white/[0.07]">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-3 mb-2">
+              <span class="text-xs font-bold bg-surface2 border border-white/10 px-2 py-0.5 rounded text-slate-400">EPIC 1</span>
+              <span class="text-xs text-slate-500">INF-001 – INF-008</span>
+            </div>
+            <h3 class="text-lg font-bold">Terraform Bootstrap</h3>
+            <p class="text-slate-400 text-sm mt-1">S3 backend configuration, VPC, EKS cluster, ECR repositories, ElastiCache Redis, and remote state setup.</p>
+          </div>
+          <div class="text-right flex-shrink-0">
+            <div class="text-2xl font-black text-slate-600">8</div>
+            <div class="text-xs text-slate-500">stories</div>
+          </div>
+        </div>
+        <div class="mt-4 flex items-center gap-3">
+          <div class="flex-1 bg-surface2 rounded-full h-1.5">
+            <div class="bg-slate-600 h-1.5 rounded-full w-0"></div>
+          </div>
+          <span class="text-xs text-slate-500">0%</span>
+        </div>
+      </div>
+      <div class="p-6 grid sm:grid-cols-2 gap-2">
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-001 · Terraform S3 remote state backend</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-002 · VPC with public/private subnets</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-003 · EKS cluster + managed node groups</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-004 · ECR repositories for 8 services</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-005 · ElastiCache Redis 7.1 cluster</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-006 · Route53 hosted zones</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-007 · CloudFront + S3 tile CDN</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-008 · Terraform variable files (staging/prod)</span></div>
+      </div>
+    </div>
+
+    <!-- Epic 2 -->
+    <div class="bg-surface border border-white/[0.07] rounded-2xl overflow-hidden">
+      <div class="p-6 border-b border-white/[0.07]">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-3 mb-2">
+              <span class="text-xs font-bold bg-surface2 border border-white/10 px-2 py-0.5 rounded text-slate-400">EPIC 2</span>
+              <span class="text-xs text-slate-500">INF-009 – INF-018</span>
+            </div>
+            <h3 class="text-lg font-bold">EKS Cluster Bootstrap</h3>
+            <p class="text-slate-400 text-sm mt-1">Kubernetes deployments for all 5 services, TLS certificates, RBAC configuration, and ingress controllers.</p>
+          </div>
+          <div class="text-right flex-shrink-0">
+            <div class="text-2xl font-black text-slate-600">10</div>
+            <div class="text-xs text-slate-500">stories</div>
+          </div>
+        </div>
+        <div class="mt-4 flex items-center gap-3">
+          <div class="flex-1 bg-surface2 rounded-full h-1.5">
+            <div class="bg-slate-600 h-1.5 rounded-full w-0"></div>
+          </div>
+          <span class="text-xs text-slate-500">0%</span>
+        </div>
+      </div>
+      <div class="p-6 grid sm:grid-cols-2 gap-2">
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-009 · nginx ingress controller + ALB</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-010 · cert-manager + Let's Encrypt TLS</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-011 · api-gateway deployment + service</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-012 · tile-server deployment + service</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-013 · valhalla deployment + PVC</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-014 · nominatim deployment + PVC</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-015 · geocoding deployment + service</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-016 · RBAC roles and service accounts</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-017 · Kustomize staging overlay</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-018 · Kustomize prod overlay + HPA + PDB</span></div>
+      </div>
+    </div>
+
+    <!-- Epic 3 -->
+    <div class="bg-surface border border-white/[0.07] rounded-2xl overflow-hidden">
+      <div class="p-6 border-b border-white/[0.07]">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-3 mb-2">
+              <span class="text-xs font-bold bg-surface2 border border-white/10 px-2 py-0.5 rounded text-slate-400">EPIC 3</span>
+              <span class="text-xs text-slate-500">INF-019 – INF-026</span>
+            </div>
+            <h3 class="text-lg font-bold">CI/CD Pipeline</h3>
+            <p class="text-slate-400 text-sm mt-1">OIDC-based AWS authentication, Docker build and push, staging auto-deploy, and production approval gate.</p>
+          </div>
+          <div class="text-right flex-shrink-0">
+            <div class="text-2xl font-black text-slate-600">8</div>
+            <div class="text-xs text-slate-500">stories</div>
+          </div>
+        </div>
+        <div class="mt-4 flex items-center gap-3">
+          <div class="flex-1 bg-surface2 rounded-full h-1.5">
+            <div class="bg-slate-600 h-1.5 rounded-full w-0"></div>
+          </div>
+          <span class="text-xs text-slate-500">0%</span>
+        </div>
+      </div>
+      <div class="p-6 grid sm:grid-cols-2 gap-2">
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-019 · GitHub OIDC → AWS IAM role</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-020 · Docker build + ECR push workflow</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-021 · Trivy image scanning in CI</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-022 · Checkov IaC policy gate</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-023 · Staging auto-deploy on merge to main</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-024 · Production manual approval workflow</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-025 · terraform plan PR comment bot</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-026 · Rollback workflow for prod</span></div>
+      </div>
+    </div>
+
+    <!-- Epic 4 -->
+    <div class="bg-surface border border-white/[0.07] rounded-2xl overflow-hidden">
+      <div class="p-6 border-b border-white/[0.07]">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-3 mb-2">
+              <span class="text-xs font-bold bg-surface2 border border-white/10 px-2 py-0.5 rounded text-slate-400">EPIC 4</span>
+              <span class="text-xs text-slate-500">INF-027 – INF-036</span>
+            </div>
+            <h3 class="text-lg font-bold">Monitoring &amp; Alerting</h3>
+            <p class="text-slate-400 text-sm mt-1">Grafana dashboards, AlertManager rules, PrometheusRules for SLOs, and Fluent Bit log shipping.</p>
+          </div>
+          <div class="text-right flex-shrink-0">
+            <div class="text-2xl font-black text-slate-600">10</div>
+            <div class="text-xs text-slate-500">stories</div>
+          </div>
+        </div>
+        <div class="mt-4 flex items-center gap-3">
+          <div class="flex-1 bg-surface2 rounded-full h-1.5">
+            <div class="bg-slate-600 h-1.5 rounded-full w-0"></div>
+          </div>
+          <span class="text-xs text-slate-500">0%</span>
+        </div>
+      </div>
+      <div class="p-6 grid sm:grid-cols-2 gap-2">
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-027 · kube-prometheus-stack Helm deploy</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-028 · Grafana dashboards (API + infra)</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-029 · AlertManager PagerDuty integration</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-030 · PrometheusRules for p95 latency SLO</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-031 · Fluent Bit → CloudWatch Logs</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-032 · Error rate alert (>1% 5xx)</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-033 · Redis memory utilisation alert</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-034 · Node disk pressure alert</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-035 · Uptime checks for all endpoints</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-036 · Cost anomaly detection alert</span></div>
+      </div>
+    </div>
+
+    <!-- Epic 5 -->
+    <div class="bg-surface border border-white/[0.07] rounded-2xl overflow-hidden">
+      <div class="p-6 border-b border-white/[0.07]">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-3 mb-2">
+              <span class="text-xs font-bold bg-surface2 border border-white/10 px-2 py-0.5 rounded text-slate-400">EPIC 5</span>
+              <span class="text-xs text-slate-500">INF-037 – INF-043</span>
+            </div>
+            <h3 class="text-lg font-bold">Security &amp; Compliance</h3>
+            <p class="text-slate-400 text-sm mt-1">WAF rules, Kubernetes NetworkPolicies, IMDSv2 enforcement, and Trivy SARIF reports integrated into GitHub Security.</p>
+          </div>
+          <div class="text-right flex-shrink-0">
+            <div class="text-2xl font-black text-slate-600">7</div>
+            <div class="text-xs text-slate-500">stories</div>
+          </div>
+        </div>
+        <div class="mt-4 flex items-center gap-3">
+          <div class="flex-1 bg-surface2 rounded-full h-1.5">
+            <div class="bg-slate-600 h-1.5 rounded-full w-0"></div>
+          </div>
+          <span class="text-xs text-slate-500">0%</span>
+        </div>
+      </div>
+      <div class="p-6 grid sm:grid-cols-2 gap-2">
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-037 · AWS WAF rules for OWASP top 10</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-038 · NetworkPolicies (deny-all + allow-list)</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-039 · IMDSv2 enforcement on all nodes</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-040 · Trivy SARIF → GitHub Security tab</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-041 · Checkov CI policy-as-code gate</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-042 · Secrets rotation (Redis auth token)</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-043 · EKS audit logging → CloudWatch</span></div>
+      </div>
+    </div>
+
+    <!-- Epic 6 -->
+    <div class="bg-surface border border-white/[0.07] rounded-2xl overflow-hidden">
+      <div class="p-6 border-b border-white/[0.07]">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-3 mb-2">
+              <span class="text-xs font-bold bg-surface2 border border-white/10 px-2 py-0.5 rounded text-slate-400">EPIC 6</span>
+              <span class="text-xs text-slate-500">INF-044 – INF-048</span>
+            </div>
+            <h3 class="text-lg font-bold">Cost Optimisation</h3>
+            <p class="text-slate-400 text-sm mt-1">Spot instance node groups, NAT Gateway consolidation, ElastiCache reserved instances, and S3 intelligent tiering.</p>
+          </div>
+          <div class="text-right flex-shrink-0">
+            <div class="text-2xl font-black text-slate-600">5</div>
+            <div class="text-xs text-slate-500">stories</div>
+          </div>
+        </div>
+        <div class="mt-4 flex items-center gap-3">
+          <div class="flex-1 bg-surface2 rounded-full h-1.5">
+            <div class="bg-slate-600 h-1.5 rounded-full w-0"></div>
+          </div>
+          <span class="text-xs text-slate-500">0%</span>
+        </div>
+      </div>
+      <div class="p-6 grid sm:grid-cols-2 gap-2">
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-044 · Spot instance node group for batch</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-045 · Single NAT Gateway (non-prod)</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-046 · ElastiCache Reserved Instance purchase</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-047 · S3 Intelligent-Tiering for tiles</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-048 · AWS Cost Anomaly Detection alert</span></div>
+      </div>
+    </div>
+
+    <!-- Epic 7 -->
+    <div class="bg-surface border border-white/[0.07] rounded-2xl overflow-hidden">
+      <div class="p-6 border-b border-white/[0.07]">
+        <div class="flex items-start justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-3 mb-2">
+              <span class="text-xs font-bold bg-surface2 border border-white/10 px-2 py-0.5 rounded text-slate-400">EPIC 7</span>
+              <span class="text-xs text-slate-500">INF-049 – INF-054</span>
+            </div>
+            <h3 class="text-lg font-bold">Disaster Recovery</h3>
+            <p class="text-slate-400 text-sm mt-1">Firestore backup automation, EFS snapshot policy, cluster rebuild runbook, and RTO/RPO validation testing.</p>
+          </div>
+          <div class="text-right flex-shrink-0">
+            <div class="text-2xl font-black text-slate-600">6</div>
+            <div class="text-xs text-slate-500">stories</div>
+          </div>
+        </div>
+        <div class="mt-4 flex items-center gap-3">
+          <div class="flex-1 bg-surface2 rounded-full h-1.5">
+            <div class="bg-slate-600 h-1.5 rounded-full w-0"></div>
+          </div>
+          <span class="text-xs text-slate-500">0%</span>
+        </div>
+      </div>
+      <div class="p-6 grid sm:grid-cols-2 gap-2">
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-049 · Firestore daily backup to S3</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-050 · EFS snapshot lifecycle policy</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-051 · Cluster rebuild runbook (< 30 min RTO)</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-052 · RTO/RPO validation test workflow</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-053 · Cross-region S3 replication</span></div>
+        <div class="flex items-center gap-3 text-sm"><span class="text-slate-600">🔲</span><span class="text-slate-400">INF-054 · DR drill schedule + alert</span></div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/[0.07] bg-surface mt-20 py-10">
+    <div class="max-w-5xl mx-auto px-6 flex flex-wrap justify-between items-center gap-4">
+      <div>
+        <div class="font-black text-lg">Ar<span class="text-teal">ah</span></div>
+        <p class="text-xs text-slate-500 mt-1">Part of the Arah Platform · MIT License</p>
+      </div>
+      <div class="flex gap-6 text-sm text-slate-500">
+        <a href="https://deanz93.github.io/arah/" class="hover:text-white">Main Site</a>
+        <a href="https://github.com/deanz93/arah" class="hover:text-white">Monorepo</a>
+        <a href="https://github.com/deanz93/arah-infra" class="hover:text-white">This Repo</a>
+      </div>
+      <p class="text-xs text-slate-600">MIT · Built in Malaysia 🇲🇾</p>
+    </div>
+  </footer>
+
+</body>
+</html>

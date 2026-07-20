@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Architecture · arah-routing</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: {
+        'teal': { DEFAULT: '#00D8A0' },
+        'amber': { DEFAULT: '#FF7040' },
+        'bg': '#080D12',
+        'surface': '#111820',
+        'surface2': '#1A2433',
+      }}}
+    }
+  </script>
+  <style>
+    body { font-family: system-ui,-apple-system,sans-serif; }
+    .code-block { background:#0D1117; border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:1.25rem; overflow-x:auto; }
+    pre code { font-family:'Fira Code',monospace; font-size:0.82rem; line-height:1.7; color:#e8f0fa; }
+    pre.diagram { font-family:'Fira Code',monospace; font-size:0.8rem; line-height:1.8; color:#a8c4e0; }
+  </style>
+</head>
+<body class="bg-bg text-white min-h-screen">
+
+  <!-- Nav -->
+  <nav class="fixed top-0 inset-x-0 z-50 border-b border-white/[0.07] bg-bg/90 backdrop-blur-xl">
+    <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="index.html" class="font-black text-xl text-white">Ar<span class="text-teal">ah</span> <span class="text-slate-500 font-semibold text-base">/ routing</span></a>
+      <div class="flex items-center gap-5 text-sm">
+        <a href="index.html" class="text-slate-400 hover:text-white">Home</a>
+        <a href="architecture.html" class="text-white font-semibold">Architecture</a>
+        <a href="roadmap.html" class="text-slate-400 hover:text-white">Roadmap</a>
+        <a href="contributing.html" class="text-slate-400 hover:text-white">Contributing</a>
+        <a href="https://github.com/deanz93/arah-routing" class="bg-teal text-bg font-bold px-4 py-1.5 rounded-lg hover:opacity-80">GitHub →</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <div class="pt-28 pb-12 px-6 border-b border-white/[0.07]">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-teal text-sm font-semibold mb-3 uppercase tracking-widest">Architecture</div>
+      <h1 class="text-4xl font-black mb-3">Routing Engine Architecture</h1>
+      <p class="text-slate-400 text-lg">Valhalla C++ · OSM Pipeline · Malaysian Profiles · REST API</p>
+    </div>
+  </div>
+
+  <main class="max-w-5xl mx-auto px-6 py-14 space-y-16">
+
+    <!-- Section 1: How Valhalla Works -->
+    <section>
+      <h2 class="text-2xl font-black mb-4">How Valhalla Works</h2>
+      <p class="text-slate-400 mb-6 leading-relaxed">
+        Valhalla is an open-source C++ routing engine. On startup it loads a pre-built graph of Malaysian roads into memory (~3.8GB RAM). Each route request runs a bidirectional A* search over this in-memory graph and returns a response in under 500ms — even for 350km cross-peninsula routes. The graph is never re-read from disk at query time, which is the source of its low latency.
+      </p>
+      <div class="grid md:grid-cols-4 gap-4">
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5 text-center">
+          <div class="text-2xl mb-2">📦</div>
+          <div class="font-semibold text-sm mb-1">OSM PBF</div>
+          <p class="text-xs text-slate-400">Malaysia road data from Geofabrik</p>
+        </div>
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5 text-center">
+          <div class="text-2xl mb-2">⚙️</div>
+          <div class="font-semibold text-sm mb-1">Tile Build</div>
+          <p class="text-xs text-slate-400">valhalla_build_tiles (~15 min, Docker)</p>
+        </div>
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5 text-center">
+          <div class="text-2xl mb-2">🧠</div>
+          <div class="font-semibold text-sm mb-1">In-memory graph</div>
+          <p class="text-xs text-slate-400">~3.8GB loaded at startup</p>
+        </div>
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5 text-center">
+          <div class="text-teal font-black text-xl mb-1">&lt;500ms</div>
+          <div class="font-semibold text-sm mb-1">HTTP API</div>
+          <p class="text-xs text-slate-400">p95 for 350km routes</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: Data Pipeline Diagram -->
+    <section>
+      <h2 class="text-2xl font-black mb-4">OSM Data Pipeline</h2>
+      <p class="text-slate-400 mb-6">The pipeline runs monthly via a GitHub Actions workflow. The tile swap is atomic — pods continue serving old tiles until the new graph is fully built and validated.</p>
+      <div class="code-block">
+        <pre class="diagram">
+Geofabrik (monthly)
+   │ malaysia-latest.osm.pbf
+   ▼
+Valhalla tile builder (Docker)
+   │ valhalla_tiles/ (~3.8GB)
+   ▼
+EFS shared storage
+   │ (atomic mv, ReadOnlyMany)
+   ▼
+Valhalla K8s pods (2 replicas)
+   │
+   ▼
+REST API → arah-api (proxy)
+        </pre>
+      </div>
+      <div class="mt-6 bg-surface border border-white/[0.07] rounded-xl p-5">
+        <div class="font-semibold text-sm mb-2">Malaysia OSM Bounding Box</div>
+        <p class="text-slate-400 text-sm mb-3">The PBF extract is clipped to this bbox, covering Peninsular Malaysia, Sabah, and Sarawak.</p>
+        <div class="code-block"><pre><code>99.5°E, 1.0°N → 119.5°E, 7.5°N</code></pre></div>
+      </div>
+    </section>
+
+    <!-- Section 3: Routing Profiles -->
+    <section>
+      <h2 class="text-2xl font-black mb-4">Routing Profiles</h2>
+      <p class="text-slate-400 mb-6">Each profile is a Valhalla costing model tuned for Malaysian road usage. Profiles are selected via the <code class="text-teal bg-teal/10 px-1.5 py-0.5 rounded text-sm">costing</code> parameter in the API request.</p>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm border-collapse">
+          <thead>
+            <tr class="border-b border-white/[0.07]">
+              <th class="text-left py-3 px-4 text-slate-400 font-semibold">Profile</th>
+              <th class="text-left py-3 px-4 text-slate-400 font-semibold">Use case</th>
+              <th class="text-left py-3 px-4 text-slate-400 font-semibold">Toll avoid</th>
+              <th class="text-left py-3 px-4 text-slate-400 font-semibold">Highway avoid</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-white/[0.04]">
+            <tr class="hover:bg-surface/50">
+              <td class="py-3 px-4 font-mono text-teal text-sm">auto</td>
+              <td class="py-3 px-4 text-slate-300">Standard car navigation</td>
+              <td class="py-3 px-4 text-slate-400">Optional</td>
+              <td class="py-3 px-4 text-slate-400">Optional</td>
+            </tr>
+            <tr class="hover:bg-surface/50">
+              <td class="py-3 px-4 font-mono text-teal text-sm">auto_toll_free</td>
+              <td class="py-3 px-4 text-slate-300">Avoid all tolls</td>
+              <td class="py-3 px-4 text-teal">Always</td>
+              <td class="py-3 px-4 text-slate-400">No</td>
+            </tr>
+            <tr class="hover:bg-surface/50">
+              <td class="py-3 px-4 font-mono text-teal text-sm">motorcycle</td>
+              <td class="py-3 px-4 text-slate-300">Motorbike routing</td>
+              <td class="py-3 px-4 text-slate-400">Optional</td>
+              <td class="py-3 px-4 text-slate-400">Optional</td>
+            </tr>
+            <tr class="hover:bg-surface/50">
+              <td class="py-3 px-4 font-mono text-teal text-sm">pedestrian</td>
+              <td class="py-3 px-4 text-slate-300">Walking directions in BM</td>
+              <td class="py-3 px-4 text-slate-400">N/A</td>
+              <td class="py-3 px-4 text-slate-400">N/A</td>
+            </tr>
+            <tr class="hover:bg-surface/50">
+              <td class="py-3 px-4 font-mono text-teal text-sm">bicycle</td>
+              <td class="py-3 px-4 text-slate-300">Cycling routes</td>
+              <td class="py-3 px-4 text-slate-400">N/A</td>
+              <td class="py-3 px-4 text-slate-400">N/A</td>
+            </tr>
+            <tr class="hover:bg-surface/50">
+              <td class="py-3 px-4 font-mono text-teal text-sm">truck</td>
+              <td class="py-3 px-4 text-slate-300">Lorry / heavy vehicle routing</td>
+              <td class="py-3 px-4 text-slate-400">Optional</td>
+              <td class="py-3 px-4 text-slate-400">Optional</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 4: API Endpoints -->
+    <section>
+      <h2 class="text-2xl font-black mb-4">API Endpoints</h2>
+      <p class="text-slate-400 mb-6">All endpoints are proxied through <code class="text-teal bg-teal/10 px-1.5 py-0.5 rounded text-sm">arah-api</code>. The Valhalla pod is not exposed directly to the internet.</p>
+      <div class="space-y-3">
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5 flex items-start gap-4">
+          <span class="bg-teal/10 border border-teal/20 text-teal text-xs font-bold px-2 py-1 rounded font-mono flex-shrink-0 mt-0.5">POST</span>
+          <div>
+            <div class="font-mono text-sm font-semibold">/route</div>
+            <p class="text-slate-400 text-sm mt-1">Point-to-point routing with up to 5 waypoints. Returns turn-by-turn manoeuvres, distance, duration, and polyline geometry.</p>
+          </div>
+        </div>
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5 flex items-start gap-4">
+          <span class="bg-teal/10 border border-teal/20 text-teal text-xs font-bold px-2 py-1 rounded font-mono flex-shrink-0 mt-0.5">POST</span>
+          <div>
+            <div class="font-mono text-sm font-semibold">/optimized_route</div>
+            <p class="text-slate-400 text-sm mt-1">Travelling Salesman Problem (TSP) solver for delivery routing. Finds the shortest ordering of multiple stops.</p>
+          </div>
+        </div>
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5 flex items-start gap-4">
+          <span class="bg-teal/10 border border-teal/20 text-teal text-xs font-bold px-2 py-1 rounded font-mono flex-shrink-0 mt-0.5">POST</span>
+          <div>
+            <div class="font-mono text-sm font-semibold">/isochrone</div>
+            <p class="text-slate-400 text-sm mt-1">Reachability polygon: generates drive-time zones (e.g. "all areas reachable within 30 minutes from KL Sentral").</p>
+          </div>
+        </div>
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5 flex items-start gap-4">
+          <span class="bg-surface2 border border-white/10 text-slate-300 text-xs font-bold px-2 py-1 rounded font-mono flex-shrink-0 mt-0.5">GET</span>
+          <div>
+            <div class="font-mono text-sm font-semibold">/status</div>
+            <p class="text-slate-400 text-sm mt-1">Engine health check. Returns Valhalla version, graph build date, and tile set version. Used by Kubernetes liveness probes.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 5: Performance Benchmarks -->
+    <section>
+      <h2 class="text-2xl font-black mb-4">Performance Benchmarks</h2>
+      <p class="text-slate-400 mb-6">Benchmarks run with k6 against staging EKS (2 Valhalla pods). Measured end-to-end including proxy hop through arah-api.</p>
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm border-collapse">
+          <thead>
+            <tr class="border-b border-white/[0.07]">
+              <th class="text-left py-3 px-4 text-slate-400 font-semibold">Route</th>
+              <th class="text-left py-3 px-4 text-slate-400 font-semibold">Distance</th>
+              <th class="text-right py-3 px-4 text-slate-400 font-semibold">p50</th>
+              <th class="text-right py-3 px-4 text-slate-400 font-semibold">p95</th>
+              <th class="text-right py-3 px-4 text-slate-400 font-semibold">p99</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-white/[0.04]">
+            <tr class="hover:bg-surface/50">
+              <td class="py-3 px-4 font-medium">KL → Penang</td>
+              <td class="py-3 px-4 text-slate-400">350km</td>
+              <td class="py-3 px-4 text-right text-teal font-semibold">180ms</td>
+              <td class="py-3 px-4 text-right text-teal font-semibold">420ms</td>
+              <td class="py-3 px-4 text-right text-slate-400">680ms</td>
+            </tr>
+            <tr class="hover:bg-surface/50">
+              <td class="py-3 px-4 font-medium">KL → JB</td>
+              <td class="py-3 px-4 text-slate-400">340km</td>
+              <td class="py-3 px-4 text-right text-teal font-semibold">190ms</td>
+              <td class="py-3 px-4 text-right text-teal font-semibold">430ms</td>
+              <td class="py-3 px-4 text-right text-slate-400">700ms</td>
+            </tr>
+            <tr class="hover:bg-surface/50">
+              <td class="py-3 px-4 font-medium">KK → Sandakan</td>
+              <td class="py-3 px-4 text-slate-400">390km</td>
+              <td class="py-3 px-4 text-right text-teal font-semibold">200ms</td>
+              <td class="py-3 px-4 text-right text-teal font-semibold">460ms</td>
+              <td class="py-3 px-4 text-right text-slate-400">720ms</td>
+            </tr>
+            <tr class="hover:bg-surface/50">
+              <td class="py-3 px-4 font-medium">Local (5km)</td>
+              <td class="py-3 px-4 text-slate-400">5km</td>
+              <td class="py-3 px-4 text-right text-teal font-semibold">12ms</td>
+              <td class="py-3 px-4 text-right text-teal font-semibold">35ms</td>
+              <td class="py-3 px-4 text-right text-slate-400">60ms</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="mt-4 flex items-center gap-2 text-sm text-slate-500">
+        <svg class="w-4 h-4 text-teal" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+        SLO: p95 &lt; 500ms · All routes passing
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/[0.07] bg-surface mt-20 py-10">
+    <div class="max-w-5xl mx-auto px-6 flex flex-wrap justify-between items-center gap-4">
+      <div>
+        <div class="font-black text-lg">Ar<span class="text-teal">ah</span></div>
+        <p class="text-xs text-slate-500 mt-1">Part of the Arah Platform · MIT License</p>
+      </div>
+      <div class="flex gap-6 text-sm text-slate-500">
+        <a href="https://deanz93.github.io/arah/" class="hover:text-white">Main Site</a>
+        <a href="https://github.com/deanz93/arah" class="hover:text-white">Monorepo</a>
+        <a href="https://github.com/deanz93/arah-routing" class="hover:text-white">This Repo</a>
+      </div>
+      <p class="text-xs text-slate-600">MIT · Built in Malaysia 🇲🇾</p>
+    </div>
+  </footer>
+
+</body>
+</html>

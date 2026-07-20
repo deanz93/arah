@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contributing — arah-tile-server</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: {
+        'teal': { DEFAULT: '#00D8A0' },
+        'amber': { DEFAULT: '#FF7040' },
+        'bg': '#080D12',
+        'surface': '#111820',
+        'surface2': '#1A2433',
+      }}}
+    }
+  </script>
+  <style>
+    body { font-family: system-ui,-apple-system,sans-serif; }
+    .code-block { background:#0D1117; border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:1.25rem; overflow-x:auto; }
+    pre code { font-family:'Fira Code',monospace; font-size:0.82rem; line-height:1.7; color:#e8f0fa; }
+  </style>
+</head>
+<body class="bg-bg text-slate-200 min-h-screen">
+
+  <!-- Nav -->
+  <nav class="fixed top-0 inset-x-0 z-50 border-b border-white/[0.07] bg-bg/90 backdrop-blur-xl">
+    <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="index.html" class="font-black text-xl text-white">Ar<span class="text-teal">ah</span> <span class="text-slate-500 font-semibold text-base">/ tile-server</span></a>
+      <div class="flex items-center gap-5 text-sm">
+        <a href="index.html" class="text-slate-400 hover:text-white">Home</a>
+        <a href="styles.html" class="text-slate-400 hover:text-white">Map Styles</a>
+        <a href="roadmap.html" class="text-slate-400 hover:text-white">Roadmap</a>
+        <a href="contributing.html" class="text-white font-semibold">Contributing</a>
+        <a href="https://github.com/deanz93/arah-tile-server" class="bg-teal text-bg font-bold px-4 py-1.5 rounded-lg hover:opacity-80">GitHub →</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <section class="pt-32 pb-12 px-6">
+    <div class="max-w-5xl mx-auto">
+      <div class="inline-flex items-center gap-2 bg-surface2 border border-white/[0.08] text-teal text-xs font-semibold px-3 py-1.5 rounded-full mb-6">
+        Open Source · MIT License
+      </div>
+      <h1 class="text-4xl font-black text-white mb-3">Contributing</h1>
+      <p class="text-lg text-slate-400 max-w-2xl">How to contribute to arah-tile-server — setup, branch format, skill files, and PR checklist</p>
+    </div>
+  </section>
+
+  <!-- Getting Started -->
+  <section class="px-6 pb-10">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-2xl font-bold text-white mb-6">Getting Started</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-surface border border-white/[0.07] rounded-2xl p-6">
+          <h3 class="text-base font-bold text-white mb-4">Prerequisites</h3>
+          <ul class="space-y-2 text-sm text-slate-400">
+            <li class="flex gap-2"><span class="text-teal mt-0.5">✓</span> Docker Desktop / Docker Engine</li>
+            <li class="flex gap-2"><span class="text-teal mt-0.5">✓</span> Node.js 24 LTS</li>
+            <li class="flex gap-2"><span class="text-teal mt-0.5">✓</span> Java 21 (for local Planetiler)</li>
+            <li class="flex gap-2"><span class="text-teal mt-0.5">✓</span> k6 (for load testing)</li>
+            <li class="flex gap-2"><span class="text-teal mt-0.5">✓</span> Playwright (for visual regression)</li>
+          </ul>
+        </div>
+        <div class="bg-surface border border-white/[0.07] rounded-2xl p-6">
+          <h3 class="text-base font-bold text-white mb-4">Local Setup</h3>
+          <div class="code-block">
+            <pre><code>git clone https://github.com/deanz93/arah-tile-server.git
+cd arah-tile-server
+# Build and run locally
+docker build -t arah-tile-server:local .
+docker run -p 8080:8080 \
+  -v $(pwd)/data:/data \
+  arah-tile-server:local
+# Verify
+curl http://localhost:8080/health</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Branch & Commit Format -->
+  <section class="px-6 pb-10">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-2xl font-bold text-white mb-6">Branch &amp; Commit Format</h2>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-surface border border-white/[0.07] rounded-2xl p-6">
+          <h3 class="text-base font-bold text-white mb-3">Branch naming</h3>
+          <div class="code-block mb-3">
+            <pre><code>feature/TILE-NNN-short-description</code></pre>
+          </div>
+          <p class="text-slate-500 text-xs">Examples:</p>
+          <div class="code-block mt-2">
+            <pre><code>feature/TILE-012-bilingual-labels
+feature/TILE-028-jawi-rtl-layer
+feature/TILE-021-k6-load-test</code></pre>
+          </div>
+        </div>
+        <div class="bg-surface border border-white/[0.07] rounded-2xl p-6">
+          <h3 class="text-base font-bold text-white mb-3">Commit convention</h3>
+          <div class="code-block mb-3">
+            <pre><code>feat(tiles): short description</code></pre>
+          </div>
+          <p class="text-slate-500 text-xs">Conventional Commits prefixes:</p>
+          <ul class="space-y-1.5 mt-3 text-sm text-slate-400">
+            <li><code class="text-teal text-xs">feat(tiles):</code> — new feature</li>
+            <li><code class="text-teal text-xs">fix(tiles):</code> — bug fix</li>
+            <li><code class="text-teal text-xs">chore(tiles):</code> — maintenance</li>
+            <li><code class="text-teal text-xs">docs(tiles):</code> — documentation</li>
+            <li><code class="text-teal text-xs">test(tiles):</code> — tests only</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skill Files -->
+  <section class="px-6 pb-10">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-2xl font-bold text-white mb-6">Skill Files</h2>
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="bg-surface border border-white/[0.07] rounded-2xl p-5">
+          <div class="flex items-center gap-2 mb-3">
+            <div class="w-8 h-8 rounded-lg bg-teal/10 flex items-center justify-center">
+              <svg class="w-4 h-4 text-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
+            <code class="text-teal text-sm font-mono">style.md</code>
+          </div>
+          <p class="text-slate-500 text-xs leading-relaxed">MapLibre style authoring guide — colour tokens, layer naming conventions, zoom ranges, and Jawi RTL requirements.</p>
+        </div>
+        <div class="bg-surface border border-white/[0.07] rounded-2xl p-5">
+          <div class="flex items-center gap-2 mb-3">
+            <div class="w-8 h-8 rounded-lg bg-teal/10 flex items-center justify-center">
+              <svg class="w-4 h-4 text-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+            </div>
+            <code class="text-teal text-sm font-mono">test.md</code>
+          </div>
+          <p class="text-slate-500 text-xs leading-relaxed">Testing runbook — how to run Playwright visual regression tests and k6 scenarios against a local TileServer instance.</p>
+        </div>
+        <div class="bg-surface border border-white/[0.07] rounded-2xl p-5">
+          <div class="flex items-center gap-2 mb-3">
+            <div class="w-8 h-8 rounded-lg bg-teal/10 flex items-center justify-center">
+              <svg class="w-4 h-4 text-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            </div>
+            <code class="text-teal text-sm font-mono">pr.md</code>
+          </div>
+          <p class="text-slate-500 text-xs leading-relaxed">PR template and review checklist — what reviewers look for in tile style, pipeline, and deployment PRs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pre-PR Checklist -->
+  <section class="px-6 pb-16">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-2xl font-bold text-white mb-6">Pre-PR Checklist</h2>
+      <p class="text-slate-400 text-sm mb-6">All items must pass before opening a pull request. CI enforces these gates automatically.</p>
+      <div class="bg-surface border border-white/[0.07] rounded-2xl overflow-hidden">
+        <div class="divide-y divide-white/[0.04]">
+          <div class="flex items-center gap-4 px-6 py-4">
+            <div class="w-6 h-6 rounded-full bg-teal/10 border border-teal/30 flex items-center justify-center shrink-0">
+              <svg class="w-3.5 h-3.5 text-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <div>
+              <div class="text-white text-sm font-medium">Docker build passes</div>
+              <p class="text-slate-500 text-xs"><code class="font-mono">docker build -t arah-tile-server:local .</code> exits 0</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-4 px-6 py-4">
+            <div class="w-6 h-6 rounded-full bg-teal/10 border border-teal/30 flex items-center justify-center shrink-0">
+              <svg class="w-3.5 h-3.5 text-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <div>
+              <div class="text-white text-sm font-medium">Playwright visual regression tests pass</div>
+              <p class="text-slate-500 text-xs">Screenshot diffs within 0.5% threshold for day and night styles</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-4 px-6 py-4">
+            <div class="w-6 h-6 rounded-full bg-teal/10 border border-teal/30 flex items-center justify-center shrink-0">
+              <svg class="w-3.5 h-3.5 text-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <div>
+              <div class="text-white text-sm font-medium">k6 p95 &lt; 200ms</div>
+              <p class="text-slate-500 text-xs">Tile endpoint p95 latency under 200ms at 100 VU sustained load</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-4 px-6 py-4">
+            <div class="w-6 h-6 rounded-full bg-teal/10 border border-teal/30 flex items-center justify-center shrink-0">
+              <svg class="w-3.5 h-3.5 text-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <div>
+              <div class="text-white text-sm font-medium">pmtiles verify passes</div>
+              <p class="text-slate-500 text-xs"><code class="font-mono">pmtiles verify malaysia.pmtiles</code> — checksum and header validation</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-4 px-6 py-4">
+            <div class="w-6 h-6 rounded-full bg-teal/10 border border-teal/30 flex items-center justify-center shrink-0">
+              <svg class="w-3.5 h-3.5 text-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <div>
+              <div class="text-white text-sm font-medium">Docker uid 1001</div>
+              <p class="text-slate-500 text-xs">Container process runs as non-root uid 1001 — verified by <code class="font-mono">docker run --user check</code></p>
+            </div>
+          </div>
+          <div class="flex items-center gap-4 px-6 py-4">
+            <div class="w-6 h-6 rounded-full bg-teal/10 border border-teal/30 flex items-center justify-center shrink-0">
+              <svg class="w-3.5 h-3.5 text-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <div>
+              <div class="text-white text-sm font-medium">Both day + night styles render</div>
+              <p class="text-slate-500 text-xs"><code class="font-mono">/styles/arah-day/style.json</code> and <code class="font-mono">/styles/arah-night/style.json</code> return valid MapLibre JSON</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-4 px-6 py-4">
+            <div class="w-6 h-6 rounded-full bg-teal/10 border border-teal/30 flex items-center justify-center shrink-0">
+              <svg class="w-3.5 h-3.5 text-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <div>
+              <div class="text-white text-sm font-medium">Jawi layer present</div>
+              <p class="text-slate-500 text-xs"><code class="font-mono">place-label-jawi</code> layer present in style JSON with visibility set to <code class="font-mono">none</code></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PR workflow -->
+      <div class="mt-8 bg-surface border border-white/[0.07] rounded-2xl p-6">
+        <h3 class="text-base font-bold text-white mb-4">PR Workflow</h3>
+        <div class="code-block">
+          <pre><code># 1. Create feature branch
+git checkout -b feature/TILE-NNN-description
+
+# 2. Make your changes, then run checks
+docker build -t arah-tile-server:local .
+npx playwright test --update-snapshots  # first run only
+k6 run scripts/load-test.js
+
+# 3. Commit with conventional format
+git commit -m "feat(tiles): add jawi label layer (TILE-028)"
+
+# 4. Push and open PR
+git push origin feature/TILE-NNN-description
+gh pr create --fill</code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/[0.07] bg-surface mt-20 py-10">
+    <div class="max-w-5xl mx-auto px-6 flex flex-wrap justify-between items-center gap-4">
+      <div>
+        <div class="font-black text-lg">Ar<span class="text-teal">ah</span></div>
+        <p class="text-xs text-slate-500 mt-1">Part of the Arah Platform · MIT License</p>
+      </div>
+      <div class="flex gap-6 text-sm text-slate-500">
+        <a href="https://deanz93.github.io/arah/" class="hover:text-white">Main Site</a>
+        <a href="https://github.com/deanz93/arah" class="hover:text-white">Monorepo</a>
+        <a href="https://github.com/deanz93/arah-tile-server" class="hover:text-white">This Repo</a>
+      </div>
+      <p class="text-xs text-slate-600">MIT · Built in Malaysia 🇲🇾</p>
+    </div>
+  </footer>
+
+</body>
+</html>

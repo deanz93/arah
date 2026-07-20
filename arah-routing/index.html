@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>arah-routing · Self-hosted Valhalla Routing</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: { extend: { colors: {
+        'teal': { DEFAULT: '#00D8A0' },
+        'amber': { DEFAULT: '#FF7040' },
+        'bg': '#080D12',
+        'surface': '#111820',
+        'surface2': '#1A2433',
+      }}}
+    }
+  </script>
+  <style>
+    body { font-family: system-ui,-apple-system,sans-serif; }
+    .code-block { background:#0D1117; border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:1.25rem; overflow-x:auto; }
+    pre code { font-family:'Fira Code',monospace; font-size:0.82rem; line-height:1.7; color:#e8f0fa; }
+  </style>
+</head>
+<body class="bg-bg text-white min-h-screen">
+
+  <!-- Nav -->
+  <nav class="fixed top-0 inset-x-0 z-50 border-b border-white/[0.07] bg-bg/90 backdrop-blur-xl">
+    <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+      <a href="index.html" class="font-black text-xl text-white">Ar<span class="text-teal">ah</span> <span class="text-slate-500 font-semibold text-base">/ routing</span></a>
+      <div class="flex items-center gap-5 text-sm">
+        <a href="index.html" class="text-white font-semibold">Home</a>
+        <a href="architecture.html" class="text-slate-400 hover:text-white">Architecture</a>
+        <a href="roadmap.html" class="text-slate-400 hover:text-white">Roadmap</a>
+        <a href="contributing.html" class="text-slate-400 hover:text-white">Contributing</a>
+        <a href="https://github.com/deanz93/arah-routing" class="bg-teal text-bg font-bold px-4 py-1.5 rounded-lg hover:opacity-80">GitHub →</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="pt-36 pb-20 px-6">
+    <div class="max-w-5xl mx-auto text-center">
+      <div class="inline-flex items-center gap-2 bg-teal/10 border border-teal/20 rounded-full px-4 py-1.5 text-teal text-sm font-semibold mb-8">
+        <span class="w-2 h-2 rounded-full bg-teal inline-block"></span>
+        Self-hosted Valhalla · Malaysia OSM Data
+      </div>
+      <h1 class="text-6xl font-black mb-6 tracking-tight">
+        arah-<span class="text-teal">routing</span>
+      </h1>
+      <p class="text-xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+        Self-hosted Valhalla routing engine for Malaysian roads. Turn-by-turn directions in Bahasa Malaysia, toll avoidance, and p95 &lt; 500ms for 350km routes.
+      </p>
+
+      <!-- Badges -->
+      <div class="flex flex-wrap justify-center gap-2 mb-12">
+        <span class="bg-surface2 border border-white/10 rounded-full px-3 py-1 text-xs text-slate-300 font-medium">Valhalla C++</span>
+        <span class="bg-surface2 border border-white/10 rounded-full px-3 py-1 text-xs text-slate-300 font-medium">Docker</span>
+        <span class="bg-surface2 border border-white/10 rounded-full px-3 py-1 text-xs text-slate-300 font-medium">Python 3</span>
+        <span class="bg-surface2 border border-white/10 rounded-full px-3 py-1 text-xs text-slate-300 font-medium">k6</span>
+        <span class="bg-surface2 border border-white/10 rounded-full px-3 py-1 text-xs text-slate-300 font-medium">Kubernetes</span>
+        <span class="bg-teal/10 border border-teal/20 rounded-full px-3 py-1 text-xs text-teal font-medium">MIT</span>
+        <span class="bg-amber/10 border border-amber/20 rounded-full px-3 py-1 text-xs text-amber font-medium">34 Stories</span>
+      </div>
+
+      <!-- Stats -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto mb-16">
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5 text-center">
+          <div class="text-3xl font-black text-teal">34</div>
+          <div class="text-sm text-slate-400 mt-1">Stories</div>
+        </div>
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5 text-center">
+          <div class="text-3xl font-black text-white">5</div>
+          <div class="text-sm text-slate-400 mt-1">Epics</div>
+        </div>
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5 text-center">
+          <div class="text-3xl font-black text-white">MY</div>
+          <div class="text-sm text-slate-400 mt-1">Malaysia OSM data</div>
+        </div>
+        <div class="bg-surface border border-white/[0.07] rounded-xl p-5 text-center">
+          <div class="text-3xl font-black text-white">MIT</div>
+          <div class="text-sm text-slate-400 mt-1">License</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Feature Cards -->
+  <section class="px-6 pb-20">
+    <div class="max-w-5xl mx-auto grid md:grid-cols-3 gap-6">
+      <!-- Valhalla Routing -->
+      <div class="bg-surface border border-white/[0.07] rounded-2xl p-7 hover:border-teal/30 transition-colors">
+        <div class="w-10 h-10 bg-teal/10 border border-teal/20 rounded-xl flex items-center justify-center mb-5">
+          <svg class="w-5 h-5 text-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"/></svg>
+        </div>
+        <h3 class="font-bold text-lg mb-3">Valhalla Routing</h3>
+        <ul class="text-slate-400 text-sm space-y-2">
+          <li class="flex items-start gap-2"><span class="text-teal mt-0.5">▸</span> Turn-by-turn manoeuvres in BM</li>
+          <li class="flex items-start gap-2"><span class="text-teal mt-0.5">▸</span> 3 route alternatives per request</li>
+          <li class="flex items-start gap-2"><span class="text-teal mt-0.5">▸</span> Toll avoidance profile</li>
+          <li class="flex items-start gap-2"><span class="text-teal mt-0.5">▸</span> p95 &lt; 500ms for 350km routes</li>
+          <li class="flex items-start gap-2"><span class="text-teal mt-0.5">▸</span> TSP optimised delivery routing</li>
+          <li class="flex items-start gap-2"><span class="text-teal mt-0.5">▸</span> Drive-time isochrone polygons</li>
+        </ul>
+      </div>
+
+      <!-- OSM Data Pipeline -->
+      <div class="bg-surface border border-white/[0.07] rounded-2xl p-7 hover:border-teal/30 transition-colors">
+        <div class="w-10 h-10 bg-teal/10 border border-teal/20 rounded-xl flex items-center justify-center mb-5">
+          <svg class="w-5 h-5 text-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+        </div>
+        <h3 class="font-bold text-lg mb-3">OSM Data Pipeline</h3>
+        <ul class="text-slate-400 text-sm space-y-2">
+          <li class="flex items-start gap-2"><span class="text-teal mt-0.5">▸</span> Monthly OSM PBF refresh from Geofabrik</li>
+          <li class="flex items-start gap-2"><span class="text-teal mt-0.5">▸</span> Malaysia bounding box enforced</li>
+          <li class="flex items-start gap-2"><span class="text-teal mt-0.5">▸</span> Atomic EFS tile swap (zero-downtime)</li>
+          <li class="flex items-start gap-2"><span class="text-teal mt-0.5">▸</span> Reproducible Docker builds</li>
+          <li class="flex items-start gap-2"><span class="text-teal mt-0.5">▸</span> Graph validation post-build</li>
+          <li class="flex items-start gap-2"><span class="text-teal mt-0.5">▸</span> ~3.8GB RAM graph in-memory</li>
+        </ul>
+      </div>
+
+      <!-- Malaysian Profiles -->
+      <div class="bg-surface border border-white/[0.07] rounded-2xl p-7 hover:border-teal/30 transition-colors">
+        <div class="w-10 h-10 bg-teal/10 border border-teal/20 rounded-xl flex items-center justify-center mb-5">
+          <svg class="w-5 h-5 text-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>
+        </div>
+        <h3 class="font-bold text-lg mb-3">Malaysian Profiles</h3>
+        <ul class="text-slate-400 text-sm space-y-2">
+          <li class="flex items-start gap-2"><span class="text-teal mt-0.5">▸</span> Car, motorcycle, lorry profiles</li>
+          <li class="flex items-start gap-2"><span class="text-teal mt-0.5">▸</span> Pedestrian and bicycle profiles</li>
+          <li class="flex items-start gap-2"><span class="text-teal mt-0.5">▸</span> Toll-avoidance profile</li>
+          <li class="flex items-start gap-2"><span class="text-teal mt-0.5">▸</span> Highway-avoidance profile</li>
+          <li class="flex items-start gap-2"><span class="text-teal mt-0.5">▸</span> Malaysia speed limits applied</li>
+          <li class="flex items-start gap-2"><span class="text-teal mt-0.5">▸</span> Flood zone avoidance (planned)</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quick Start -->
+  <section class="px-6 pb-20">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-3xl font-black mb-3">Quick Start</h2>
+      <p class="text-slate-400 mb-6">Build the Docker image locally and test against the live Valhalla API.</p>
+      <div class="code-block">
+        <pre><code>git clone https://github.com/deanz93/arah-routing.git
+cd arah-routing
+docker build -t arah-routing:local .
+docker run -p 8002:8002 -v $(pwd)/data:/data arah-routing:local
+curl http://localhost:8002/status</code></pre>
+      </div>
+
+      <div class="mt-8 bg-surface border border-teal/20 rounded-xl p-6 flex items-start gap-4">
+        <div class="w-8 h-8 bg-teal/10 border border-teal/20 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5">
+          <svg class="w-4 h-4 text-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        </div>
+        <div>
+          <div class="font-semibold text-sm mb-1">First-run note: graph build takes ~15 minutes</div>
+          <p class="text-slate-400 text-sm">The <code class="text-teal text-xs">data/</code> directory must contain <code class="text-teal text-xs">malaysia-latest.osm.pbf</code>. Download from <a href="https://download.geofabrik.de/asia/malaysia-singapore-brunei.html" class="text-teal hover:underline">Geofabrik</a>. Pre-built tiles are available on the EFS mount in staging/prod.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Links -->
+  <section class="px-6 pb-20">
+    <div class="max-w-5xl mx-auto grid md:grid-cols-3 gap-4">
+      <a href="architecture.html" class="bg-surface border border-white/[0.07] rounded-xl p-5 hover:border-teal/30 transition-colors group">
+        <div class="font-semibold mb-1 group-hover:text-teal transition-colors">Architecture →</div>
+        <div class="text-slate-400 text-sm">Valhalla pipeline, profiles, API endpoints, benchmarks</div>
+      </a>
+      <a href="roadmap.html" class="bg-surface border border-white/[0.07] rounded-xl p-5 hover:border-teal/30 transition-colors group">
+        <div class="font-semibold mb-1 group-hover:text-teal transition-colors">Roadmap →</div>
+        <div class="text-slate-400 text-sm">34 stories across 5 epics — data to operations</div>
+      </a>
+      <a href="contributing.html" class="bg-surface border border-white/[0.07] rounded-xl p-5 hover:border-teal/30 transition-colors group">
+        <div class="font-semibold mb-1 group-hover:text-teal transition-colors">Contributing →</div>
+        <div class="text-slate-400 text-sm">Profile authoring, testing, and PR checklist</div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-white/[0.07] bg-surface mt-20 py-10">
+    <div class="max-w-5xl mx-auto px-6 flex flex-wrap justify-between items-center gap-4">
+      <div>
+        <div class="font-black text-lg">Ar<span class="text-teal">ah</span></div>
+        <p class="text-xs text-slate-500 mt-1">Part of the Arah Platform · MIT License</p>
+      </div>
+      <div class="flex gap-6 text-sm text-slate-500">
+        <a href="https://deanz93.github.io/arah/" class="hover:text-white">Main Site</a>
+        <a href="https://github.com/deanz93/arah" class="hover:text-white">Monorepo</a>
+        <a href="https://github.com/deanz93/arah-routing" class="hover:text-white">This Repo</a>
+      </div>
+      <p class="text-xs text-slate-600">MIT · Built in Malaysia 🇲🇾</p>
+    </div>
+  </footer>
+
+</body>
+</html>
