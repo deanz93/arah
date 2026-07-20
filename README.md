@@ -138,27 +138,6 @@ Infrastructure: AWS EKS ap-southeast-1 · ElastiCache Redis 7.1
 
 ---
 
-## Quick Start (Local Dev)
-
-```bash
-# Clone
-git clone https://github.com/deanz93/arah.git && cd arah
-
-# Start full local backend (Valhalla + Nominatim + Tile Server + API)
-cd infra && docker-compose up
-
-# Mobile app (requires Android emulator or physical device)
-cd apps/mobile && npm ci && npx react-native run-android
-
-# Web admin portal
-cd apps/web && npm ci && npm run dev
-# → http://localhost:3000
-```
-
-> **Full setup guide:** [docs/bmad/06-dev-setup.md](docs/bmad/06-dev-setup.md)
-
----
-
 ## Scalability Path
 
 | Phase | Users | Infrastructure |
