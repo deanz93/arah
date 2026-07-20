@@ -188,11 +188,14 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for full guidelines.
 
 **Where to contribute by interest:**
 - 📱 Mobile dev → [arah-mobile](https://github.com/deanz93/arah-mobile)
-- 🌐 Frontend/admin UI → [arah-web](https://github.com/deanz93/arah-web)
+- 🌐 Frontend / admin UI → [arah-web](https://github.com/deanz93/arah-web)
 - ⚙️ Backend API → [arah-api](https://github.com/deanz93/arah-api)
-- 🗺️ OSM data quality → [arah-geocoding](https://github.com/deanz93/arah-geocoding)
-- 🛣️ Routing improvements → [arah-routing](https://github.com/deanz93/arah-routing)
-- ☁️ DevOps / infra → [arah-infra](https://github.com/deanz93/arah-infra)
+- 🔔 Cloud functions & notifications → [arah-functions](https://github.com/deanz93/arah-functions)
+- 🛣️ Routing engine → [arah-routing](https://github.com/deanz93/arah-routing)
+- 🗺️ Address search & OSM data → [arah-geocoding](https://github.com/deanz93/arah-geocoding)
+- 🧱 Vector map tiles (2D/3D) → [arah-basemap](https://github.com/deanz93/arah-basemap)
+- 🖥️ Tile server & delivery → [arah-tile-server](https://github.com/deanz93/arah-tile-server)
+- ☁️ DevOps / infrastructure → [arah-infra](https://github.com/deanz93/arah-infra)
 
 ---
 
@@ -202,7 +205,7 @@ Arah is built by a small core team and growing. We're looking for people who car
 
 **To express interest, email:**
 
-> 📧 **developer@plisca.com.my**
+> 📧 **deanz9307@gmail.com**
 >
 > Subject: `[Arah] <Role> — <Your name>`
 > Attach or link your GitHub profile, portfolio, or relevant work.
