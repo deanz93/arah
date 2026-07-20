@@ -121,7 +121,7 @@ Infrastructure: AWS EKS ap-southeast-1 · ElastiCache Redis 7.1
 
 ---
 
-## The 8 Repos
+## The 8 Service Repos
 
 | Repo | Stack | What it does | Site |
 |------|-------|--------------|------|
@@ -133,6 +133,7 @@ Infrastructure: AWS EKS ap-southeast-1 · ElastiCache Redis 7.1
 | [arah-geocoding](https://github.com/deanz93/arah-geocoding) | Nominatim 4.4 | Malaysian address search | [↗](https://deanz93.github.io/arah/arah-geocoding/) |
 | [arah-tile-server](https://github.com/deanz93/arah-tile-server) | PMTiles + TileServer-GL-Light | Self-hosted vector map tiles | [↗](https://deanz93.github.io/arah/arah-tile-server/) |
 | [arah-infra](https://github.com/deanz93/arah-infra) | Terraform + Kubernetes + Helm | All infrastructure as code | [↗](https://deanz93.github.io/arah/arah-infra/) |
+| [arah-basemap](https://github.com/deanz93/arah-basemap) | Planetiler + PMTiles + MapLibre GL | 2D/3D basemap pipeline | [↗](https://deanz93.github.io/arah/arah-basemap/) |
 
 > This repo (`arah`) is the **reference monorepo** — BMAD documentation, architecture decisions, API spec, and scaffold live here.
 

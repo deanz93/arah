@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>2D Basemap — arah-basemap</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body { background: #080D12; color: #e2e8f0; }
+  .card { background: #0F1923; border: 1px solid #1e2d3d; border-radius: 0.75rem; }
+  .card:hover { border-color: #00D8A060; }
+  pre { background: #162130; border: 1px solid #1e2d3d; border-radius: 0.5rem; padding: 1rem; overflow-x: auto; font-size: 0.82rem; line-height: 1.6; color: #a8d4b8; }
+  code { font-family: 'Cascadia Code', 'Fira Code', monospace; }
+  .badge { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 0.72rem; font-weight: 600; background: #00D8A020; color: #00D8A0; border: 1px solid #00D8A040; }
+  .step-num { width: 32px; height: 32px; border-radius: 50%; background: #00D8A020; border: 1.5px solid #00D8A0; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 700; color: #00D8A0; flex-shrink: 0; }
+  .zoom-bar { height: 8px; border-radius: 4px; background: linear-gradient(90deg, #1e2d3d 0%, #00D8A0 100%); }
+  nav a:hover { color: #00D8A0; }
+</style>
+</head>
+<body>
+
+<div class="text-xs text-center py-2 text-slate-400" style="background:#0F1923; border-bottom:1px solid #1e2d3d;">
+  🔒 Private repository &nbsp;|&nbsp;
+  <a href="https://deanz93.github.io/arah/" class="text-teal-400 hover:underline">← Arah</a>
+</div>
+
+<nav class="sticky top-0 z-50 backdrop-blur-sm" style="background:rgba(8,13,18,0.92); border-bottom:1px solid #1e2d3d;">
+  <div class="max-w-5xl mx-auto px-4 flex items-center justify-between h-14">
+    <div class="flex items-center gap-3">
+      <a href="index.html" class="text-xl">🗺️</a>
+      <a href="index.html" class="font-bold text-white">arah-basemap</a>
+    </div>
+    <div class="flex gap-6 text-sm text-slate-300">
+      <a href="index.html" class="hover:text-teal-400">Overview</a>
+      <a href="2d-maps.html" class="text-teal-400 font-medium">2D Maps</a>
+      <a href="3d-maps.html" class="hover:text-teal-400">3D Maps</a>
+      <a href="workflow.html" class="hover:text-teal-400">Workflow</a>
+    </div>
+  </div>
+</nav>
+
+<header class="py-14 px-4" style="background:linear-gradient(160deg,#080D12,#0F1923);">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-5xl mb-4">🗺️</div>
+    <h1 class="text-4xl font-bold text-white mb-3">2D Basemap Guide</h1>
+    <p class="text-lg text-slate-300 max-w-2xl">Vector tile pipeline from OpenStreetMap PBF to PMTiles — plus Planetiler config, MapLibre style, and BM-first labels.</p>
+  </div>
+</header>
+
+<main class="max-w-5xl mx-auto px-4 py-12">
+
+  <!-- Build steps -->
+  <section class="mb-14">
+    <h2 class="text-2xl font-bold text-white mb-6">Build Steps</h2>
+    <div class="space-y-6">
+
+      <div class="card p-6">
+        <div class="flex items-start gap-4">
+          <div class="step-num">1</div>
+          <div class="flex-1">
+            <h3 class="font-semibold text-white mb-2">Fetch OSM Data</h3>
+            <p class="text-slate-400 text-sm mb-3">Downloads the latest Malaysia PBF from Geofabrik and verifies checksum.</p>
+            <pre><code>scripts/fetch-osm.sh
+# → data/malaysia-singapore-brunei-latest.osm.pbf
+# Verifies md5 against Geofabrik manifest</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="card p-6">
+        <div class="flex items-start gap-4">
+          <div class="step-num">2</div>
+          <div class="flex-1">
+            <h3 class="font-semibold text-white mb-2">Generate Vector Tiles</h3>
+            <p class="text-slate-400 text-sm mb-3">Planetiler converts PBF to PMTiles. Takes ~25 min on 8-core machine.</p>
+            <pre><code>scripts/build-2d.sh
+# → dist/malaysia-2d.pmtiles
+
+# Or run Planetiler directly:
+java -Xmx8g -jar planetiler.jar \
+  --area=malaysia-singapore-brunei \
+  --output=dist/malaysia-2d.pmtiles \
+  --minzoom=0 --maxzoom=16 \
+  --languages=ms,en --force</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="card p-6">
+        <div class="flex items-start gap-4">
+          <div class="step-num">3</div>
+          <div class="flex-1">
+            <h3 class="font-semibold text-white mb-2">Validate Tile Count</h3>
+            <p class="text-slate-400 text-sm mb-3">Fails if tile count drops more than 5% vs. the previous build.</p>
+            <pre><code>npm test -- --grep "tile-count"
+# Checks tile count ±5% vs. previous build
+# Checks all zoom levels 0–16 are populated
+pmtiles verify dist/malaysia-2d.pmtiles</code></pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="card p-6">
+        <div class="flex items-start gap-4">
+          <div class="step-num">4</div>
+          <div class="flex-1">
+            <h3 class="font-semibold text-white mb-2">Upload to S3</h3>
+            <p class="text-slate-400 text-sm mb-3">Sets long cache TTL; CloudFront serves tiles globally.</p>
+            <pre><code>scripts/upload.sh --layer 2d
+# → s3://arah-tiles-prod/2d/malaysia-2d.pmtiles
+# Sets: Cache-Control: public, max-age=86400</code></pre>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Tile layers -->
+  <section class="mb-14">
+    <h2 class="text-2xl font-bold text-white mb-6">Tile Layers &amp; Zoom Ranges</h2>
+    <div class="space-y-3">
+      <div class="card p-4 flex items-center gap-4">
+        <div class="w-24 text-sm font-mono text-teal-400">land</div>
+        <div class="flex-1">
+          <div class="text-xs text-slate-400 mb-1">zoom 0–16 &nbsp;·&nbsp; landuse=*, natural earth</div>
+          <div class="zoom-bar" style="width:100%"></div>
+        </div>
+      </div>
+      <div class="card p-4 flex items-center gap-4">
+        <div class="w-24 text-sm font-mono text-blue-400">water</div>
+        <div class="flex-1">
+          <div class="text-xs text-slate-400 mb-1">zoom 4–16 &nbsp;·&nbsp; natural=water, waterway=*</div>
+          <div class="zoom-bar" style="width:75%; background:linear-gradient(90deg,#1e2d3d,#7ec8e3)"></div>
+        </div>
+      </div>
+      <div class="card p-4 flex items-center gap-4">
+        <div class="w-24 text-sm font-mono text-yellow-400">roads</div>
+        <div class="flex-1">
+          <div class="text-xs text-slate-400 mb-1">zoom 6–16 &nbsp;·&nbsp; highway=*</div>
+          <div class="zoom-bar" style="width:62%; margin-left:23%; background:linear-gradient(90deg,#1e2d3d,#E8B84B)"></div>
+        </div>
+      </div>
+      <div class="card p-4 flex items-center gap-4">
+        <div class="w-24 text-sm font-mono text-orange-400">buildings</div>
+        <div class="flex-1">
+          <div class="text-xs text-slate-400 mb-1">zoom 13–16 &nbsp;·&nbsp; building=*</div>
+          <div class="zoom-bar" style="width:23%; margin-left:77%; background:linear-gradient(90deg,#1e2d3d,#fb923c)"></div>
+        </div>
+      </div>
+      <div class="card p-4 flex items-center gap-4">
+        <div class="w-24 text-sm font-mono text-pink-400">poi</div>
+        <div class="flex-1">
+          <div class="text-xs text-slate-400 mb-1">zoom 12–16 &nbsp;·&nbsp; amenity=*, shop=*, tourism=*</div>
+          <div class="zoom-bar" style="width:31%; margin-left:69%; background:linear-gradient(90deg,#1e2d3d,#f472b6)"></div>
+        </div>
+      </div>
+      <div class="card p-4 flex items-center gap-4">
+        <div class="w-24 text-sm font-mono text-green-400">labels</div>
+        <div class="flex-1">
+          <div class="text-xs text-slate-400 mb-1">zoom 8–16 &nbsp;·&nbsp; name:ms → name:en → name</div>
+          <div class="zoom-bar" style="width:50%; margin-left:50%; background:linear-gradient(90deg,#1e2d3d,#4ade80)"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Style -->
+  <section class="mb-14">
+    <h2 class="text-2xl font-bold text-white mb-6">MapLibre Style</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="card p-5">
+        <h3 class="font-semibold text-white mb-3">Colour Palette</h3>
+        <div class="space-y-2 text-sm">
+          <div class="flex items-center gap-3"><div class="w-6 h-6 rounded" style="background:#E8B84B"></div><span class="text-slate-300">Primary road — <code class="text-slate-400">#E8B84B</code> (Malay gold)</span></div>
+          <div class="flex items-center gap-3"><div class="w-6 h-6 rounded" style="background:#1A3A5C"></div><span class="text-slate-300">Water — <code class="text-slate-400">#1A3A5C</code></span></div>
+          <div class="flex items-center gap-3"><div class="w-6 h-6 rounded" style="background:#F2EFE9; border:1px solid #ccc"></div><span class="text-slate-300">Background light — <code class="text-slate-400">#F2EFE9</code></span></div>
+          <div class="flex items-center gap-3"><div class="w-6 h-6 rounded" style="background:#0F1923"></div><span class="text-slate-300">Background dark — <code class="text-slate-400">#0F1923</code></span></div>
+          <div class="flex items-center gap-3"><div class="w-6 h-6 rounded" style="background:#00D8A0"></div><span class="text-slate-300">Accent / highway — <code class="text-slate-400">#00D8A0</code></span></div>
+        </div>
+      </div>
+      <div class="card p-5">
+        <h3 class="font-semibold text-white mb-3">BM-First Labels</h3>
+        <p class="text-sm text-slate-400 mb-3">All label layers use coalesce: BM first, English fallback.</p>
+        <pre><code>"text-field": [
+  "coalesce",
+  ["get", "name:ms"],
+  ["get", "name:en"],
+  ["get", "name"]
+]</code></pre>
+      </div>
+    </div>
+    <div class="card p-5 mt-4">
+      <h3 class="font-semibold text-white mb-3">Editing the Style</h3>
+      <pre><code># Edit
+nano styles/arah-2d.json
+
+# Validate
+npm run validate-style
+
+# Preview locally
+docker run -v $(pwd)/dist:/data -v $(pwd)/styles:/styles \
+  -p 8080:8080 maptiler/tileserver-gl-light
+# → http://localhost:8080</code></pre>
+    </div>
+  </section>
+
+  <!-- File reference -->
+  <section>
+    <h2 class="text-2xl font-bold text-white mb-6">File Reference</h2>
+    <div class="card overflow-hidden">
+      <table class="w-full text-sm">
+        <thead><tr class="border-b border-slate-700 text-left"><th class="px-5 py-3 text-slate-400 font-medium">File</th><th class="px-5 py-3 text-slate-400 font-medium">Purpose</th></tr></thead>
+        <tbody class="divide-y divide-slate-700/50 text-slate-300">
+          <tr><td class="px-5 py-3 font-mono text-teal-400">styles/arah-2d.json</td><td class="px-5 py-3">Main MapLibre GL style</td></tr>
+          <tr><td class="px-5 py-3 font-mono text-teal-400">profiles/malaysia-full.java</td><td class="px-5 py-3">Planetiler layer profile</td></tr>
+          <tr><td class="px-5 py-3 font-mono text-teal-400">scripts/fetch-osm.sh</td><td class="px-5 py-3">Download + verify OSM PBF</td></tr>
+          <tr><td class="px-5 py-3 font-mono text-teal-400">scripts/build-2d.sh</td><td class="px-5 py-3">Run Planetiler → PMTiles</td></tr>
+          <tr><td class="px-5 py-3 font-mono text-teal-400">scripts/upload.sh</td><td class="px-5 py-3">S3 upload with cache headers</td></tr>
+          <tr><td class="px-5 py-3 font-mono text-teal-400">test/tile-count.test.js</td><td class="px-5 py-3">Tile count validation</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<footer class="border-t py-8 text-center text-sm text-slate-500" style="border-color:#1e2d3d;">
+  <a href="index.html" class="text-teal-400 hover:underline">← Overview</a>
+  &nbsp;·&nbsp;
+  <a href="3d-maps.html" class="text-teal-400 hover:underline">3D Maps →</a>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Update Workflow — arah-basemap</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  body { background: #080D12; color: #e2e8f0; }
+  .card { background: #0F1923; border: 1px solid #1e2d3d; border-radius: 0.75rem; }
+  pre { background: #162130; border: 1px solid #1e2d3d; border-radius: 0.5rem; padding: 1rem; overflow-x: auto; font-size: 0.82rem; line-height: 1.6; color: #a8d4b8; }
+  nav a:hover { color: #00D8A0; }
+  .timeline-dot { width: 12px; height: 12px; border-radius: 50%; background: #00D8A0; flex-shrink: 0; margin-top: 4px; box-shadow: 0 0 0 3px #00D8A020; }
+  .timeline-line { width: 2px; background: #1e2d3d; flex-shrink: 0; min-height: 40px; margin-left: 5px; }
+  .freq-chip { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.72rem; font-weight: 600; }
+  .freq-weekly { background: #00D8A020; color: #00D8A0; }
+  .freq-nightly { background: #7ec8e320; color: #7ec8e3; }
+  .freq-monthly { background: #E8B84B20; color: #E8B84B; }
+  .freq-manual { background: #f472b620; color: #f472b6; }
+  .alert-row td:first-child { color: #e2e8f0; }
+</style>
+</head>
+<body>
+
+<div class="text-xs text-center py-2 text-slate-400" style="background:#0F1923; border-bottom:1px solid #1e2d3d;">
+  🔒 Private repository &nbsp;|&nbsp;
+  <a href="https://deanz93.github.io/arah/" class="text-teal-400 hover:underline">← Arah</a>
+</div>
+
+<nav class="sticky top-0 z-50 backdrop-blur-sm" style="background:rgba(8,13,18,0.92); border-bottom:1px solid #1e2d3d;">
+  <div class="max-w-5xl mx-auto px-4 flex items-center justify-between h-14">
+    <div class="flex items-center gap-3">
+      <a href="index.html" class="text-xl">🗺️</a>
+      <a href="index.html" class="font-bold text-white">arah-basemap</a>
+    </div>
+    <div class="flex gap-6 text-sm text-slate-300">
+      <a href="index.html" class="hover:text-teal-400">Overview</a>
+      <a href="2d-maps.html" class="hover:text-teal-400">2D Maps</a>
+      <a href="3d-maps.html" class="hover:text-teal-400">3D Maps</a>
+      <a href="workflow.html" class="text-teal-400 font-medium">Workflow</a>
+    </div>
+  </div>
+</nav>
+
+<header class="py-14 px-4" style="background:linear-gradient(160deg,#080D12,#0F1923);">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-5xl mb-4">🔄</div>
+    <h1 class="text-4xl font-bold text-white mb-3">Update Workflow</h1>
+    <p class="text-lg text-slate-300 max-w-2xl">Scheduled rebuild cadence, nightly OSM diff patching, manual hotfix procedure, and rollback steps.</p>
+  </div>
+</header>
+
+<main class="max-w-5xl mx-auto px-4 py-12">
+
+  <!-- Schedule table -->
+  <section class="mb-14">
+    <h2 class="text-2xl font-bold text-white mb-6">Update Schedule</h2>
+    <div class="card overflow-hidden">
+      <table class="w-full text-sm">
+        <thead><tr class="border-b border-slate-700 text-left"><th class="px-5 py-3 text-slate-400 font-medium">Type</th><th class="px-5 py-3 text-slate-400 font-medium">Frequency</th><th class="px-5 py-3 text-slate-400 font-medium">Time (MYT)</th><th class="px-5 py-3 text-slate-400 font-medium">Method</th></tr></thead>
+        <tbody class="divide-y divide-slate-700/50 text-slate-300">
+          <tr>
+            <td class="px-5 py-3 font-medium text-white">Full rebuild</td>
+            <td class="px-5 py-3"><span class="freq-chip freq-weekly">Weekly</span></td>
+            <td class="px-5 py-3">Sunday 02:00</td>
+            <td class="px-5 py-3">GitHub Actions</td>
+          </tr>
+          <tr>
+            <td class="px-5 py-3 font-medium text-white">OSM diff patch</td>
+            <td class="px-5 py-3"><span class="freq-chip freq-nightly">Nightly</span></td>
+            <td class="px-5 py-3">Daily 01:00</td>
+            <td class="px-5 py-3">osmupdate + Planetiler</td>
+          </tr>
+          <tr>
+            <td class="px-5 py-3 font-medium text-white">Terrain DEM</td>
+            <td class="px-5 py-3"><span class="freq-chip freq-monthly">Monthly</span></td>
+            <td class="px-5 py-3">1st of month</td>
+            <td class="px-5 py-3">Manual Actions trigger</td>
+          </tr>
+          <tr>
+            <td class="px-5 py-3 font-medium text-white">Hotfix</td>
+            <td class="px-5 py-3"><span class="freq-chip freq-manual">On demand</span></td>
+            <td class="px-5 py-3">—</td>
+            <td class="px-5 py-3">scripts/hotfix.sh</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Weekly rebuild timeline -->
+  <section class="mb-14">
+    <h2 class="text-2xl font-bold text-white mb-6">Weekly Full Rebuild</h2>
+    <div class="card p-6">
+      <div class="space-y-0">
+        <div class="flex gap-4">
+          <div class="flex flex-col items-center"><div class="timeline-dot"></div><div class="timeline-line"></div></div>
+          <div class="pb-6">
+            <div class="font-semibold text-white">Fetch OSM PBF</div>
+            <div class="text-sm text-slate-400">Download malaysia-singapore-brunei-latest.osm.pbf from Geofabrik. Verify md5.</div>
+            <pre class="mt-2"><code>scripts/fetch-osm.sh</code></pre>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <div class="flex flex-col items-center"><div class="timeline-dot"></div><div class="timeline-line"></div></div>
+          <div class="pb-6">
+            <div class="font-semibold text-white">Generate 2D tiles &nbsp;<span class="text-slate-500 text-sm font-normal">~25 min</span></div>
+            <div class="text-sm text-slate-400">Full Planetiler run on 8-core machine with 8 GB heap.</div>
+            <pre class="mt-2"><code>scripts/build-2d.sh</code></pre>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <div class="flex flex-col items-center"><div class="timeline-dot" style="background:#E8B84B;box-shadow:0 0 0 3px #E8B84B20"></div><div class="timeline-line"></div></div>
+          <div class="pb-6">
+            <div class="font-semibold text-white">Rebuild terrain (if version changed)</div>
+            <div class="text-sm text-slate-400">Only runs if Copernicus DEM source has a newer version.</div>
+            <pre class="mt-2"><code>scripts/build-terrain.sh --if-newer</code></pre>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <div class="flex flex-col items-center"><div class="timeline-dot" style="background:#7ec8e3;box-shadow:0 0 0 3px #7ec8e320"></div><div class="timeline-line"></div></div>
+          <div class="pb-6">
+            <div class="font-semibold text-white">Validate</div>
+            <div class="text-sm text-slate-400">Tile count check + style-spec validation. Fails CI if count drops &gt;5%.</div>
+            <pre class="mt-2"><code>npm test
+pmtiles verify dist/malaysia-2d.pmtiles</code></pre>
+          </div>
+        </div>
+        <div class="flex gap-4">
+          <div class="flex flex-col items-center"><div class="timeline-dot" style="background:#4ade80;box-shadow:0 0 0 3px #4ade8020"></div><div class="timeline-line" style="min-height:0"></div></div>
+          <div class="pb-2">
+            <div class="font-semibold text-white">Upload to S3 + notify</div>
+            <div class="text-sm text-slate-400">Upload PMTiles, set cache headers, post to Slack #maps-ops.</div>
+            <pre class="mt-2"><code>scripts/upload.sh --layer 2d
+# → s3://arah-tiles-prod/2d/malaysia-2d.pmtiles
+# → Slack: "Weekly tile build complete ✅ (2.8 GB)"</code></pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Nightly diff -->
+  <section class="mb-14">
+    <h2 class="text-2xl font-bold text-white mb-6">Nightly Diff Patch</h2>
+    <p class="text-slate-400 text-sm mb-4">Keeps roads and POIs fresh without a full rebuild. Takes ~8 min.</p>
+    <div class="card p-5">
+      <pre><code>scripts/diff-update.sh
+# 1. Download OSM minutely diffs since last run
+# 2. Apply diffs with osmupdate → malaysia-updated.osm.pbf
+# 3. Run Planetiler only on changed tile bounding boxes
+# 4. Merge new tiles into existing PMTiles archive
+# 5. Upload delta tiles to S3
+# Cost: ~$0.02/night (EC2 t3.xlarge, 8 min)</code></pre>
+    </div>
+    <p class="text-xs text-slate-400 mt-3">Nightly diff adds ~50 MB to the archive. The weekly full rebuild compacts it back down.</p>
+  </section>
+
+  <!-- Hotfix -->
+  <section class="mb-14">
+    <h2 class="text-2xl font-bold text-white mb-6">Manual Hotfix</h2>
+    <p class="text-slate-400 text-sm mb-4">Use when a specific area has critical data errors — wrong road name, missing hospital, incorrect routing.</p>
+    <div class="card p-5">
+      <pre><code># Rebuild tiles for a city-district bounding box only (~5 min)
+scripts/hotfix.sh --bbox "3.05,101.55,3.25,101.75"
+
+# Bbox format: "lat_min,lon_min,lat_max,lon_max"
+# Examples:
+# KL centre:   "3.12,101.65,3.18,101.72"
+# Georgetown:  "5.39,100.33,5.44,100.37"
+# JB city:     "1.44,103.71,1.50,103.78"</code></pre>
+    </div>
+  </section>
+
+  <!-- Rollback -->
+  <section class="mb-14">
+    <h2 class="text-2xl font-bold text-white mb-6">Rollback</h2>
+    <div class="grid md:grid-cols-2 gap-5">
+      <div class="card p-5">
+        <h3 class="font-semibold text-white mb-3">By date</h3>
+        <pre><code>scripts/rollback.sh --to 2026-07-13
+# Copies previous week's PMTiles from
+# S3 versioned bucket
+# Invalidates CloudFront /tiles/*</code></pre>
+      </div>
+      <div class="card p-5">
+        <h3 class="font-semibold text-white mb-3">Retention</h3>
+        <div class="text-sm text-slate-400 space-y-2">
+          <div>S3 versioning keeps <strong class="text-white">4 weekly builds</strong></div>
+          <div>After 28 days, old versions are deleted by lifecycle rule</div>
+          <div>CloudFront invalidation takes ~30 seconds globally</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Monitoring -->
+  <section class="mb-14">
+    <h2 class="text-2xl font-bold text-white mb-6">Monitoring &amp; Alerts</h2>
+    <div class="card overflow-hidden">
+      <table class="w-full text-sm">
+        <thead><tr class="border-b border-slate-700 text-left"><th class="px-5 py-3 text-slate-400 font-medium">Metric</th><th class="px-5 py-3 text-slate-400 font-medium">Alert threshold</th><th class="px-5 py-3 text-slate-400 font-medium">Channel</th></tr></thead>
+        <tbody class="divide-y divide-slate-700/50 text-slate-300 alert-row">
+          <tr><td class="px-5 py-3">Tile build duration</td><td class="px-5 py-3 text-yellow-400">&gt;45 min</td><td class="px-5 py-3">#maps-ops Slack</td></tr>
+          <tr><td class="px-5 py-3">Tile count delta</td><td class="px-5 py-3 text-red-400">&gt;5% drop</td><td class="px-5 py-3">PagerDuty P2</td></tr>
+          <tr><td class="px-5 py-3">PMTiles size</td><td class="px-5 py-3 text-yellow-400">&gt;5 GB</td><td class="px-5 py-3">#maps-ops Slack</td></tr>
+          <tr><td class="px-5 py-3">TileServer 5xx rate</td><td class="px-5 py-3 text-red-400">&gt;0.1% / 5 min</td><td class="px-5 py-3">PagerDuty P1</td></tr>
+          <tr><td class="px-5 py-3">S3 upload failure</td><td class="px-5 py-3 text-red-400">Any failure</td><td class="px-5 py-3">PagerDuty P2</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="text-xs text-slate-400 mt-3">Dashboard: Grafana <code class="text-teal-400">arah-tiles</code> board.</p>
+  </section>
+
+  <!-- Add new layer -->
+  <section>
+    <h2 class="text-2xl font-bold text-white mb-6">Adding a New Layer</h2>
+    <div class="space-y-3">
+      <div class="card p-4 flex items-start gap-3">
+        <div class="text-teal-400 font-bold text-sm w-5">1</div>
+        <div class="text-sm text-slate-300">Add OSM tag mapping to <code class="text-teal-400">profiles/malaysia-full.java</code></div>
+      </div>
+      <div class="card p-4 flex items-start gap-3">
+        <div class="text-teal-400 font-bold text-sm w-5">2</div>
+        <div class="text-sm text-slate-300">Add layer definition and paint rules to <code class="text-teal-400">styles/arah-2d.json</code></div>
+      </div>
+      <div class="card p-4 flex items-start gap-3">
+        <div class="text-teal-400 font-bold text-sm w-5">3</div>
+        <div class="text-sm text-slate-300">Run <code class="text-teal-400">npm run validate-style</code> — must pass before continuing</div>
+      </div>
+      <div class="card p-4 flex items-start gap-3">
+        <div class="text-teal-400 font-bold text-sm w-5">4</div>
+        <div class="text-sm text-slate-300">Test with a small bbox: <code class="text-teal-400">scripts/build-2d.sh --layer &lt;name&gt; --bbox "3.1,101.6,3.2,101.7"</code></div>
+      </div>
+      <div class="card p-4 flex items-start gap-3">
+        <div class="text-teal-400 font-bold text-sm w-5">5</div>
+        <div class="text-sm text-slate-300">Run <code class="text-teal-400">npm test</code> — all tests must pass</div>
+      </div>
+      <div class="card p-4 flex items-start gap-3">
+        <div class="text-teal-400 font-bold text-sm w-5">6</div>
+        <div class="text-sm text-slate-300">Open a PR → merge → next weekly build picks it up automatically</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="border-t py-8 text-center text-sm text-slate-500" style="border-color:#1e2d3d;">
+  <a href="3d-maps.html" class="text-teal-400 hover:underline">← 3D Maps</a>
+  &nbsp;·&nbsp;
+  <a href="index.html" class="text-teal-400 hover:underline">Overview</a>
+  &nbsp;·&nbsp;
+  <a href="https://deanz93.github.io/arah/" class="text-teal-400 hover:underline">Arah Platform →</a>
+</footer>
+
+</body>
+</html>

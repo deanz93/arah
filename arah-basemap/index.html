@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>arah-basemap — Basemap Pipeline</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        teal: { DEFAULT: '#00D8A0', dark: '#00A87C' },
+        navy: { 900: '#080D12', 800: '#0F1923', 700: '#162130' },
+      }
+    }
+  }
+}
+</script>
+<style>
+  :root { color-scheme: light dark; }
+  body { background: #f8fafc; color: #0f172a; }
+  @media (prefers-color-scheme: dark) {
+    body { background: #080D12; color: #e2e8f0; }
+  }
+  .dark body { background: #080D12; color: #e2e8f0; }
+  .light body { background: #f8fafc; color: #0f172a; }
+
+  .card {
+    background: white;
+    border: 1px solid #e2e8f0;
+  }
+  @media (prefers-color-scheme: dark) {
+    .card { background: #0F1923; border-color: #1e2d3d; }
+  }
+  .dark .card { background: #0F1923; border-color: #1e2d3d; }
+  .light .card { background: white; border-color: #e2e8f0; }
+
+  .map-canvas {
+    position: relative;
+    height: 220px;
+    background: #0F1923;
+    overflow: hidden;
+    border-radius: 0.75rem;
+  }
+  .map-grid line { stroke: #00D8A0; stroke-opacity: 0.08; }
+  .road { stroke: #00D8A0; stroke-opacity: 0.6; fill: none; }
+  .road-2 { stroke: #E8B84B; stroke-opacity: 0.5; fill: none; }
+  .building { fill: #162130; stroke: #00D8A0; stroke-opacity: 0.3; stroke-width: 0.5; }
+  .water { fill: #1A3A5C; fill-opacity: 0.7; }
+  .pulse-dot { fill: #00D8A0; }
+
+  .badge { display: inline-block; padding: 2px 10px; border-radius: 999px; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.04em; background: #00D8A040; color: #00D8A0; border: 1px solid #00D8A060; }
+  .badge-yellow { background: #E8B84B30; color: #E8B84B; border-color: #E8B84B60; }
+  .badge-blue { background: #1A3A5C60; color: #7ec8e3; border-color: #1A3A5C; }
+
+  .layer-bar { height: 6px; border-radius: 3px; background: #00D8A0; transition: width 1s ease; }
+
+  nav a { transition: color 0.15s; }
+  nav a:hover { color: #00D8A0; }
+  .private-banner { background: linear-gradient(90deg, #162130, #0F1923); border-bottom: 1px solid #1e2d3d; }
+</style>
+</head>
+<body>
+
+<!-- Private banner -->
+<div class="private-banner text-xs text-center py-2 text-slate-400">
+  🔒 Private repository — Arah internal tooling &nbsp;|&nbsp;
+  <a href="https://deanz93.github.io/arah/" class="text-teal-400 hover:underline">← Back to Arah</a>
+</div>
+
+<!-- Nav -->
+<nav class="sticky top-0 z-50 border-b border-slate-200 dark:border-navy-700 bg-white/90 dark:bg-navy-800/90 backdrop-blur-sm" style="background: rgba(8,13,18,0.92); border-color: #1e2d3d;">
+  <div class="max-w-5xl mx-auto px-4 flex items-center justify-between h-14">
+    <div class="flex items-center gap-3">
+      <span class="text-xl">🗺️</span>
+      <span class="font-bold text-white">arah-basemap</span>
+      <span class="badge">Pipeline</span>
+    </div>
+    <div class="flex items-center gap-6 text-sm text-slate-300">
+      <a href="index.html" class="text-teal-400 font-medium">Overview</a>
+      <a href="2d-maps.html" class="nav-link">2D Maps</a>
+      <a href="3d-maps.html" class="nav-link">3D Maps</a>
+      <a href="workflow.html" class="nav-link">Workflow</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<header class="py-16 px-4" style="background: linear-gradient(160deg, #080D12 0%, #0F1923 60%, #162130 100%);">
+  <div class="max-w-5xl mx-auto">
+    <div class="map-canvas mb-8">
+      <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+        <!-- Grid -->
+        <defs>
+          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#00D8A0" stroke-width="0.4" opacity="0.12"/>
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#grid)"/>
+        <!-- Water -->
+        <ellipse cx="72%" cy="68%" rx="18%" ry="10%" class="water"/>
+        <!-- Roads -->
+        <path d="M 0 110 Q 200 80 400 130 T 800 100" class="road" stroke-width="3"/>
+        <path d="M 0 140 Q 180 120 350 160 T 800 140" class="road road-2" stroke-width="2"/>
+        <path d="M 120 0 Q 130 100 125 220" class="road" stroke-width="2"/>
+        <path d="M 280 0 Q 290 110 285 220" class="road road-2" stroke-width="1.5"/>
+        <path d="M 480 30 L 480 220" class="road" stroke-width="2"/>
+        <path d="M 0 70 Q 300 60 500 80 T 900 60" class="road road-2" stroke-width="1.5"/>
+        <!-- Buildings -->
+        <rect x="160" y="60" width="30" height="20" class="building"/>
+        <rect x="200" y="55" width="20" height="25" class="building"/>
+        <rect x="230" y="62" width="25" height="18" class="building"/>
+        <rect x="340" y="75" width="18" height="22" class="building"/>
+        <rect x="365" y="70" width="24" height="28" class="building"/>
+        <rect x="540" y="50" width="28" height="18" class="building"/>
+        <rect x="575" y="55" width="20" height="14" class="building"/>
+        <rect x="600" y="48" width="22" height="22" class="building"/>
+        <!-- GPS pulse -->
+        <circle cx="50%" cy="45%" r="18" fill="#00D8A0" opacity="0.08">
+          <animate attributeName="r" values="18;32;18" dur="2s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0.08;0;0.08" dur="2s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="50%" cy="45%" r="6" class="pulse-dot"/>
+        <circle cx="50%" cy="45%" r="3" fill="white"/>
+        <!-- Labels -->
+        <text x="50%" y="38%" fill="#00D8A0" font-size="9" opacity="0.7" text-anchor="middle">14/8198/13187</text>
+        <text x="72%" y="75%" fill="#7ec8e3" font-size="8" opacity="0.5" text-anchor="middle">Tasik</text>
+      </svg>
+      <div class="absolute top-3 right-3 text-xs text-teal-400 bg-navy-900/80 px-2 py-1 rounded font-mono" style="background:rgba(8,13,18,0.8);">PMTiles v3 · z0–16</div>
+    </div>
+
+    <h1 class="text-4xl font-bold text-white mb-3">Arah Basemap Pipeline</h1>
+    <p class="text-lg text-slate-300 mb-6 max-w-2xl">OSM → vector tiles → 2D/3D rendering. Full pipeline from raw OpenStreetMap data to production tiles served across Malaysia.</p>
+    <div class="flex flex-wrap gap-3">
+      <span class="badge">Planetiler 0.8</span>
+      <span class="badge">PMTiles v3</span>
+      <span class="badge-yellow badge">MapLibre GL 4</span>
+      <span class="badge-blue badge">Malaysia OSM</span>
+    </div>
+  </div>
+</header>
+
+<!-- Stack overview -->
+<main class="max-w-5xl mx-auto px-4 py-12">
+
+  <!-- Pipeline flow -->
+  <section class="mb-14">
+    <h2 class="text-2xl font-bold text-white mb-6">Pipeline at a Glance</h2>
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-4 items-center">
+      <div class="card rounded-xl p-4 text-center">
+        <div class="text-2xl mb-2">🌍</div>
+        <div class="text-sm font-semibold text-white">Geofabrik</div>
+        <div class="text-xs text-slate-400 mt-1">OSM PBF daily</div>
+      </div>
+      <div class="text-teal-400 text-center text-xl hidden md:block">→</div>
+      <div class="card rounded-xl p-4 text-center">
+        <div class="text-2xl mb-2">⚙️</div>
+        <div class="text-sm font-semibold text-white">Planetiler</div>
+        <div class="text-xs text-slate-400 mt-1">Vector tile gen</div>
+      </div>
+      <div class="text-teal-400 text-center text-xl hidden md:block">→</div>
+      <div class="card rounded-xl p-4 text-center">
+        <div class="text-2xl mb-2">📦</div>
+        <div class="text-sm font-semibold text-white">PMTiles v3</div>
+        <div class="text-xs text-slate-400 mt-1">Single archive</div>
+      </div>
+    </div>
+    <div class="flex justify-center mt-4 text-teal-400 text-xl md:hidden">↓</div>
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-4 items-center mt-4">
+      <div class="card rounded-xl p-4 text-center">
+        <div class="text-2xl mb-2">☁️</div>
+        <div class="text-sm font-semibold text-white">AWS S3</div>
+        <div class="text-xs text-slate-400 mt-1">ap-southeast-1</div>
+      </div>
+      <div class="text-teal-400 text-center text-xl hidden md:block">→</div>
+      <div class="card rounded-xl p-4 text-center">
+        <div class="text-2xl mb-2">🖥️</div>
+        <div class="text-sm font-semibold text-white">TileServer-GL</div>
+        <div class="text-xs text-slate-400 mt-1">Docker · port 8080</div>
+      </div>
+      <div class="text-teal-400 text-center text-xl hidden md:block">→</div>
+      <div class="card rounded-xl p-4 text-center">
+        <div class="text-2xl mb-2">🗺️</div>
+        <div class="text-sm font-semibold text-white">MapLibre GL</div>
+        <div class="text-xs text-slate-400 mt-1">2D + 3D render</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tile layers -->
+  <section class="mb-14">
+    <h2 class="text-2xl font-bold text-white mb-6">Tile Layers</h2>
+    <div class="card rounded-xl overflow-hidden">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b border-slate-700 text-left">
+            <th class="px-5 py-3 text-slate-400 font-medium">Layer</th>
+            <th class="px-5 py-3 text-slate-400 font-medium">Zoom</th>
+            <th class="px-5 py-3 text-slate-400 font-medium">OSM Tags</th>
+            <th class="px-5 py-3 text-slate-400 font-medium">3D</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-700/50 text-slate-300">
+          <tr><td class="px-5 py-3 font-mono text-teal-400">land</td><td class="px-5 py-3">0–16</td><td class="px-5 py-3">landuse=*</td><td class="px-5 py-3">—</td></tr>
+          <tr><td class="px-5 py-3 font-mono text-blue-400">water</td><td class="px-5 py-3">4–16</td><td class="px-5 py-3">natural=water</td><td class="px-5 py-3">—</td></tr>
+          <tr><td class="px-5 py-3 font-mono text-yellow-400">roads</td><td class="px-5 py-3">6–16</td><td class="px-5 py-3">highway=*</td><td class="px-5 py-3">—</td></tr>
+          <tr><td class="px-5 py-3 font-mono text-orange-400">buildings</td><td class="px-5 py-3">13–16</td><td class="px-5 py-3">building=*</td><td class="px-5 py-3">✅ extrusion</td></tr>
+          <tr><td class="px-5 py-3 font-mono text-pink-400">poi</td><td class="px-5 py-3">12–16</td><td class="px-5 py-3">amenity=*, shop=*</td><td class="px-5 py-3">—</td></tr>
+          <tr><td class="px-5 py-3 font-mono text-slate-400">terrain</td><td class="px-5 py-3">5–12</td><td class="px-5 py-3">DEM raster</td><td class="px-5 py-3">✅ pitch</td></tr>
+          <tr><td class="px-5 py-3 font-mono text-green-400">labels</td><td class="px-5 py-3">8–16</td><td class="px-5 py-3">name:ms, name:en</td><td class="px-5 py-3">—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Coverage -->
+  <section class="mb-14">
+    <h2 class="text-2xl font-bold text-white mb-6">Malaysia Coverage</h2>
+    <div class="grid md:grid-cols-3 gap-5">
+      <div class="card rounded-xl p-5">
+        <div class="text-teal-400 font-bold text-lg mb-1">Peninsular</div>
+        <div class="text-slate-300 text-sm mb-3">All 11 states + KL, Putrajaya</div>
+        <div class="layer-bar" style="width:95%"></div>
+        <div class="text-xs text-slate-400 mt-1">95% OSM coverage</div>
+      </div>
+      <div class="card rounded-xl p-5">
+        <div class="text-yellow-400 font-bold text-lg mb-1">Sabah</div>
+        <div class="text-slate-300 text-sm mb-3">Major roads + city areas</div>
+        <div class="layer-bar" style="width:72%; background:#E8B84B"></div>
+        <div class="text-xs text-slate-400 mt-1">72% OSM coverage</div>
+      </div>
+      <div class="card rounded-xl p-5">
+        <div class="text-blue-400 font-bold text-lg mb-1">Sarawak</div>
+        <div class="text-slate-300 text-sm mb-3">Major roads + Kuching, Miri</div>
+        <div class="layer-bar" style="width:68%; background:#7ec8e3"></div>
+        <div class="text-xs text-slate-400 mt-1">68% OSM coverage</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Links -->
+  <section class="mb-6">
+    <h2 class="text-2xl font-bold text-white mb-6">Documentation</h2>
+    <div class="grid md:grid-cols-2 gap-4">
+      <a href="2d-maps.html" class="card rounded-xl p-5 flex gap-4 hover:border-teal-500 transition-colors group">
+        <div class="text-3xl">🗺️</div>
+        <div>
+          <div class="font-semibold text-white group-hover:text-teal-400 transition-colors">2D Basemap Guide</div>
+          <div class="text-sm text-slate-400 mt-1">Vector tile pipeline, Planetiler config, style JSON</div>
+        </div>
+      </a>
+      <a href="3d-maps.html" class="card rounded-xl p-5 flex gap-4 hover:border-teal-500 transition-colors group">
+        <div class="text-3xl">🏙️</div>
+        <div>
+          <div class="font-semibold text-white group-hover:text-teal-400 transition-colors">3D Maps Guide</div>
+          <div class="text-sm text-slate-400 mt-1">Terrain DEM, 3D buildings, MapLibre camera</div>
+        </div>
+      </a>
+      <a href="workflow.html" class="card rounded-xl p-5 flex gap-4 hover:border-teal-500 transition-colors group">
+        <div class="text-3xl">🔄</div>
+        <div>
+          <div class="font-semibold text-white group-hover:text-teal-400 transition-colors">Update Workflow</div>
+          <div class="text-sm text-slate-400 mt-1">Weekly rebuild, nightly diff patch, rollback</div>
+        </div>
+      </a>
+      <a href="https://github.com/deanz93/arah-basemap" class="card rounded-xl p-5 flex gap-4 hover:border-teal-500 transition-colors group">
+        <div class="text-3xl">🔒</div>
+        <div>
+          <div class="font-semibold text-white group-hover:text-teal-400 transition-colors">GitHub Repo</div>
+          <div class="text-sm text-slate-400 mt-1">Private · Scripts, profiles, CI workflows</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="border-t py-8 text-center text-sm text-slate-500" style="border-color:#1e2d3d;">
+  <a href="https://deanz93.github.io/arah/" class="text-teal-400 hover:underline">← Arah Platform</a>
+  &nbsp;·&nbsp; arah-basemap &nbsp;·&nbsp; Private
+</footer>
+
+</body>
+</html>
