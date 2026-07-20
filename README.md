@@ -121,7 +121,7 @@ Infrastructure: AWS EKS ap-southeast-1 · ElastiCache Redis 7.1
 
 ---
 
-## The 8 Service Repos
+## The 9 Service Repos
 
 | Repo | Stack | What it does | Site |
 |------|-------|--------------|------|
@@ -193,6 +193,45 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for full guidelines.
 - 🗺️ OSM data quality → [arah-geocoding](https://github.com/deanz93/arah-geocoding)
 - 🛣️ Routing improvements → [arah-routing](https://github.com/deanz93/arah-routing)
 - ☁️ DevOps / infra → [arah-infra](https://github.com/deanz93/arah-infra)
+
+---
+
+## Join the Team
+
+Arah is built by a small core team and growing. We're looking for people who care about Malaysia, open-source, and building things that last.
+
+**To express interest, email:**
+
+> 📧 **developer@plisca.com.my**
+>
+> Subject: `[Arah] <Role> — <Your name>`
+> Attach or link your GitHub profile, portfolio, or relevant work.
+
+All roles are currently **volunteer / open-source contributor** basis. Serious contributors will be considered for paid engagements as the project grows.
+
+---
+
+## Open Roles
+
+| # | Role | Skills | Repo |
+|---|------|--------|------|
+| 1 | **Mobile Developer** | React Native 0.74, TypeScript, MapLibre GL Native | [arah-mobile](https://github.com/deanz93/arah-mobile) |
+| 2 | **Backend Developer** | Node.js, Fastify v4, Socket.io, Firebase Admin | [arah-api](https://github.com/deanz93/arah-api) |
+| 3 | **Frontend Developer** | Next.js 14 App Router, TypeScript, Tailwind CSS | [arah-web](https://github.com/deanz93/arah-web) |
+| 4 | **Firebase / Cloud Functions Engineer** | Firebase v2 Functions, Firestore, FCM, TypeScript | [arah-functions](https://github.com/deanz93/arah-functions) |
+| 5 | **DevOps / Infrastructure Engineer** | Terraform, AWS EKS, Kubernetes, Helm, GitHub Actions | [arah-infra](https://github.com/deanz93/arah-infra) |
+| 6 | **GIS / Map Data Specialist** | OpenStreetMap, Nominatim, Valhalla, Planetiler, PMTiles | [arah-geocoding](https://github.com/deanz93/arah-geocoding) · [arah-basemap](https://github.com/deanz93/arah-basemap) |
+| 7 | **Routing Engineer** | C++, Valhalla costing models, OSM road data | [arah-routing](https://github.com/deanz93/arah-routing) |
+| 8 | **UI/UX Designer** | Figma, mobile navigation UX, Bahasa Malaysia-first design | All repos |
+| 9 | **QA / Test Engineer** | Detox (mobile E2E), Playwright (web), API testing | All repos |
+| 10 | **Community Manager** | OSM mapping, social media, Malaysian developer community | — |
+
+### What We Value
+
+- You care about Malaysia having sovereign, open infrastructure
+- You write clean code and review others' PRs honestly
+- You're comfortable working async in a distributed team
+- You contribute with intent — quality over quantity
 
 ---
 
