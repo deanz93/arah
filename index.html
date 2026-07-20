@@ -251,12 +251,18 @@ nav {
 
 /* ── REPOS ───────────────────────────────────────────────── */
 .repos-section { background: var(--sur); }
-.repos-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; margin-top: 2.5rem; }
-.repo-card { background: var(--bg); border: 1px solid var(--bdr); border-radius: 10px; padding: 1.2rem; transition: border-color 0.2s, transform 0.15s; }
+.repos-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; margin-top: 2.5rem; }
+.repo-card { background: var(--bg); border: 1px solid var(--bdr); border-radius: 10px; padding: 1.2rem; transition: border-color 0.2s, transform 0.15s; display: flex; flex-direction: column; }
 .repo-card:hover { border-color: var(--acc); transform: translateY(-2px); }
 .repo-name { font-size: 0.875rem; font-weight: 800; letter-spacing: -0.01em; margin-bottom: 0.35rem; color: var(--acc); }
 .repo-tech { font-size: 0.75rem; color: var(--txt2); margin-bottom: 0.5rem; }
-.repo-desc { font-size: 0.8rem; color: var(--txt2); line-height: 1.5; }
+.repo-desc { font-size: 0.8rem; color: var(--txt2); line-height: 1.5; flex: 1; }
+.repo-links { display: flex; gap: 0.5rem; margin-top: 0.9rem; flex-wrap: wrap; }
+.repo-link { font-size: 0.7rem; font-weight: 700; padding: 3px 9px; border-radius: 4px; letter-spacing: 0.02em; transition: background 0.15s, color 0.15s, border-color 0.15s; }
+.repo-link-gh { color: var(--txt2); border: 1px solid var(--bdr2); }
+.repo-link-gh:hover { color: var(--txt); border-color: var(--txt2); }
+.repo-link-site { color: var(--acc); border: 1px solid var(--acc); background: var(--acc-glow); }
+.repo-link-site:hover { background: var(--acc); color: #080D12; }
 
 /* ── CTA ─────────────────────────────────────────────────── */
 .cta-section { background: linear-gradient(135deg, color-mix(in srgb, var(--acc) 8%, var(--bg)), var(--bg)); border-top: 1px solid var(--bdr); text-align: center; padding: 6rem 2rem; }
@@ -298,7 +304,7 @@ footer { background: var(--sur); border-top: 1px solid var(--bdr); padding: 2.5r
   .section { padding: 4rem 1rem; }
   .hero { padding: 80px 1rem 3rem; }
   .features-grid { grid-template-columns: 1fr; }
-  .repos-grid { grid-template-columns: repeat(2,1fr); }
+  .repos-grid { grid-template-columns: 1fr; }
   .tech-grid { grid-template-columns: 1fr; }
   .stats-inner { grid-template-columns: repeat(2,1fr); }
   .my-item { grid-template-columns: 2.5rem 1fr; }
@@ -360,7 +366,7 @@ footer { background: var(--sur); border-top: 1px solid var(--bdr); padding: 2.5r
 <div class="stats-bar">
   <div class="stats-inner">
     <div class="stat-item"><div class="stat-num">230</div><div class="stat-label" data-t="stats.features">Ciri Dirancang</div></div>
-    <div class="stat-item"><div class="stat-num">8</div><div class="stat-label" data-t="stats.repos">Repo Sumber Terbuka</div></div>
+    <div class="stat-item"><div class="stat-num">9</div><div class="stat-label" data-t="stats.repos">Repo Sumber Terbuka</div></div>
     <div class="stat-item"><div class="stat-num">100%</div><div class="stat-label" data-t="stats.data">Data Malaysia</div></div>
     <div class="stat-item"><div class="stat-num">MIT</div><div class="stat-label" data-t="stats.license">Lesen Terbuka</div></div>
   </div>
@@ -595,17 +601,90 @@ footer { background: var(--sur); border-top: 1px solid var(--bdr); padding: 2.5r
 <section class="section repos-section" id="repos">
   <div class="container">
     <p class="section-eyebrow" data-t="repos.eyebrow">Sumber Terbuka</p>
-    <h2 class="section-h2" data-t="repos.h2">8 repositori. Satu platform. Sepenuhnya terbuka.</h2>
+    <h2 class="section-h2" data-t="repos.h2">9 repositori. Satu platform. Sepenuhnya terbuka.</h2>
     <p class="section-sub" data-t="repos.sub">Setiap perkhidmatan adalah repo sumber terbuka yang berasingan. Sumbang ke mana-mana lapisan — mudah alih, API, laluan, infrastruktur. Berlesen MIT. PR dialu-alukan.</p>
     <div class="repos-grid">
-      <a href="https://github.com/deanz93/arah-mobile" class="repo-card"><div class="repo-name">arah-mobile</div><div class="repo-tech" data-t="repo.mobile.tech">React Native + TypeScript</div><div class="repo-desc" data-t="repo.mobile.desc">Aplikasi navigasi iOS &amp; Android</div></a>
-      <a href="https://github.com/deanz93/arah-web" class="repo-card"><div class="repo-name">arah-web</div><div class="repo-tech" data-t="repo.web.tech">Next.js 14 + TypeScript</div><div class="repo-desc" data-t="repo.web.desc">Laman awam &amp; portal admin</div></a>
-      <a href="https://github.com/deanz93/arah-api" class="repo-card"><div class="repo-name">arah-api</div><div class="repo-tech" data-t="repo.api.tech">Fastify + Node.js</div><div class="repo-desc" data-t="repo.api.desc">Auth, laporan, API profil</div></a>
-      <a href="https://github.com/deanz93/arah-functions" class="repo-card"><div class="repo-name">arah-functions</div><div class="repo-tech" data-t="repo.fn.tech">Firebase Cloud Functions</div><div class="repo-desc" data-t="repo.fn.desc">Kitaran hayat laporan &amp; pemberitahuan</div></a>
-      <a href="https://github.com/deanz93/arah-routing" class="repo-card"><div class="repo-name">arah-routing</div><div class="repo-tech" data-t="repo.routing.tech">Valhalla (C++)</div><div class="repo-desc" data-t="repo.routing.desc">Enjin laluan dihoskan sendiri</div></a>
-      <a href="https://github.com/deanz93/arah-geocoding" class="repo-card"><div class="repo-name">arah-geocoding</div><div class="repo-tech" data-t="repo.geo.tech">Nominatim</div><div class="repo-desc" data-t="repo.geo.desc">Carian alamat Malaysia</div></a>
-      <a href="https://github.com/deanz93/arah-tile-server" class="repo-card"><div class="repo-name">arah-tile-server</div><div class="repo-tech" data-t="repo.tiles.tech">PMTiles + TileServer-GL</div><div class="repo-desc" data-t="repo.tiles.desc">Jubin peta vektor dihoskan sendiri</div></a>
-      <a href="https://github.com/deanz93/arah-infra" class="repo-card"><div class="repo-name">arah-infra</div><div class="repo-tech" data-t="repo.infra.tech">Terraform + Kubernetes</div><div class="repo-desc" data-t="repo.infra.desc">Semua infrastruktur sebagai kod</div></a>
+      <div class="repo-card">
+        <div class="repo-name">arah-mobile</div>
+        <div class="repo-tech" data-t="repo.mobile.tech">React Native + TypeScript</div>
+        <div class="repo-desc" data-t="repo.mobile.desc">Aplikasi navigasi iOS &amp; Android</div>
+        <div class="repo-links">
+          <a href="https://github.com/deanz93/arah-mobile" class="repo-link repo-link-gh" target="_blank" rel="noopener">GitHub ↗</a>
+          <a href="https://deanz93.github.io/arah/arah-mobile/" class="repo-link repo-link-site" target="_blank" rel="noopener" data-t="repo.link.site">Laman ↗</a>
+        </div>
+      </div>
+      <div class="repo-card">
+        <div class="repo-name">arah-web</div>
+        <div class="repo-tech" data-t="repo.web.tech">Next.js 14 + TypeScript</div>
+        <div class="repo-desc" data-t="repo.web.desc">Laman awam &amp; portal admin</div>
+        <div class="repo-links">
+          <a href="https://github.com/deanz93/arah-web" class="repo-link repo-link-gh" target="_blank" rel="noopener">GitHub ↗</a>
+          <a href="https://deanz93.github.io/arah/arah-web/" class="repo-link repo-link-site" target="_blank" rel="noopener" data-t="repo.link.site">Laman ↗</a>
+        </div>
+      </div>
+      <div class="repo-card">
+        <div class="repo-name">arah-api</div>
+        <div class="repo-tech" data-t="repo.api.tech">Fastify + Node.js</div>
+        <div class="repo-desc" data-t="repo.api.desc">Auth, laporan, API profil</div>
+        <div class="repo-links">
+          <a href="https://github.com/deanz93/arah-api" class="repo-link repo-link-gh" target="_blank" rel="noopener">GitHub ↗</a>
+          <a href="https://deanz93.github.io/arah/arah-api/" class="repo-link repo-link-site" target="_blank" rel="noopener" data-t="repo.link.site">Laman ↗</a>
+        </div>
+      </div>
+      <div class="repo-card">
+        <div class="repo-name">arah-functions</div>
+        <div class="repo-tech" data-t="repo.fn.tech">Firebase Cloud Functions</div>
+        <div class="repo-desc" data-t="repo.fn.desc">Kitaran hayat laporan &amp; pemberitahuan</div>
+        <div class="repo-links">
+          <a href="https://github.com/deanz93/arah-functions" class="repo-link repo-link-gh" target="_blank" rel="noopener">GitHub ↗</a>
+          <a href="https://deanz93.github.io/arah/arah-functions/" class="repo-link repo-link-site" target="_blank" rel="noopener" data-t="repo.link.site">Laman ↗</a>
+        </div>
+      </div>
+      <div class="repo-card">
+        <div class="repo-name">arah-routing</div>
+        <div class="repo-tech" data-t="repo.routing.tech">Valhalla (C++)</div>
+        <div class="repo-desc" data-t="repo.routing.desc">Enjin laluan dihoskan sendiri</div>
+        <div class="repo-links">
+          <a href="https://github.com/deanz93/arah-routing" class="repo-link repo-link-gh" target="_blank" rel="noopener">GitHub ↗</a>
+          <a href="https://deanz93.github.io/arah/arah-routing/" class="repo-link repo-link-site" target="_blank" rel="noopener" data-t="repo.link.site">Laman ↗</a>
+        </div>
+      </div>
+      <div class="repo-card">
+        <div class="repo-name">arah-geocoding</div>
+        <div class="repo-tech" data-t="repo.geo.tech">Nominatim</div>
+        <div class="repo-desc" data-t="repo.geo.desc">Carian alamat Malaysia</div>
+        <div class="repo-links">
+          <a href="https://github.com/deanz93/arah-geocoding" class="repo-link repo-link-gh" target="_blank" rel="noopener">GitHub ↗</a>
+          <a href="https://deanz93.github.io/arah/arah-geocoding/" class="repo-link repo-link-site" target="_blank" rel="noopener" data-t="repo.link.site">Laman ↗</a>
+        </div>
+      </div>
+      <div class="repo-card">
+        <div class="repo-name">arah-tile-server</div>
+        <div class="repo-tech" data-t="repo.tiles.tech">PMTiles + TileServer-GL</div>
+        <div class="repo-desc" data-t="repo.tiles.desc">Jubin peta vektor dihoskan sendiri</div>
+        <div class="repo-links">
+          <a href="https://github.com/deanz93/arah-tile-server" class="repo-link repo-link-gh" target="_blank" rel="noopener">GitHub ↗</a>
+          <a href="https://deanz93.github.io/arah/arah-tile-server/" class="repo-link repo-link-site" target="_blank" rel="noopener" data-t="repo.link.site">Laman ↗</a>
+        </div>
+      </div>
+      <div class="repo-card">
+        <div class="repo-name">arah-infra</div>
+        <div class="repo-tech" data-t="repo.infra.tech">Terraform + Kubernetes</div>
+        <div class="repo-desc" data-t="repo.infra.desc">Semua infrastruktur sebagai kod</div>
+        <div class="repo-links">
+          <a href="https://github.com/deanz93/arah-infra" class="repo-link repo-link-gh" target="_blank" rel="noopener">GitHub ↗</a>
+          <a href="https://deanz93.github.io/arah/arah-infra/" class="repo-link repo-link-site" target="_blank" rel="noopener" data-t="repo.link.site">Laman ↗</a>
+        </div>
+      </div>
+      <div class="repo-card">
+        <div class="repo-name">arah-basemap</div>
+        <div class="repo-tech" data-t="repo.basemap.tech">Planetiler + PMTiles + MapLibre GL</div>
+        <div class="repo-desc" data-t="repo.basemap.desc">Saluran paip jubin peta 2D &amp; 3D</div>
+        <div class="repo-links">
+          <a href="https://github.com/deanz93/arah-basemap" class="repo-link repo-link-gh" target="_blank" rel="noopener">GitHub ↗</a>
+          <a href="https://deanz93.github.io/arah/arah-basemap/" class="repo-link repo-link-site" target="_blank" rel="noopener" data-t="repo.link.site">Laman ↗</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -732,7 +811,7 @@ const T = {
     'tech.tiles.desc':'Jubin vektor pada CDN CloudFront. Had Malaysia 99.5,1.0–119.5,7.5. Cache CDN 7 hari. Tiada kos API per permintaan.',
     'tech.firebase.desc':'Auth (Google + OTP Telefon), Firestore DB masa nyata, Analitik, Crashlytics, Cloud Functions v2.',
     'tech.infra.desc':'Terraform IaC. ap-southeast-1 (Singapura). ElastiCache Redis 7.1. Auto-skala HPA. CI/CD GitHub Actions.',
-    'repos.eyebrow':'Sumber Terbuka','repos.h2':'8 repositori. Satu platform. Sepenuhnya terbuka.',
+    'repos.eyebrow':'Sumber Terbuka','repos.h2':'9 repositori. Satu platform. Sepenuhnya terbuka.',
     'repos.sub':'Setiap perkhidmatan adalah repo sumber terbuka yang berasingan. Sumbang ke mana-mana lapisan — mudah alih, API, laluan, infrastruktur. Berlesen MIT. PR dialu-alukan.',
     'repo.mobile.tech':'React Native + TypeScript','repo.mobile.desc':'Aplikasi navigasi iOS & Android',
     'repo.web.tech':'Next.js 14 + TypeScript','repo.web.desc':'Laman awam & portal admin',
@@ -742,6 +821,8 @@ const T = {
     'repo.geo.tech':'Nominatim','repo.geo.desc':'Carian alamat Malaysia',
     'repo.tiles.tech':'PMTiles + TileServer-GL','repo.tiles.desc':'Jubin peta vektor dihoskan sendiri',
     'repo.infra.tech':'Terraform + Kubernetes','repo.infra.desc':'Semua infrastruktur sebagai kod',
+    'repo.basemap.tech':'Planetiler + PMTiles + MapLibre GL','repo.basemap.desc':'Saluran paip jubin peta 2D & 3D',
+    'repo.link.site':'Laman ↗',
     'cta.h2':'Bina bersama kami.<br>Malaysia layak dapat lebih baik.',
     'cta.sub':'Arah adalah projek sumber terbuka yang dibina oleh rakyat Malaysia, untuk rakyat Malaysia. Sama ada anda pembangun, pereka, penyumbang OSM, atau bersemangat tentang kedaulatan data — ada tempat untuk anda di sini.',
     'cta.btn1':'Mulakan di GitHub','cta.btn2':'Panduan Pembangun',
@@ -830,7 +911,7 @@ const T = {
     'tech.tiles.desc':'Self-hosted vector tiles on CloudFront CDN. Malaysia bounds 99.5,1.0–119.5,7.5. 7-day CDN cache. No API cost per request.',
     'tech.firebase.desc':'Auth (Google + Phone OTP), Firestore real-time DB, Analytics, Crashlytics, Cloud Functions v2.',
     'tech.infra.desc':'Terraform IaC. ap-southeast-1 (Singapore). ElastiCache Redis 7.1. HPA auto-scaling. GitHub Actions CI/CD.',
-    'repos.eyebrow':'Open Source','repos.h2':'8 repositories. One platform. Fully open.',
+    'repos.eyebrow':'Open Source','repos.h2':'9 repositories. One platform. Fully open.',
     'repos.sub':'Every service is a separate open-source repo. Contribute to any layer — mobile, API, routing, infra. MIT licensed. PRs welcome.',
     'repo.mobile.tech':'React Native + TypeScript','repo.mobile.desc':'iOS & Android navigation app',
     'repo.web.tech':'Next.js 14 + TypeScript','repo.web.desc':'Public site & admin portal',
@@ -840,6 +921,8 @@ const T = {
     'repo.geo.tech':'Nominatim','repo.geo.desc':'Malaysian address search',
     'repo.tiles.tech':'PMTiles + TileServer-GL','repo.tiles.desc':'Self-hosted vector map tiles',
     'repo.infra.tech':'Terraform + Kubernetes','repo.infra.desc':'All infrastructure as code',
+    'repo.basemap.tech':'Planetiler + PMTiles + MapLibre GL','repo.basemap.desc':'2D & 3D basemap tile pipeline',
+    'repo.link.site':'Site ↗',
     'cta.h2':'Build with us.<br>Malaysia deserves better.',
     'cta.sub':"Arah is an open-source project built by Malaysians, for Malaysians. Whether you're a developer, designer, OSM contributor, or just passionate about data sovereignty — there's a place for you.",
     'cta.btn1':'Start on GitHub','cta.btn2':'Developer Guide',
