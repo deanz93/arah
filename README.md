@@ -17,7 +17,7 @@
 - 🗣️ **Bahasa Malaysia-first** — Turn-by-turn TTS voice guidance in natural BM
 - 🌊 **Flash flood alerts** — Evacuation routing when roads are inundated
 - 💰 **Toll cost in Ringgit** — Exact cost per plaza before you start driving
-- 🕌 **Prayer time + Surau locator** — Waktu solat overlay, nearest masjid along route
+- 🕌 **Islamic suite** — Waktu solat, doa + azan audio, Qibla compass, Musafir calculator, Halal filter
 - ⚠️ **Zon Selamat alerts** — School zone audio warnings during school hours
 - 📡 **Open source, no proprietary APIs** — OSM, Valhalla, MapLibre GL, Nominatim
 
@@ -72,6 +72,19 @@
 - **Johor–Singapore** checkpoint community wait time
 - **Jawi script** toggle for place name labels
 - **Malaysian postcode** search (01000–98859, all states)
+
+### 🕌 Islamic Features (Ciri Islam)
+
+- **Waktu Solat** — Prayer times banner on map screen; auto-detects your JAKIM zone from GPS; powered by `api.waktusolat.app/v2` (Malaysia) and `api.aladhan.com` (worldwide)
+- **Doa Naik Kenderaan** — Arabic, rumi, and Malay translation displayed + **audio recitation** plays automatically when navigation starts (Az-Zukhruf 43:13–14)
+- **Azan** — Full azan **audio** plays at every prayer time; navigation voice is lowered during azan and resumes automatically after
+- **Musafir Calculator** — Detects if your journey ≥ 88.7 km (Shafi'i school); shows "🧳 Musafir — anda layak qasar & jamak" badge on route preview
+- **Nearest Masjid/Surau** — Find the 3 closest places of worship with one tap; add as navigation waypoint mid-journey
+- **Qibla Compass** — Live Qibla direction using device magnetometer; shows bearing in degrees and distance to Mecca
+- **Prayer Approaching Alert** — "Asar dalam 15 minit — Surau Al-Hidayah 800m on route, singgah?" alert during navigation; configurable 0–60 min lead time
+- **Halal POI Filter** — Toggle "Halal Sahaja" in food search to show only halal-tagged restaurants
+- **Jumaat Reminder** — Push notification N minutes before Friday Zohor with route to nearest masjid
+- **Hijri Date** — Displayed alongside Gregorian date on the prayer times banner
 
 ### 🔌 Offline & Performance
 - Download map tiles for offline: **Peninsular**, **Sabah**, or **Sarawak**
