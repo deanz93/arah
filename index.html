@@ -211,6 +211,16 @@ nav {
 .feat-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 1rem; }
 .feat-tag { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 0.2rem 0.55rem; border-radius: 4px; background: var(--sur2); color: var(--txt2); }
 
+/* ── ISLAMIC ─────────────────────────────────────────────── */
+.islamic-section { background: var(--bg); }
+.islamic-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.2rem; margin-top: 3rem; }
+.isl-card { background: var(--sur); border: 1px solid var(--bdr); border-radius: 12px; padding: 1.6rem; display: flex; gap: 1.2rem; align-items: flex-start; transition: border-color 0.25s, transform 0.2s; }
+.isl-card:hover { border-color: var(--acc); transform: translateY(-2px); }
+.isl-icon { font-size: 1.5rem; flex-shrink: 0; width: 48px; height: 48px; border-radius: 12px; background: var(--acc-glow); display: flex; align-items: center; justify-content: center; }
+.isl-body h3 { font-size: 1rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.4rem; }
+.isl-body p { font-size: 0.85rem; color: var(--txt2); line-height: 1.6; }
+.isl-badge { display: inline-block; margin-top: 0.6rem; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.2rem 0.55rem; border-radius: 4px; background: var(--acc-glow); color: var(--acc); }
+
 /* ── MALAYSIA-FIRST ──────────────────────────────────────── */
 .my-section { background: var(--bg); }
 .my-hero-text { font-size: clamp(1.4rem, 2.5vw, 2rem); font-weight: 900; letter-spacing: -0.03em; line-height: 1.2; text-wrap: balance; margin-bottom: 3rem; }
@@ -297,6 +307,7 @@ footer { background: var(--sur); border-top: 1px solid var(--bdr); padding: 2.5r
   .features-grid { grid-template-columns: repeat(2,1fr); }
   .tech-grid { grid-template-columns: repeat(2,1fr); }
   .repos-grid { grid-template-columns: repeat(2,1fr); }
+  .islamic-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 600px) {
   nav { padding: 0 1rem; }
@@ -305,6 +316,7 @@ footer { background: var(--sur); border-top: 1px solid var(--bdr); padding: 2.5r
   .hero { padding: 80px 1rem 3rem; }
   .features-grid { grid-template-columns: 1fr; }
   .repos-grid { grid-template-columns: 1fr; }
+  .islamic-grid { grid-template-columns: 1fr; }
   .tech-grid { grid-template-columns: 1fr; }
   .stats-inner { grid-template-columns: repeat(2,1fr); }
   .my-item { grid-template-columns: 2.5rem 1fr; }
@@ -319,6 +331,7 @@ footer { background: var(--sur); border-top: 1px solid var(--bdr); padding: 2.5r
   <div class="nav-logo">Ar<span>ah</span></div>
   <ul class="nav-links">
     <li><a href="#features"   data-t="nav.features">Ciri-ciri</a></li>
+    <li><a href="#islamic"    data-t="nav.islamic">🕌 Islam</a></li>
     <li><a href="#malaysia"   data-t="nav.malaysia">Malaysia-First</a></li>
     <li><a href="#compare"    data-t="nav.compare">Bandingkan</a></li>
     <li><a href="#repos"      data-t="nav.repos">Sumber Terbuka</a></li>
@@ -465,6 +478,108 @@ footer { background: var(--sur); border-top: 1px solid var(--bdr); padding: 2.5r
           <span class="feat-tag" data-t="tag.hmac">HMAC Anon</span>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ISLAMIC FEATURES -->
+<section class="section islamic-section" id="islamic">
+  <div class="container">
+    <p class="section-eyebrow" data-t="isl.eyebrow">Ciri Islam</p>
+    <h2 class="section-h2" data-t="isl.h2">Direka untuk Muslim Malaysia.</h2>
+    <p class="section-sub" data-t="isl.sub">Dari waktu solat hingga doa naik kenderaan — Arah menghormati keperluan Muslim dalam setiap perjalanan.</p>
+    <div class="islamic-grid">
+
+      <div class="isl-card">
+        <div class="isl-icon">🕐</div>
+        <div class="isl-body">
+          <h3 data-t="isl.1.title">Waktu Solat & Tarikh Hijri</h3>
+          <p data-t="isl.1.desc">Zon JAKIM dikesan automatik daripada GPS anda. Paparan 6 waktu solat harian dengan kiraan detik ke waktu solat seterusnya dan tarikh Hijri. Data daripada api.waktusolat.app (Malaysia) atau api.aladhan.com (luar negara).</p>
+          <span class="isl-badge">MVP</span>
+        </div>
+      </div>
+
+      <div class="isl-card">
+        <div class="isl-icon">🤲</div>
+        <div class="isl-body">
+          <h3 data-t="isl.2.title">Doa Naik Kenderaan + Audio</h3>
+          <p data-t="isl.2.desc">Paparan doa naik kenderaan (Az-Zukhruf 43:13–14) dalam tulisan Arab, rumi, dan terjemahan Melayu apabila navigasi dimulakan. Bacaan audio dimainkan secara automatik.</p>
+          <span class="isl-badge">MVP</span>
+        </div>
+      </div>
+
+      <div class="isl-card">
+        <div class="isl-icon">📡</div>
+        <div class="isl-body">
+          <h3 data-t="isl.3.title">Azan + Jeda Suara Navigasi</h3>
+          <p data-t="isl.3.desc">Audio azan dimainkan pada setiap waktu solat. Suara panduan navigasi dijeda secara automatik semasa azan dan disambung semula selepas tamat. Tidak termasuk Syuruk.</p>
+          <span class="isl-badge">MVP</span>
+        </div>
+      </div>
+
+      <div class="isl-card">
+        <div class="isl-icon">🧳</div>
+        <div class="isl-body">
+          <h3 data-t="isl.4.title">Kalkulator Musafir</h3>
+          <p data-t="isl.4.desc">Kesan secara automatik jika perjalanan anda ≥ 81 km (kadar 2 marhalah, penyelarasan baharu Malaysia). Papar lencana "Musafir — Anda layak qasar &amp; jamak solat" pada pratonton laluan.</p>
+          <span class="isl-badge">MVP</span>
+        </div>
+      </div>
+
+      <div class="isl-card">
+        <div class="isl-icon">🕌</div>
+        <div class="isl-body">
+          <h3 data-t="isl.5.title">Masjid &amp; Surau Terdekat</h3>
+          <p data-t="isl.5.desc">Cari masjid, surau, atau musolla terdekat dengan satu ketukan. Tambah sebagai waypoin navigasi semasa dalam perjalanan. Jarak dan nama dipaparkan.</p>
+          <span class="isl-badge">v1</span>
+        </div>
+      </div>
+
+      <div class="isl-card">
+        <div class="isl-icon">🧭</div>
+        <div class="isl-body">
+          <h3 data-t="isl.6.title">Kompas Kiblat</h3>
+          <p data-t="isl.6.desc">Arah kiblat masa nyata menggunakan magnetometer peranti. Papar darjah dari utara dan jarak ke Mekah. Dikira semula apabila lokasi GPS berubah lebih 500m.</p>
+          <span class="isl-badge">v1</span>
+        </div>
+      </div>
+
+      <div class="isl-card">
+        <div class="isl-icon">⏰</div>
+        <div class="isl-body">
+          <h3 data-t="isl.7.title">Amaran Waktu Solat Semasa Navigasi</h3>
+          <p data-t="isl.7.desc">Kad amaran muncul N minit sebelum waktu solat semasa navigasi — "Asar dalam 15 minit — Surau Al-Hidayah 800m, singgah?" dengan pilihan tambah waypoin terus.</p>
+          <span class="isl-badge">v1</span>
+        </div>
+      </div>
+
+      <div class="isl-card">
+        <div class="isl-icon">🥩</div>
+        <div class="isl-body">
+          <h3 data-t="isl.8.title">Penapis Halal untuk Carian Makanan</h3>
+          <p data-t="isl.8.desc">Togol "Halal Sahaja" dalam carian makanan dan restoran untuk menyembunyikan tempat makan yang tidak berlabel halal dalam OpenStreetMap.</p>
+          <span class="isl-badge">v1</span>
+        </div>
+      </div>
+
+      <div class="isl-card">
+        <div class="isl-icon">🕋</div>
+        <div class="isl-body">
+          <h3 data-t="isl.9.title">Peringatan Solat Jumaat</h3>
+          <p data-t="isl.9.desc">Pemberitahuan tolak setiap hari Jumaat N minit sebelum Zohor — "Jumaat — Zohor dalam 30 minit. Masjid terdekat: 1.2 km." Ketuk untuk laluan terus ke masjid.</p>
+          <span class="isl-badge">v1</span>
+        </div>
+      </div>
+
+      <div class="isl-card">
+        <div class="isl-icon">📅</div>
+        <div class="isl-body">
+          <h3 data-t="isl.10.title">Tarikh Hijri dalam Aplikasi</h3>
+          <p data-t="isl.10.desc">Tarikh Hijri dipapar pada sepanduk waktu solat — contohnya "14 Muharram 1447". Berguna semasa bulan Ramadan, 10 Zulhijjah, dan tarikh penting Islam yang lain.</p>
+          <span class="isl-badge">v1</span>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -731,7 +846,7 @@ footer { background: var(--sur); border-top: 1px solid var(--bdr); padding: 2.5r
 ══════════════════════════════════════════════════════════ */
 const T = {
   bm: {
-    'nav.features':'Ciri-ciri','nav.malaysia':'Malaysia-First','nav.compare':'Bandingkan','nav.repos':'Sumber Terbuka','nav.github':'GitHub','nav.beta':'Cuba Beta',
+    'nav.features':'Ciri-ciri','nav.islamic':'🕌 Islam','nav.malaysia':'Malaysia-First','nav.compare':'Bandingkan','nav.repos':'Sumber Terbuka','nav.github':'GitHub','nav.beta':'Cuba Beta',
     'hero.eyebrow':'Platform Navigasi Berdaulat Malaysia',
     'hero.h1':'Navigasi Malaysia,<br><em>Tanpa Kompromi.</em>',
     'hero.tagline':'Komuniti pandu arah. Data di bumi Malaysia. Percuma selamanya.',
@@ -768,6 +883,19 @@ const T = {
     'tag.tolldb':'DB Tol','tag.perplaza':'Per Plaza',
     'tag.pmtiles':'PMTiles','tag.delta':'Kemas Kini Delta','tag.eastmy':'Malaysia Timur',
     'tag.pdpa':'PDPA 2010','tag.nodata':'Tiada Jualan Data','tag.hmac':'HMAC Anon',
+    'isl.eyebrow':'Ciri Islam',
+    'isl.h2':'Direka untuk Muslim Malaysia.',
+    'isl.sub':'Dari waktu solat hingga doa naik kenderaan — Arah menghormati keperluan Muslim dalam setiap perjalanan.',
+    'isl.1.title':'Waktu Solat & Tarikh Hijri','isl.1.desc':'Zon JAKIM dikesan automatik daripada GPS anda. Paparan 6 waktu solat harian dengan kiraan detik ke waktu solat seterusnya dan tarikh Hijri. Data daripada api.waktusolat.app (Malaysia) atau api.aladhan.com (luar negara).',
+    'isl.2.title':'Doa Naik Kenderaan + Audio','isl.2.desc':'Paparan doa naik kenderaan (Az-Zukhruf 43:13–14) dalam tulisan Arab, rumi, dan terjemahan Melayu apabila navigasi dimulakan. Bacaan audio dimainkan secara automatik.',
+    'isl.3.title':'Azan + Jeda Suara Navigasi','isl.3.desc':'Audio azan dimainkan pada setiap waktu solat. Suara panduan navigasi dijeda secara automatik semasa azan dan disambung semula selepas tamat. Tidak termasuk Syuruk.',
+    'isl.4.title':'Kalkulator Musafir','isl.4.desc':'Kesan secara automatik jika perjalanan anda ≥ 81 km (kadar 2 marhalah, penyelarasan baharu Malaysia). Papar lencana "Musafir — Anda layak qasar & jamak solat" pada pratonton laluan.',
+    'isl.5.title':'Masjid & Surau Terdekat','isl.5.desc':'Cari masjid, surau, atau musolla terdekat dengan satu ketukan. Tambah sebagai waypoin navigasi semasa dalam perjalanan. Jarak dan nama dipaparkan.',
+    'isl.6.title':'Kompas Kiblat','isl.6.desc':'Arah kiblat masa nyata menggunakan magnetometer peranti. Papar darjah dari utara dan jarak ke Mekah. Dikira semula apabila lokasi GPS berubah lebih 500m.',
+    'isl.7.title':'Amaran Waktu Solat Semasa Navigasi','isl.7.desc':'Kad amaran muncul N minit sebelum waktu solat semasa navigasi — "Asar dalam 15 minit — Surau terdekat 800m, singgah?" dengan pilihan tambah waypoin terus.',
+    'isl.8.title':'Penapis Halal untuk Carian Makanan','isl.8.desc':'Togol "Halal Sahaja" dalam carian makanan dan restoran untuk menyembunyikan tempat makan yang tidak berlabel halal dalam OpenStreetMap.',
+    'isl.9.title':'Peringatan Solat Jumaat','isl.9.desc':'Pemberitahuan tolak setiap hari Jumaat N minit sebelum Zohor dengan laluan ke masjid terdekat. Boleh dikonfigurasikan: 15, 30, 45, atau 60 minit.',
+    'isl.10.title':'Tarikh Hijri dalam Aplikasi','isl.10.desc':'Tarikh Hijri dipapar pada sepanduk waktu solat. Berguna semasa Ramadan, 10 Zulhijjah, dan tarikh penting Islam yang lain.',
     'my.eyebrow':'Untuk Malaysia, Dari Malaysia',
     'my.herotext':'Ciri-ciri yang <strong>tiada dalam Waze</strong> atau Google Maps —<br>kerana mereka tidak faham Malaysia.',
     'my.1.title':'Amaran Banjir + Laluan Pemindahan',
@@ -831,7 +959,7 @@ const T = {
     'footer.license':'Lesen MIT','footer.mit':'Berlesen MIT — Dibina di Malaysia 🇲🇾',
   },
   en: {
-    'nav.features':'Features','nav.malaysia':'Malaysia-First','nav.compare':'Compare','nav.repos':'Open Source','nav.github':'GitHub','nav.beta':'Try Beta',
+    'nav.features':'Features','nav.islamic':'🕌 Islamic','nav.malaysia':'Malaysia-First','nav.compare':'Compare','nav.repos':'Open Source','nav.github':'GitHub','nav.beta':'Try Beta',
     'hero.eyebrow':"Malaysia's Sovereign Navigation Platform",
     'hero.h1':'Navigate Malaysia,<br><em>Without Compromise.</em>',
     'hero.tagline':'Community-powered navigation. Malaysian data sovereignty. Forever free.',
@@ -868,6 +996,19 @@ const T = {
     'tag.tolldb':'Toll Database','tag.perplaza':'Per Plaza',
     'tag.pmtiles':'PMTiles','tag.delta':'Delta Updates','tag.eastmy':'East Malaysia',
     'tag.pdpa':'PDPA 2010','tag.nodata':'No Data Sale','tag.hmac':'HMAC Anon',
+    'isl.eyebrow':'Islamic Features',
+    'isl.h2':'Built for Malaysian Muslims.',
+    'isl.sub':'From prayer times to the travel dua — Arah respects every Muslim\'s needs on every journey.',
+    'isl.1.title':'Prayer Times & Hijri Date','isl.1.desc':'JAKIM zone auto-detected from your GPS. Displays all 6 daily prayer times with a countdown to the next prayer and the Hijri date. Data from api.waktusolat.app (Malaysia) or api.aladhan.com (worldwide).',
+    'isl.2.title':'Travel Dua + Audio Recitation','isl.2.desc':'Displays the travel dua (Az-Zukhruf 43:13–14) in Arabic, romanised rumi, and Malay translation when navigation starts. Audio recitation plays automatically.',
+    'isl.3.title':'Azan + Navigation Voice Pause','isl.3.desc':'Full azan audio plays at every prayer time. Navigation voice guidance is paused automatically during the azan and resumes once it ends. Does not apply to Sunrise.',
+    'isl.4.title':'Musafir Calculator','isl.4.desc':'Automatically detects if your journey is ≥ 81 km (2 marhalah, Malaysia\'s new standardised rate). Displays a "Musafir — you may shorten & combine prayers" badge on the route preview screen.',
+    'isl.5.title':'Nearest Masjid & Surau','isl.5.desc':'Find the nearest mosque, surau, or musolla in one tap. Add as a navigation waypoint mid-journey. Distance and name shown.',
+    'isl.6.title':'Qibla Compass','isl.6.desc':'Live Qibla direction using the device magnetometer. Shows bearing in degrees from north and distance to Mecca. Recalculated when GPS location changes by more than 500m.',
+    'isl.7.title':'Prayer Alert During Navigation','isl.7.desc':'An alert card appears N minutes before prayer time during navigation — "Asar in 15 min — nearest surau 800m on route, detour?" with a one-tap waypoint option.',
+    'isl.8.title':'Halal Filter for Food Search','isl.8.desc':'Toggle "Halal Only" in food and restaurant search to hide establishments not tagged as halal in OpenStreetMap.',
+    'isl.9.title':'Friday Prayer Reminder','isl.9.desc':'Push notification every Friday N minutes before Zohor with a route to the nearest masjid. Configurable: 15, 30, 45, or 60 minutes.',
+    'isl.10.title':'Hijri Date in App','isl.10.desc':'Hijri date displayed on the prayer times banner. Useful during Ramadan, 10 Zulhijjah, and other important Islamic dates.',
     'my.eyebrow':'For Malaysia, By Malaysia',
     'my.herotext':'Features <strong>not found in Waze</strong> or Google Maps —<br>because they don\'t understand Malaysia.',
     'my.1.title':'Flood Alert + Evacuation Routing',
