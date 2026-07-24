@@ -78,7 +78,7 @@
 - **Waktu Solat** — Prayer times banner on map screen; auto-detects your JAKIM zone from GPS; powered by `api.waktusolat.app/v2` (Malaysia) and `api.aladhan.com` (worldwide)
 - **Doa Naik Kenderaan** — Arabic, rumi, and Malay translation displayed + **audio recitation** plays automatically when navigation starts (Az-Zukhruf 43:13–14)
 - **Azan** — Full azan **audio** plays at every prayer time; navigation voice is lowered during azan and resumes automatically after
-- **Musafir Calculator** — Detects if your journey ≥ 88.7 km (Shafi'i school); shows "🧳 Musafir — anda layak qasar & jamak" badge on route preview
+- **Musafir Calculator** — Detects if your journey ≥ 81 km (kadar 2 marhalah, penyelarasan baharu Malaysia); shows "🧳 Musafir — anda layak qasar & jamak" badge on route preview
 - **Nearest Masjid/Surau** — Find the 3 closest places of worship with one tap; add as navigation waypoint mid-journey
 - **Qibla Compass** — Live Qibla direction using device magnetometer; shows bearing in degrees and distance to Mecca
 - **Prayer Approaching Alert** — "Asar dalam 15 minit — Surau Al-Hidayah 800m on route, singgah?" alert during navigation; configurable 0–60 min lead time
