@@ -294,6 +294,8 @@ footer { background: var(--sur); border-top: 1px solid var(--bdr); padding: 2.5r
 .footer-links a { font-size: 0.85rem; color: var(--txt2); transition: color 0.2s; }
 .footer-links a:hover { color: var(--txt); }
 .footer-mit { font-size: 0.75rem; color: var(--txt2); opacity: 0.6; }
+.kofi-btn { display: inline-flex; align-items: center; gap: 0.45rem; background: #FF5E5B; color: #fff; font-size: 0.82rem; font-weight: 700; padding: 0.45rem 1rem; border-radius: 999px; text-decoration: none; transition: opacity 0.2s, transform 0.15s; white-space: nowrap; }
+.kofi-btn:hover { opacity: 0.88; transform: translateY(-1px); }
 
 /* ── RESPONSIVE ──────────────────────────────────────────── */
 @media (max-width: 900px) {
@@ -836,7 +838,12 @@ footer { background: var(--sur); border-top: 1px solid var(--bdr); padding: 2.5r
       <li><a href="https://github.com/deanz93/arah/blob/master/CONTRIBUTING.md" data-t="footer.contribute">Sumbang</a></li>
       <li><a href="https://github.com/deanz93/arah/blob/master/LICENSE" data-t="footer.license">Lesen MIT</a></li>
     </ul>
-    <div class="footer-mit" data-t="footer.mit">Berlesen MIT — Dibina di Malaysia 🇲🇾</div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:0.5rem;">
+      <a href="https://ko-fi.com/najmuddinyusoff" target="_blank" rel="noopener" class="kofi-btn">
+        ☕ <span data-t="footer.kofi">Sokong Arah</span>
+      </a>
+      <div class="footer-mit" data-t="footer.mit">Berlesen MIT — Dibina di Malaysia 🇲🇾</div>
+    </div>
   </div>
 </footer>
 
@@ -957,6 +964,7 @@ const T = {
     'footer.tagline':'Tunjuk Arah, Bersama 🇲🇾',
     'footer.prd':'PRD','footer.arch':'Seni Bina','footer.contribute':'Sumbang',
     'footer.license':'Lesen MIT','footer.mit':'Berlesen MIT — Dibina di Malaysia 🇲🇾',
+    'footer.kofi':'Sokong Arah',
   },
   en: {
     'nav.features':'Features','nav.islamic':'🕌 Islamic','nav.malaysia':'Malaysia-First','nav.compare':'Compare','nav.repos':'Open Source','nav.github':'GitHub','nav.beta':'Try Beta',
@@ -1070,6 +1078,7 @@ const T = {
     'footer.tagline':'Show Direction, Together 🇲🇾',
     'footer.prd':'PRD','footer.arch':'Architecture','footer.contribute':'Contribute',
     'footer.license':'MIT License','footer.mit':'MIT Licensed — Built in Malaysia 🇲🇾',
+    'footer.kofi':'Support Arah',
   }
 };
 

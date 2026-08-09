@@ -8,6 +8,7 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 [![Platform](https://img.shields.io/badge/platform-Android%20%7C%20iOS%20%7C%20Web-blue.svg)](#)
 [![Data: Malaysia](https://img.shields.io/badge/data-Malaysia%20only-CC0001.svg)](#)
+[![Ko-fi](https://img.shields.io/badge/Ko--fi-Support%20Arah-FF5E5B?logo=ko-fi&logoColor=white)](https://ko-fi.com/najmuddinyusoff)
 
 > 🌐 **Landing page:** https://deanz93.github.io/arah/
 
@@ -248,6 +249,14 @@ All roles are currently **volunteer / open-source contributor** basis. Serious c
 - You write clean code and review others' PRs honestly
 - You're comfortable working async in a distributed team
 - You contribute with intent — quality over quantity
+
+---
+
+## Support the Project
+
+Arah is built by volunteers. If it's useful to you, consider buying a coffee — it keeps the servers running and the contributors motivated.
+
+[![Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/najmuddinyusoff)
 
 ---
 
