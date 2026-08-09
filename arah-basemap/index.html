@@ -59,14 +59,13 @@ tailwind.config = {
 
   nav a { transition: color 0.15s; }
   nav a:hover { color: #00D8A0; }
-  .private-banner { background: linear-gradient(90deg, #162130, #0F1923); border-bottom: 1px solid #1e2d3d; }
 </style>
 </head>
 <body>
 
-<!-- Private banner -->
-<div class="private-banner text-xs text-center py-2 text-slate-400">
-  🔒 Private repository — Arah internal tooling &nbsp;|&nbsp;
+<!-- OSS notice -->
+<div class="text-xs text-center py-2 text-slate-400" style="background:#0F1923; border-bottom:1px solid #1e2d3d;">
+  📂 Open-source (MIT) &nbsp;|&nbsp;
   <a href="https://deanz93.github.io/arah/" class="text-teal-400 hover:underline">← Back to Arah</a>
 </div>
 
@@ -266,10 +265,10 @@ tailwind.config = {
         </div>
       </a>
       <a href="https://github.com/deanz93/arah-basemap" class="card rounded-xl p-5 flex gap-4 hover:border-teal-500 transition-colors group">
-        <div class="text-3xl">🔒</div>
+        <div class="text-3xl">📂</div>
         <div>
           <div class="font-semibold text-white group-hover:text-teal-400 transition-colors">GitHub Repo</div>
-          <div class="text-sm text-slate-400 mt-1">Private · Scripts, profiles, CI workflows</div>
+          <div class="text-sm text-slate-400 mt-1">Open-source (MIT) · Scripts, profiles, CI workflows</div>
         </div>
       </a>
     </div>

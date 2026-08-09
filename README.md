@@ -148,7 +148,7 @@ Infrastructure: AWS EKS ap-southeast-1 · ElastiCache Redis 7.1
 | [arah-infra](https://github.com/deanz93/arah-infra) | Terraform + Kubernetes + Helm | All infrastructure as code | [↗](https://deanz93.github.io/arah/arah-infra/) |
 | [arah-basemap](https://github.com/deanz93/arah-basemap) | Planetiler + PMTiles + MapLibre GL | 2D/3D basemap pipeline | [↗](https://deanz93.github.io/arah/arah-basemap/) |
 
-> This repo (`arah`) is the **reference monorepo** — BMAD documentation, architecture decisions, API spec, and scaffold live here.
+> All 9 repos are **open-source (MIT)**. This repo (`arah`) is the **reference monorepo** — BMAD documentation, architecture decisions, API spec, and scaffold live here.
 
 ---
 
